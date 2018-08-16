@@ -1,0 +1,67 @@
+<div class="container-fluid">
+  <h2 class="ui header">Demo Form: Sku with Builder</h2>
+  <form [formGroup]="myForm"
+        class="ui form">
+
+    <div class="form-group row">
+      <div class="col-xs-6">
+        <label for="name" class="required">Insert Aula name</label>
+        <input class="form-control form-control-sm" type="text"
+               id="name" placeholder="Insert Aula name"
+               formControlName="name">
+      </div>
+    </div>
+
+
+    <div class="form-group row">
+      <div class="col-xs-6">
+        <label for="capacity" class="required">Insert Aula capacity</label>
+        <input type="number" min="0" step="1" id="capacity"
+               class="form-control form-control-sm"
+               formControlName="capacity">
+      </div>
+    </div>
+
+
+    <div class="form-group row">
+      <div class="col-xs-6">
+        <label for="longitude">Insert Longitude</label>
+        <input type="number" id="longitude" class="form-control form-control-sm"
+                formControlName="longitude">
+      </div>
+    </div>
+
+
+    <div class="form-group row">
+      <div class="col-xs-6">
+        <label for="latitude">Insert Latitude</label>
+        <input type="number" id="latitude" class="form-control form-control-sm"
+                formControlName="latitude">
+      </div>
+    </div>
+
+
+    <div class="form-group row">
+      <div class="col-xs-12"  *ngFor="let item of equipments; let i = index" >
+        <div class="form-group row">
+          <div class="form-check">
+            <label [for]="i" class="form-check-label">
+              {{ item.name }}
+              <input type="checkbox" class="form-check-input" [id]="i"
+                    (change)="optionsChecked(i)">
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-group row">
+      <div class="col-xs-12">
+        <button class="btn btn-primary" (click)="onSubmit()">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+

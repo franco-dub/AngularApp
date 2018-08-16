@@ -1,0 +1,36 @@
+<div class="card card-body mb-3">
+
+  <div *ngIf="user.hide">
+    <mat-label>{{errorLog}}</mat-label>
+  </div>
+  <mat-card align="center">
+    <mat-card-content>
+      <mat-card-title>
+        <h4>E-mail</h4>
+      </mat-card-title>
+      <mat-form-field appearance="legacy">
+        <input matInput="password" placeholder="Insert email" #email>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+
+
+  <mat-card align="center">
+    <mat-card-content>
+      <mat-card-title>
+        <h4>Password</h4>
+      </mat-card-title>
+      <mat-form-field appearance="legacy">
+        <input matInput="password" type="password" placeholder="Insert password" #password>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+
+
+  <mat-card-actions align="center" class="example-card">
+    <mat-card-content>
+      <button align="center"mat-raised-button (click)="login(email.value, password.value)">Login</button>
+    </mat-card-content>
+  </mat-card-actions>
+
+</div>
