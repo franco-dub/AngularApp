@@ -11,7 +11,7 @@ import {
   FormGroup,
   ValidatorFn
 } from "@angular/forms";
-import {Aula} from "../../models/Aula";
+import {Room} from "../../models/Room";
 
 
 @Component({
@@ -85,7 +85,7 @@ export class AddAulaComponent implements OnInit {
       }
     }
 
-    let aula: Aula = {
+    let aula: Room = {
       name: this.myForm.get('name').value,
       capacity: this.myForm.get('capacity').value,
       latitude: this.myForm.get('latitude').value,

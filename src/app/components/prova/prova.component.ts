@@ -4,7 +4,7 @@ import {Form, FormArray, FormBuilder, FormControl, FormGroup, Validators} from "
 import {GetService} from "../../servicies/get.service";
 import {Router} from "@angular/router";
 import {Equipments} from "../models/Equipments";
-import {Aula} from "../models/Aula";
+import {Room} from "../models/Room";
 import {PostService} from "../../servicies/post.service";
 
 @Component({
@@ -79,7 +79,7 @@ export class ProvaComponent implements OnInit {
       }
     }
 
-    let aula : Aula = {
+    let aula : Room = {
       name: this.myForm.get('name').value,
       capacity: this.myForm.get('capacity').value,
       latitude: this.myForm.get('latitude').value,

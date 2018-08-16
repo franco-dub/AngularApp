@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Observable } from "rxjs";
-import {Aula} from "../components/models/Aula";
+import {Room} from "../components/models/Room";
 import {Teaching} from "../components/models/Teaching";
 import {StudyCourse} from "../components/models/StudyCourse";
 
@@ -21,8 +21,8 @@ export class PostService {
 
   constructor(private http: HttpClient) { }
 
-  saveNewAula(aula: Aula): Observable<Aula>{
-        return this.http.post<Aula>(this.saveAulaUrl, aula, httpOptions);
+  saveNewAula(aula: Room): Observable<Room>{
+        return this.http.post<Room>(this.saveAulaUrl, aula, httpOptions);
   }
 
   saveTeaching(teaching: Teaching): Observable<Teaching>{
@@ -34,8 +34,8 @@ export class PostService {
     return this.http.post<StudyCourse>(this.saveStudyCourseUrl, studyCourse, httpOptions);
   }
 
-  getAulas(): Observable<Aula[]>{
-    return this.http.get<Aula[]>(this.getAulasUrl);
+  getAulas(): Observable<Room[]>{
+    return this.http.get<Room[]>(this.getAulasUrl);
   }
 
 }

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PostService} from "../../../servicies/post.service";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {User} from "../../models/User";
+import {Person} from "../../models/Person";
 import {GetService} from "../../../servicies/get.service";
 
 @Component({
@@ -66,7 +66,7 @@ export class AddUserComponent implements OnInit {
 
     if (this.checkData(selectedUser, selectedCourse, selectedTeaching)) {
       console.log("data correctly inserted");
-      let newUser: User;
+      let newUser: Person;
 
       switch (selectedUser) {
         case "Student":
@@ -131,34 +131,29 @@ export class AddUserComponent implements OnInit {
     return "prova";
   }
 
-  private newStudent(user: string, course: number): User{
+  private newStudent(user: string, course: number): Person{
     return {
-      name: this.form.get('firstName').value,
-      surname: this.form.get('lastName').value,
+      firstName: this.form.get('firstName').value,
+      lastName: this.form.get('lastName').value,
       email: this.form.get('email').value,
-      type: user,
       password: this.password(),
-      idStudyCourse: course
     }
   }
 
-  private newProfessor(user: string, teaching: number): User{
+  private newProfessor(user: string, teaching: number): Person{
     return {
-      name: this.form.get('firstName').value,
-      surname: this.form.get('lastName').value,
+      firstName: this.form.get('firstName').value,
+      lastName: this.form.get('lastName').value,
       email: this.form.get('email').value,
-      type: user,
       password: this.password(),
-      idTeaching: teaching
     }
   }
 
-  private newSecretary(user: string): User{
+  private newSecretary(user: string): Person{
     return {
-      name: this.form.get('firstName').value,
-      surname: this.form.get('lastName').value,
+      firstName: this.form.get('firstName').value,
+      lastName: this.form.get('lastName').value,
       email: this.form.get('email').value,
-      type: user,
       password: this.password(),
     }
   }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from "rxjs";
-import {User} from "../components/models/User";
+import {Person} from "../components/models/Person";
 import {Login} from "../components/models/Login";
 
 import {Equipments} from "../components/models/Equipments";
@@ -9,14 +9,14 @@ import {StudyCourseType} from "../components/models/StudyCourseType";
 import {Teaching} from "../components/models/Teaching";
 import {StudyCourse} from "../components/models/StudyCourse";
 import {Calendar} from "../components/models/Calendar";
-import {Aula} from "../components/models/Aula";
-
+import {Room} from "../components/models/Room";
+import {returned} from "../components/models/Returned";
 
 
 @Injectable()
 export class GetService {
 
-  loginUrl: string = "http://localhost:8080/SEAppBackend/user/login/"; // /{email}/{passwd}
+  loginUrl: string = "http://localhost:8080/SpringApp/user/login/"; // /{email}/{passwd}
 
   equipmentList: string = "http://localhost:8080/SEAppBackend/equipment/getAll";
 
@@ -34,8 +34,8 @@ export class GetService {
 
   constructor(private http: HttpClient) { }
 
-  login(user: Login): Observable<User>{
-    return this.http.get<User>(this.loginUrl + user.email + "/" + user.password );
+  login(user: Login): Observable<returned>{
+    return this.http.get<returned>(this.loginUrl + user.email + "/" + user.password );
   }
 
   getEquipmentData(): Observable<Equipments[]>{
@@ -62,8 +62,8 @@ export class GetService {
     return this.http.get<Calendar>(this.getCalendarByCourseUrl);
   }
 
-  getAulas(): Observable<Aula[]>{
-    return this.http.get<Aula[]>(this.getAulasUrl);
+  getAulas(): Observable<Room[]>{
+    return this.http.get<Room[]>(this.getAulasUrl);
   }
 
 }

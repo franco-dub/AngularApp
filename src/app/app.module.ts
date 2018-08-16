@@ -30,6 +30,9 @@ import { AddTeachingComponent } from './components/secretary/add-teaching/add-te
 import { AddStudyCourseComponent } from './components/secretary/add-study-course/add-study-course.component';
 import { AddCalendarComponent } from './components/secretary/add-calendar/add-calendar.component';
 import {CdkTableModule} from "@angular/cdk/table";
+import {RoleGuardService} from "./servicies/role-guard.service";
+import {AuthGuardService} from "./servicies/auth-guard.service";
+import {AuthService} from "./servicies/auth.service";
 
 @NgModule({
   declarations: [
@@ -69,7 +72,10 @@ import {CdkTableModule} from "@angular/cdk/table";
   ],
   providers: [
     GetService,
-    PostService
+    PostService,
+    RoleGuardService,
+    AuthGuardService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

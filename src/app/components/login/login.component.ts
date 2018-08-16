@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Login } from "../models/Login";
 import { GetService } from "../../servicies/get.service";
-import { User } from "../models/User";
+import { Person } from "../models/Person";
 import { Router } from "@angular/router";
+import {returned} from "../models/Returned";
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
                 password: "",
                 hide: false};
 
-  loggedUser: User;
+  loggedUser: Person;
   errorLog: string = "";
 
   constructor(private getService: GetService, private router: Router) { }
@@ -29,25 +30,25 @@ export class LoginComponent implements OnInit {
 
     this.getService.login(this.user).subscribe(loggedUser => {
 
-      this.loggedUser = loggedUser;
+      let returned: returned = loggedUser;
 
       if(this.loggedUser!= null) {
 
         this.user.hide = false;
-        console.log(this.loggedUser.type);
+        console.log('this.loggedUser.type');
 
-        switch (this.loggedUser.type) {
+        switch (returned.userType) {
 
-          case "Segretario":
+          case "Secretary":
             console.log("ok il prezzo è giusto");
             this.router.navigate(["seg-home"]);
             break;
 
-          case "Docente":
+          case "Professor":
             console.log("ok il prezzo è giusto");
             break;
 
-          case "Studente":
+          case "Student":
             this.errorLog = "Student can\'t login from website";
             this.user.hide = true;
             break;

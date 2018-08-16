@@ -1,6 +1,7 @@
 import {Equipments} from "./Equipments";
 
-export interface Aula {
+export interface Room {
+  roomId?: number;
   name: string;
   capacity: number;
   longitude: number;
