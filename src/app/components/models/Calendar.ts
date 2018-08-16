@@ -1,5 +1,5 @@
 import {Teaching} from "./Teaching";
-import {Aula} from "./Aula";
+import {Aula} from "./Room";
 import {Hours} from "./Hours";
 import {StudyCourse} from "./StudyCourse";
 

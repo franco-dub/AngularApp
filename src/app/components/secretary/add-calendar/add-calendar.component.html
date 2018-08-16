@@ -1,0 +1,193 @@
+<div class="page">
+  <mat-grid-list [cols]="3">
+
+    <mat-grid-tile>
+      <mat-card align="center" class="page">
+        <mat-card-content>
+          <mat-card-title>
+            <h4>Select Course Calendar</h4>
+          </mat-card-title>
+          <mat-form-field appearance="legacy">
+            <mat-select placeholder="Select course" [(ngModel)]="studyCourse">
+              <mat-option *ngFor="let course of studyCourses"
+                      style="font-size: medium" [value]="course">
+                {{ course.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+
+    <mat-grid-tile>
+      <mat-card align="center" class="page">
+        <mat-card-content>
+          <mat-card-title>
+            <h4>Select Semester</h4>
+          </mat-card-title>
+          <mat-form-field appearance="legacy">
+            <mat-select placeholder="Semester" [(ngModel)]="semester" (selectionChange)="getTeachings()">
+              <mat-option style="font-size: medium" [value]="1" >
+                1
+              </mat-option>
+              <mat-option style="font-size: medium" [value]="2">
+                2
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-card class="page" align="center">
+        <mat-card-content>
+          <mat-card-title>
+            <h4>Select Teaching</h4>
+          </mat-card-title>
+          <mat-form-field appearance="legacy">
+            <mat-select placeholder="Teaching" [(ngModel)]="teaching"
+                        (selectionChange)="unselectedTeaching = false">
+              <mat-option *ngFor="let teach of teachings" [value]="teach" >
+                {{ teach.name }} <span style="color: blue">{{ teach.hours }}</span>
+              </mat-option>
+            </mat-select>
+            <mat-hint>
+              <span *ngIf="teaching.leftHours < 0" style="color: red;">
+                {{ teaching.leftHours }} Too much hour selected
+              </span>
+              <span *ngIf="teaching.leftHours >= 0" style="color: blue;">
+                {{ teaching.leftHours }} remaining
+              </span>
+            </mat-hint>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+
+  <mat-card *ngIf="(tooMuchHourError[0] || tooMuchHourError[1] ||
+                    tooMuchHourError[4] || tooMuchHourError[2] ||
+                    tooMuchHourError[5] || tooMuchHourError[3])">
+    <mat-card-content style="color: red">
+      Too much hour selected
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="unselectedTeaching">
+    <mat-card-content style="color: red">
+      Select first a teach
+    </mat-card-content>
+  </mat-card>
+
+
+  <div class="table-container">
+    <table mat-table [dataSource]="data">
+
+      <ng-container matColumnDef="hours" sticky >
+        <th mat-header-cell *matHeaderCellDef class="first-box-container column-title unSelectable">
+          Hours/Days
+        </th>
+        <td mat-cell *matCellDef="let element; let i = index" ngClass="first-box-container column-title unSelectable">
+            {{element.hour}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="monday" >
+        <th mat-header-cell *matHeaderCellDef class="other-box-container column-title unSelectable" >
+          Monday
+        </th>
+        <td mat-cell *matCellDef="let element; let i = index" class="other-box-container column-data">
+          <mat-card  (click)="changeState((i * 2), 1)">
+            {{ !(monday[i].firstHalfSelected == false || monday[i].firstHalfSelected == null) ? teaching.name : '' }}
+          </mat-card>
+          <mat-card (click)="changeState(((i * 2) + 1), 1)">
+            {{ !(monday[i].secondHalfSelected == false || monday[i].secondHalfSelected == null) ? teaching.name : '' }}
+          </mat-card>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="tuesday">
+        <th mat-header-cell *matHeaderCellDef class="other-box-container column-title unSelectable">
+          Tuesday
+        </th>
+        <td mat-cell *matCellDef="let element; let i = index" class="other-box-container column-data">
+          <mat-card  (click)="changeState((i * 2), 2)">
+            {{ !(tuesday[i].firstHalfSelected == false || tuesday[i].firstHalfSelected == null) ? teaching.name : '' }}
+          </mat-card>
+          <mat-card (click)="changeState(((i * 2) + 1), 2)">
+            {{ !(tuesday[i].secondHalfSelected == false || tuesday[i].secondHalfSelected == null) ? teaching.name : '' }}
+          </mat-card>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="wednesday">
+        <th mat-header-cell  *matHeaderCellDef class="other-box-container column-title unSelectable">
+            Wednesday
+        </th>
+        <td mat-cell *matCellDef="let element; let i = index" class="other-box-container column-data">
+          <mat-card  (click)="changeState((i * 2), 3)">
+            {{ !(wednesday[i].firstHalfSelected == false || wednesday[i].firstHalfSelected == null) ? teaching.name : '' }}
+          </mat-card>
+          <mat-card (click)="changeState(((i * 2) + 1), 3)">
+            {{ !(wednesday[i].secondHalfSelected == false || wednesday[i].secondHalfSelected == null) ? teaching.name : '' }}
+          </mat-card>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="thursday">
+        <th mat-header-cell *matHeaderCellDef class="other-box-container column-title unSelectable">
+            Thursday
+        </th>
+        <td mat-cell *matCellDef="let element; let i = index" class="other-box-container column-data">
+          <mat-card  (click)="changeState((i * 2), 4)">
+            {{ !(thursday[i].firstHalfSelected == false || thursday[i].firstHalfSelected == null) ? teaching.name : '' }}
+          </mat-card>
+          <mat-card (click)="changeState(((i * 2) + 1), 4)">
+            {{ !(thursday[i].secondHalfSelected == false || thursday[i].secondHalfSelected == null) ? teaching.name : '' }}
+          </mat-card>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="friday">
+        <th mat-header-cell *matHeaderCellDef class="other-box-container column-title unSelectable">
+            Friday
+        </th>
+        <td mat-cell *matCellDef="let element; let i = index" class="other-box-container column-data">
+          <mat-card  (click)="changeState((i * 2), 5)">
+            {{ !(friday[i].firstHalfSelected == false || friday[i].firstHalfSelected == null) ? teaching.name : '' }}
+          </mat-card>
+          <mat-card (click)="changeState(((i * 2) + 1), 5)">
+            {{ !(friday[i].secondHalfSelected == false || friday[i].secondHalfSelected == null) ? teaching.name : '' }}
+          </mat-card>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="saturday">
+        <th mat-header-cell *matHeaderCellDef class="other-box-container column-title unSelectable">
+            Saturday
+        </th>
+        <td mat-cell *matCellDef="let element; let i = index" class="other-box-container column-data">
+          <mat-card  (click)="changeState((i * 2), 6)">
+            {{ !(saturday[i].firstHalfSelected == false || saturday[i].firstHalfSelected == null) ? teaching.name : '' }}
+          </mat-card>
+          <mat-card (click)="changeState(((i * 2) + 1), 6)">
+            {{ !(saturday[i].secondHalfSelected == false || saturday[i].secondHalfSelected == null) ? teaching.name : '' }}
+          </mat-card>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="days"></tr>
+      <tr mat-row *matRowDef="let row; columns: days"></tr>
+    </table>
+  </div>
+
+  <mat-card-actions align="center" class="example-card">
+    <mat-card-content>
+      <button style="font-size: large" color="warn" mat-raised-button (click)="findAula()">Find Aula</button>
+    </mat-card-content>
+  </mat-card-actions>
+
+</div>

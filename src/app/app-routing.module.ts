@@ -8,6 +8,8 @@ import {AddUserComponent} from "./components/secretary/add-user/add-user.compone
 import {AddTeachingComponent} from "./components/secretary/add-teaching/add-teaching.component";
 import {AddStudyCourseComponent} from "./components/secretary/add-study-course/add-study-course.component";
 import {AddCalendarComponent} from "./components/secretary/add-calendar/add-calendar.component";
+import { AuthGuardService as AuthGuard } from './servicies/auth-guard.service';
+import {RoleGuardService as RoleGuard} from "./servicies/role-guard.service";
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
