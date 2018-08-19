@@ -3,15 +3,8 @@ import {Equipments} from "../../models/Equipments";
 import {GetService} from "../../../servicies/get.service";
 import {Router} from "@angular/router";
 import {PostService} from "../../../servicies/post.service";
-import {
-  AbstractControl,
-  FormArray,
-  FormBuilder, FormControl,
-  FormControlName,
-  FormGroup,
-  ValidatorFn
-} from "@angular/forms";
 import {Room} from "../../models/Room";
+import {RoomEquipment} from "../../models/RoomEquipment";
 
 
 @Component({
@@ -21,32 +14,25 @@ import {Room} from "../../models/Room";
 })
 export class AddAulaComponent implements OnInit {
 
-  myForm: FormGroup;
-
-  public equipments: Equipments[] = null;
+  equipments: Equipments[] = null;
 
   columns: number = 4;
 
+  name: string = '';
+
+  capacity: number = null;
+
   row: number = 0;
 
-  constructor(private fb: FormBuilder,
-              private getService: GetService,
+  location: string = '';
+
+  longitude: string = '';
+
+  latitude: string = '';
+
+  constructor(private getService: GetService,
               private router: Router,
-              private postService: PostService) {
-
-    this.myForm = this.fb.group({
-
-      name: new FormControl(''),
-
-      capacity: new FormControl(0),
-
-      longitude: new FormControl(0),
-
-      latitude: new FormControl(0),
-
-    });
-
-  }
+              private postService: PostService) { }
 
   ngOnInit() {
 
@@ -85,16 +71,36 @@ export class AddAulaComponent implements OnInit {
       }
     }
 
-    let aula: Room = {
-      name: this.myForm.get('name').value,
-      capacity: this.myForm.get('capacity').value,
-      latitude: this.myForm.get('latitude').value,
-      longitude: this.myForm.get('longitude').value,
+    this.location = this.longitude + ", " + this.latitude;
+
+    let aul: Room = {
+      name: this.name,
+      capacity: this.capacity,
+      location: this.location,
       equipments: checkedEquipments
     };
 
-    this.postService.saveNewAula(aula).subscribe(prova => {
-      console.log(prova);
+    let roomEquipment: Array<RoomEquipment> = [];
+
+
+
+    this.postService.saveNewAula(aul).subscribe(aula => {
+      console.log(aula);
+      if(aula != null) {
+        for(let equipmen of checkedEquipments) {
+          roomEquipment.push({
+            room: aula,
+            equipment: equipmen,
+            issue: '',
+            work: 1
+          });
+        }
+        console.log(roomEquipment);
+        this.postService.saveAulaEquipments(roomEquipment).subscribe(roomEquipments => {
+          if (roomEquipments != null)
+            this.router.navigate(['seg-home']);
+        });
+      }
     });
 
   }

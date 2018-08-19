@@ -17,7 +17,8 @@ const httpOptions = {
 @Injectable()
 export class PostService {
 
-  saveAulaUrl: string = "http://localhost:8080/SpringApp/roomEquipment/add";
+  saveAulaUrl: string = "http://localhost:8080/SpringApp/room/add";
+  saveAulaEquipmentsUrl: string = "http://localhost:8080/SpringApp/roomEquipment/add";
   saveModuleUrl: string = "http://localhost:8080/SpringApp/module/save";
   saveStudyCourseUrl: string = "http://localhost:8080/SpringApp/course/save";
   saveUserUrl: string = "http://localhost:8080/SpringApp/user/save";
@@ -29,8 +30,12 @@ export class PostService {
 
   constructor(private http: HttpClient) { }
 
-  saveNewAula(aula: Array<RoomEquipment>): Observable<Array<RoomEquipment>>{
-    return this.http.post<Array<RoomEquipment>>(this.saveAulaUrl, aula, httpOptions);
+  saveNewAula(aula: Room): Observable<Room>{
+    return this.http.post<Room>(this.saveAulaUrl, aula, httpOptions);
+  }
+
+  saveAulaEquipments(equipments: Array<RoomEquipment>): Observable<Array<RoomEquipment>>{
+    return this.http.post<Array<RoomEquipment>>(this.saveAulaEquipmentsUrl, equipments, httpOptions);
   }
 
   saveModule(teaching: Module): Observable<Module>{
