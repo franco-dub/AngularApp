@@ -44,47 +44,14 @@
     </mat-card-content>
   </mat-card>
 
-
-  <mat-card align="center">
-    <mat-card-content>
-      <mat-card-title>
-        <h4>Select teachings</h4>
-      </mat-card-title>
-      <mat-form-field appearance="legacy">
-        <mat-select placeholder="select teaching" [(ngModel)]="selectedTeachings"
-                    [required] multiple>
-          <mat-select-trigger style="font-size: medium" >
-            {{ selectedTeachings.length == 0 ? '' : selectedTeachings[0].name }}
-            <span style="color : blue; font-size: small" *ngIf="studyCourseType.cfu - getCreditValue() >= 0">
-              (+{{ selectedTeachings.length == 0 ?
-              studyCourseType.cfu : studyCourseType.cfu - getCreditValue() }} remaining)
-            </span>
-            <span style="color : red; font-size: small" *ngIf="studyCourseType.cfu - getCreditValue() < 0" >
-              ({{ selectedTeachings.length == 1 ?
-              studyCourseType.cfu : studyCourseType.cfu - getCreditValue() }} of surplus)
-            </span>
-          </mat-select-trigger>
-          <mat-option *ngFor="let teach of teachings" [value]="teach">
-            {{ teach.name }} {{ teach.credits }}
-          </mat-option>
-        </mat-select>
-
-      </mat-form-field>
-      <mat-card-actions class="example-card">
-        <mat-card-content>
-          <button style="font-size: medium" color="accent" mat-flat-button (click)="addTeaching()">Add teaching</button>
-        </mat-card-content>
-      </mat-card-actions>
-    </mat-card-content>
+  <mat-card>
+    <mat-card-actions align="center" class="example-card">
+      <mat-card-content>
+        <button style="font-size: large" color="warn" mat-raised-button (click)="onSubmit()">Submit</button>
+      </mat-card-content>
+      <mat-error *ngIf="missingArguments" style="color: red">
+        Missing arguments
+      </mat-error>
+    </mat-card-actions>
   </mat-card>
-
-
-  <mat-card-actions align="center" class="example-card">
-    <mat-card-content>
-      <button style="font-size: large" color="warn" mat-raised-button (click)="onSubmit()">Submit</button>
-    </mat-card-content>
-    <mat-error *ngIf="missingArguments" style="color: red">
-      Missing arguments
-    </mat-error>
-  </mat-card-actions>
 </div>

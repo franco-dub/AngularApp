@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {PostService} from "../../../servicies/post.service";
 import {GetService} from "../../../servicies/get.service";
 import {Router} from "@angular/router";
-import {StudyCourse} from "../../models/StudyCourse";
-import {Teaching} from "../../models/Teaching";
+import {Module} from "../../models/Module";
 import {Room} from "../../models/Room";
 import {Calendar} from "../../models/Calendar";
 import {Hours} from "../../models/Hours";
+import {Course} from "../../models/Course";
 
 @Component({
   selector: 'app-add-calendar',
@@ -120,21 +120,26 @@ export class AddCalendarComponent implements OnInit {
 
   aulas: Room[] = [];
 
-  studyCourses: StudyCourse[] = [];
-  studyCourse: StudyCourse;
+  hours = [];
+
+  leftHours = [];
+
+  studyCourses: Course[] = [];
+  studyCourse: Course;
 
   semester: number = 0;
 
-  teaching: Teaching = {
-    name: '',
+  teaching: Module = {
+    title: '',
     credits: 0,
     semester: 0,
-    description: ''
   };
 
-  teachings: Teaching[] = [];
+  unselectedTeaching = true;
 
-  leftHours: number = 0;
+  teachings: Module[] = [];
+
+  leftHour: number = 0;
 
   hoursSelected: number = 0;
 
@@ -146,14 +151,13 @@ export class AddCalendarComponent implements OnInit {
     false,
     false];
 
-  unselectedTeaching: boolean = false;
+  unselectedModule: boolean = false;
 
 
   selectedAula: Room = {
     name: '',
     capacity: 0,
-    longitude: 0,
-    latitude: 0,
+    location: '',
     equipments: []
   };
 
@@ -169,8 +173,8 @@ export class AddCalendarComponent implements OnInit {
     });
   }
 
-  getTeachings(){
-    this.getService.getTeachingsById(this.studyCourse.id).subscribe(returned => {
+  getModules(){
+    this.getService.getTeachingsById(this.studyCourse.courseId).subscribe(returned => {
 
       for(let i = 0; i < returned.length; i++) {
         if (returned[i].semester == this.semester){
@@ -182,23 +186,23 @@ export class AddCalendarComponent implements OnInit {
 
         switch (this.teachings[i].credits) {
           case 12:
-            this.teachings[i].hours = 9;
-            this.teachings[i].leftHours = this.teachings[i].hours;
+            this.hours[i] = 9;
+            this.leftHours[i] = this.hours[i];
             break;
 
           case 9:
-            this.teachings[i].hours = 7;
-            this.teachings[i].leftHours = this.teachings[i].hours;
+            this.hours[i] = 7;
+            this.leftHours[i] = this.hours[i];
             break;
 
           case 6:
-            this.teachings[i].hours = 5;
-            this.teachings[i].leftHours = this.teachings[i].hours;
+            this.hours[i] = 5;
+            this.leftHours[i] = this.hours[i];
             break;
 
           case 3:
-            this.teachings[i].hours = 3;
-            this.teachings[i].leftHours = this.teachings[i].hours;
+            this.hours[i] = 3;
+            this.leftHours[i] = this.hours[i];
             break;
         }
 
@@ -232,9 +236,9 @@ export class AddCalendarComponent implements OnInit {
   changeState(index: number, day:number){
 
     let count = 0;
-    this.unselectedTeaching = this.teaching.name == '';
+    this.unselectedModule = this.teaching.title == '';
 
-    if(!this.unselectedTeaching) {
+    if(!this.unselectedModule) {
       switch (day) {
         case 1:
           if (index % 2 == 0) {
@@ -479,8 +483,8 @@ export class AddCalendarComponent implements OnInit {
       this.tooMuchHourError[day] = count > 6;
 
       for (let i = 0; i < this.teachings.length; i++) {
-        if (this.teachings[i].id == this.teaching.id) {
-          this.teachings[i].leftHours = this.teaching.hours - (this.hoursSelected / 2);
+        if (this.teachings[i].moduleId == this.teaching.moduleId) {
+          this.leftHours[i] = this.hours[i] - (this.hoursSelected / 2);
         }
 
       }

@@ -1,8 +1,12 @@
+import {Course} from "./Course";
+import {Professor} from "./Professor";
+
 export interface Module {
-  id?: number;
+  moduleId?: number;
   title: string;
-  description: string;
-  credit?: number;
+  credits?: number;
   semester?: number;
   year?: number;
+  course?: Course;
+  professor?: Professor;
 }

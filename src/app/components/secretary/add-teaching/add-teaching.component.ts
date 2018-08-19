@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {Teaching} from "../../models/Teaching";
 import {PostService} from "../../../servicies/post.service";
-import {FormControl, Validators} from "@angular/forms";
+import {Module} from "../../models/Module";
+import {GetService} from "../../../servicies/get.service";
+import {Course} from "../../models/Course";
+import {Professor} from "../../models/Professor";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-teaching',
@@ -11,38 +14,66 @@ import {FormControl, Validators} from "@angular/forms";
 export class AddTeachingComponent implements OnInit {
 
 
-  teaching: Teaching;
+  teaching: Module;
 
   name: string = '';
   credits: number = 0;
   description: string = '';
   semester: number = 0;
+  year: number = 0;
+
+  numbers: Array<number> = [];
 
   missingArguments: boolean = false;
   wrongCharacter: boolean = false;
 
-  constructor(private postService: PostService) { }
+  courses: Array<Course> = [];
+  selectedCourse: Course;
+
+  professors: Array<Professor> = [];
+  selectedProfessor: Professor;
+
+  constructor(private postService: PostService,
+              private getService: GetService,
+              private router: Router) { }
 
   ngOnInit() {
+    this.getService.findAllCourses().subscribe(courses =>{
+      console.log(courses);
+      this.courses = courses;
+      this.getService.findAllProfessor().subscribe(professors=>{
+        this.professors = professors;
+      });
+    });
+  }
+
+  fillVector(){
+    for(let i = 0; i < this.selectedCourse.year; i++){
+      this.numbers.push(i + 1);
+    }
   }
 
   onSubmit(){
 
     this.missingArguments = (((this.name || this.description) == '') || (this.credits < 3 || this.credits > 18) ||
-                                                                            this.semester == 0);
+                                this.selectedCourse == null || this.selectedProfessor == null || this.semester == 0);
     this.wrongCharacter = (this.credits < 3 || this.credits > 18);
 
     if (!this.missingArguments && ! this.wrongCharacter){
 
-      let teaching: Teaching = {
-        name: this.name,
+      let teaching: Module = {
+        title: this.name,
         credits: this.credits,
-        description: this.description,
-        semester: this.semester
+        professor: this.selectedProfessor,
+        course: this.selectedCourse,
+        semester: this.semester,
+        year: this.year
       };
 
-      this.postService.saveTeaching(teaching).subscribe(returned => {
-        console.log(returned)
+      this.postService.saveModule(teaching).subscribe(teaching => {
+        console.log(teaching);
+        if(teaching != null)
+          this.router.navigate(['seg-home']);
       });
 
     }

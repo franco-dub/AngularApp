@@ -19,8 +19,8 @@ export class PostService {
 
   saveAulaUrl: string = "http://localhost:8080/SpringApp/room/add";
   saveAulaEquipmentsUrl: string = "http://localhost:8080/SpringApp/roomEquipment/add";
-  saveModuleUrl: string = "http://localhost:8080/SpringApp/module/save";
-  saveStudyCourseUrl: string = "http://localhost:8080/SpringApp/course/save";
+  saveModuleUrl: string = "http://localhost:8080/SpringApp/module/add";
+  saveStudyCourseUrl: string = "http://localhost:8080/SpringApp/course/add";
   saveUserUrl: string = "http://localhost:8080/SpringApp/user/save";
   saveProfessorUrl: string = "http://localhost:8080/SpringApp/professor/add";
   saveSecretaryUrl: string = "http://localhost:8080/SpringApp/secretary/add";

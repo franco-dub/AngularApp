@@ -27,7 +27,7 @@
             <h4>Select Semester</h4>
           </mat-card-title>
           <mat-form-field appearance="legacy">
-            <mat-select placeholder="Semester" [(ngModel)]="semester" (selectionChange)="getTeachings()">
+            <mat-select placeholder="Semester" [(ngModel)]="semester" (selectionChange)="getModules()">
               <mat-option style="font-size: medium" [value]="1" >
                 1
               </mat-option>
@@ -49,16 +49,16 @@
           <mat-form-field appearance="legacy">
             <mat-select placeholder="Teaching" [(ngModel)]="teaching"
                         (selectionChange)="unselectedTeaching = false">
-              <mat-option *ngFor="let teach of teachings" [value]="teach" >
-                {{ teach.name }} <span style="color: blue">{{ teach.hours }}</span>
+              <mat-option *ngFor="let teach of teachings; let i = index" [value]="teach" >
+                {{ teach.title }} <span style="color: blue">{{ hours[i] }}</span>
               </mat-option>
             </mat-select>
-            <mat-hint>
-              <span *ngIf="teaching.leftHours < 0" style="color: red;">
-                {{ teaching.leftHours }} Too much hour selected
+            <mat-hint *ngFor="let teach of teachings; let i = index">
+              <span *ngIf="teaching.id == i && leftHours[i] < 0" style="color: red;">
+                {{ leftHours[i] }} Too much hour selected
               </span>
-              <span *ngIf="teaching.leftHours >= 0" style="color: blue;">
-                {{ teaching.leftHours }} remaining
+              <span *ngIf="teaching.id == i && leftHours[i] >= 0" style="color: blue;">
+                {{ leftHours[i] }} remaining
               </span>
             </mat-hint>
           </mat-form-field>
@@ -101,10 +101,10 @@
         </th>
         <td mat-cell *matCellDef="let element; let i = index" class="other-box-container column-data">
           <mat-card  (click)="changeState((i * 2), 1)">
-            {{ !(monday[i].firstHalfSelected == false || monday[i].firstHalfSelected == null) ? teaching.name : '' }}
+            {{ !(monday[i].firstHalfSelected == false || monday[i].firstHalfSelected == null) ? teaching.title : '' }}
           </mat-card>
           <mat-card (click)="changeState(((i * 2) + 1), 1)">
-            {{ !(monday[i].secondHalfSelected == false || monday[i].secondHalfSelected == null) ? teaching.name : '' }}
+            {{ !(monday[i].secondHalfSelected == false || monday[i].secondHalfSelected == null) ? teaching.title : '' }}
           </mat-card>
         </td>
       </ng-container>
@@ -115,10 +115,10 @@
         </th>
         <td mat-cell *matCellDef="let element; let i = index" class="other-box-container column-data">
           <mat-card  (click)="changeState((i * 2), 2)">
-            {{ !(tuesday[i].firstHalfSelected == false || tuesday[i].firstHalfSelected == null) ? teaching.name : '' }}
+            {{ !(tuesday[i].firstHalfSelected == false || tuesday[i].firstHalfSelected == null) ? teaching.title : '' }}
           </mat-card>
           <mat-card (click)="changeState(((i * 2) + 1), 2)">
-            {{ !(tuesday[i].secondHalfSelected == false || tuesday[i].secondHalfSelected == null) ? teaching.name : '' }}
+            {{ !(tuesday[i].secondHalfSelected == false || tuesday[i].secondHalfSelected == null) ? teaching.title : '' }}
           </mat-card>
         </td>
       </ng-container>
@@ -129,10 +129,10 @@
         </th>
         <td mat-cell *matCellDef="let element; let i = index" class="other-box-container column-data">
           <mat-card  (click)="changeState((i * 2), 3)">
-            {{ !(wednesday[i].firstHalfSelected == false || wednesday[i].firstHalfSelected == null) ? teaching.name : '' }}
+            {{ !(wednesday[i].firstHalfSelected == false || wednesday[i].firstHalfSelected == null) ? teaching.title : '' }}
           </mat-card>
           <mat-card (click)="changeState(((i * 2) + 1), 3)">
-            {{ !(wednesday[i].secondHalfSelected == false || wednesday[i].secondHalfSelected == null) ? teaching.name : '' }}
+            {{ !(wednesday[i].secondHalfSelected == false || wednesday[i].secondHalfSelected == null) ? teaching.title : '' }}
           </mat-card>
         </td>
       </ng-container>
@@ -143,10 +143,10 @@
         </th>
         <td mat-cell *matCellDef="let element; let i = index" class="other-box-container column-data">
           <mat-card  (click)="changeState((i * 2), 4)">
-            {{ !(thursday[i].firstHalfSelected == false || thursday[i].firstHalfSelected == null) ? teaching.name : '' }}
+            {{ !(thursday[i].firstHalfSelected == false || thursday[i].firstHalfSelected == null) ? teaching.title : '' }}
           </mat-card>
           <mat-card (click)="changeState(((i * 2) + 1), 4)">
-            {{ !(thursday[i].secondHalfSelected == false || thursday[i].secondHalfSelected == null) ? teaching.name : '' }}
+            {{ !(thursday[i].secondHalfSelected == false || thursday[i].secondHalfSelected == null) ? teaching.title : '' }}
           </mat-card>
         </td>
       </ng-container>
@@ -157,10 +157,10 @@
         </th>
         <td mat-cell *matCellDef="let element; let i = index" class="other-box-container column-data">
           <mat-card  (click)="changeState((i * 2), 5)">
-            {{ !(friday[i].firstHalfSelected == false || friday[i].firstHalfSelected == null) ? teaching.name : '' }}
+            {{ !(friday[i].firstHalfSelected == false || friday[i].firstHalfSelected == null) ? teaching.title : '' }}
           </mat-card>
           <mat-card (click)="changeState(((i * 2) + 1), 5)">
-            {{ !(friday[i].secondHalfSelected == false || friday[i].secondHalfSelected == null) ? teaching.name : '' }}
+            {{ !(friday[i].secondHalfSelected == false || friday[i].secondHalfSelected == null) ? teaching.title : '' }}
           </mat-card>
         </td>
       </ng-container>
@@ -171,10 +171,10 @@
         </th>
         <td mat-cell *matCellDef="let element; let i = index" class="other-box-container column-data">
           <mat-card  (click)="changeState((i * 2), 6)">
-            {{ !(saturday[i].firstHalfSelected == false || saturday[i].firstHalfSelected == null) ? teaching.name : '' }}
+            {{ !(saturday[i].firstHalfSelected == false || saturday[i].firstHalfSelected == null) ? teaching.title : '' }}
           </mat-card>
           <mat-card (click)="changeState(((i * 2) + 1), 6)">
-            {{ !(saturday[i].secondHalfSelected == false || saturday[i].secondHalfSelected == null) ? teaching.name : '' }}
+            {{ !(saturday[i].secondHalfSelected == false || saturday[i].secondHalfSelected == null) ? teaching.title : '' }}
           </mat-card>
         </td>
       </ng-container>

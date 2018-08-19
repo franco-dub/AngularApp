@@ -15,7 +15,7 @@ const routes: Routes = [
   {path: 'add-aula', component: AddAulaComponent},
   {path: 'add-user', component: AddUserComponent},
   {path: 'add-teaching', component: AddTeachingComponent},
-  {path: 'add-course', component: AddStudyCourseComponent, canActivate: [AuthGuard]},
+  {path: 'add-course', component: AddStudyCourseComponent},
   {path: 'add-calendar', component: AddCalendarComponent}
 ];
 
