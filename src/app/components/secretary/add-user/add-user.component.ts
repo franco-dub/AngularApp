@@ -1,8 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {PostService} from "../../../servicies/post.service";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder} from "@angular/forms";
 import {Person} from "../../models/Person";
 import {GetService} from "../../../servicies/get.service";
+import {Course} from "../../models/Course";
+import {Student} from "../../models/Student";
+import {Professor} from "../../models/Professor";
+import {Secretary} from "../../models/Secretary";
+import {Module} from "../../models/Module";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-user',
@@ -10,111 +16,94 @@ import {GetService} from "../../../servicies/get.service";
   styleUrls: ['./add-user.component.css'],
 })
 export class AddUserComponent implements OnInit {
+  gends = ['M', 'F'];
 
-  form: FormGroup;
-
-  type: String[] = ['Student', 'Professor', 'Secretary'];
-
+  type: String[] = ['STUDENT', 'PROFESSOR', 'SECRETARY'];
 
   selectedUser: string = "";
 
-  selectedTeaching: number;
+  selectedCourse: Course;
 
-  selectedTCourse: number;
-
-  selectedCourse: number;
+  selectedModule: Module;
 
   error: boolean = false;
 
-  studyCourses = [{id: 1,
-                name: "ingegneria"},
-                {
-                  id:4,
-                  name: "economia"
-                }];
+  firstName: string = '';
+  lastName: string = '';
+  email: string = '';
+  phone: string = '';
+  dateOfBirth: Date;
+  address: string = '';
+  gender: string = '';
+  number: number;
 
-  ingegneria = [{id: 1,
-    name: "act"},
-    {
-      id:2,
-      name: "software"
-    }];
+  courses : Array<Course> = [];
 
-  economia = [{id: 0,
-    name: "storia"},
-    {
-      id:2,
-      name: "matematica"
-    }];
+  modules: Array<Module> = [];
 
-  teachings = null;
+  constructor(private postService: PostService, private router: Router, private getService: GetService) {}
 
-
-  constructor(postService: PostService, formBuilder: FormBuilder, getService: GetService) {
-    this.form = formBuilder.group({
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
-      email: new FormControl('')
+  ngOnInit() {
+    this.getService.findAllCourses().subscribe(courses =>{
+      this.courses = courses;
     });
   }
 
-  ngOnInit() {
-    //TODO lista corsi di studio per studenti lista insegnamenti per docenti
+  findAllModuleByCourse(){
+    this.getService.findAllModulesByCourse(this.selectedCourse).subscribe(modules=>{
+      this.modules = modules;
+    });
   }
 
-  submit(selectedUser: string, selectedCourse?: number, selectedTeaching?: number){
+  submit(selectedUser: string, selectedCourse?: Course, selectedTeaching?: Module){
 
     if (this.checkData(selectedUser, selectedCourse, selectedTeaching)) {
-      console.log("data correctly inserted");
-      let newUser: Person;
+      let person = this.newPerson();
 
       switch (selectedUser) {
-        case "Student":
-          console.log(selectedUser + " " + selectedCourse);
-          newUser = this.newStudent(selectedUser, selectedCourse);
-          this.selectedTeaching = null;
+        case "STUDENT":
+          let student: Student;
+          student = this.newStudent(person, selectedCourse);
+          console.log(student);
+          this.postService.saveStudent(student).subscribe(saved=>{
+            if (saved != null)
+              this.router.navigate(['seg-home']);
+          });
           break;
 
-        case "Professor":
+        case "PROFESSOR":
+          let professor: Professor;
           console.log(selectedUser + " " + selectedTeaching);
-          newUser = this.newProfessor(selectedUser, selectedTeaching);
+          professor = this.newProfessor(person, selectedTeaching);
           this.selectedCourse = null;
+          this.postService.saveProfessor(professor).subscribe(saved=>{
+            if (saved != null)
+              this.router.navigate(['seg-home']);
+          });
           break;
 
-        case "Secretary":
-          newUser = this.newSecretary(selectedUser);
-          this.selectedTeaching= null;
+        case "SECRETARY":
+          let secretary: Secretary;
+          secretary = this.newSecretary(person);
           this.selectedCourse = null;
+          this.postService.saveSecretary(secretary).subscribe(saved=>{
+            if (saved != null)
+              this.router.navigate(['seg-home']);
+          });
           break;
       }
 
     }else{
       console.log("wrong data");
       this.error = true;
-      this.selectedTeaching= null;
       this.selectedCourse = null;
     }
-
   }
 
-  prova(){
-    console.log(this.selectedTCourse);
-    switch (this.selectedTCourse) {
-      case this.studyCourses[0].id:
-        this.teachings = this.ingegneria;
-        break;
+  private checkData(selectedUser: string, selectedCourse: Course, selectedTeaching: Module): boolean{
 
-      case this.studyCourses[1].id:
-        this.teachings = this.economia;
-        break;
-
-    }
-  }
-
-  private checkData(selectedUser: string, selectedCourse: number, selectedTeaching: number): boolean{
-
-    if((this.form.get('firstName').value || this.form.get('lastName') ||
-      this.form.get('email') || selectedUser) == null) {
+    if((this.firstName || this.lastName ||
+      this.email || selectedUser || this.number || this.address || this.phone || this. dateOfBirth) == null) {
       return false
     }else{
       if(selectedUser != "Secretary") {
@@ -122,40 +111,49 @@ export class AddUserComponent implements OnInit {
       }else{
         return true;
       }
-
     }
-
   }
 
   private password(): string{
-    return "prova";
+    return "password";
   }
 
-  private newStudent(user: string, course: number): Person{
+  private newPerson(): Person{
     return {
-      firstName: this.form.get('firstName').value,
-      lastName: this.form.get('lastName').value,
-      email: this.form.get('email').value,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      email: this.email,
+      phone: this.phone,
+      dateOfBirth: this.dateOfBirth,
+      gender: this.gender.toLowerCase(),
+      address: this.address + " n° " + this.number,
       password: this.password(),
+    };
+  }
+
+  private newStudent(person: Person, course: Course): Student{
+
+    return {
+      courseDto: course,
+      personDto: person,
+      registrationDate: new Date()
     }
   }
 
-  private newProfessor(user: string, teaching: number): Person{
+  private  newProfessor(person: Person, teaching: Module): Professor{
+
     return {
-      firstName: this.form.get('firstName').value,
-      lastName: this.form.get('lastName').value,
-      email: this.form.get('email').value,
-      password: this.password(),
+      person: person,
+      level: 'first',
+      hireDate: new Date()
     }
   }
 
-  private newSecretary(user: string): Person{
+  private newSecretary(person: Person): Secretary{
     return {
-      firstName: this.form.get('firstName').value,
-      lastName: this.form.get('lastName').value,
-      email: this.form.get('email').value,
-      password: this.password(),
-    }
+      person: person,
+      hireDate: new Date()
+    };
   }
 
 }

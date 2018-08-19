@@ -11,7 +11,6 @@ import {AppRoutingModule} from "./app-routing.module";
 import {PostService} from "./servicies/post.service";
 import { AddAulaComponent } from './components/secretary/add-aula/add-aula.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { ProvaComponent } from './components/prova/prova.component';
 import { AddUserComponent } from './components/secretary/add-user/add-user.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -24,15 +23,21 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatSelectModule,
-  MatOptionModule, MatGridListModule, MatCheckboxModule, MatTableModule
+  MatOptionModule,
+  MatGridListModule,
+  MatCheckboxModule,
+  MatTableModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatRadioModule
 } from "@angular/material";
 import { AddTeachingComponent } from './components/secretary/add-teaching/add-teaching.component';
 import { AddStudyCourseComponent } from './components/secretary/add-study-course/add-study-course.component';
 import { AddCalendarComponent } from './components/secretary/add-calendar/add-calendar.component';
 import {CdkTableModule} from "@angular/cdk/table";
-import {RoleGuardService} from "./servicies/role-guard.service";
 import {AuthGuardService} from "./servicies/auth-guard.service";
 import {AuthService} from "./servicies/auth.service";
+import {JwtHelperService} from "@auth0/angular-jwt";
 
 @NgModule({
   declarations: [
@@ -42,7 +47,6 @@ import {AuthService} from "./servicies/auth.service";
     SegHomeComponent,
     NavbarComponent,
     AddAulaComponent,
-    ProvaComponent,
     AddUserComponent,
     AddTeachingComponent,
     AddStudyCourseComponent,
@@ -68,15 +72,19 @@ import {AuthService} from "./servicies/auth.service";
     MatGridListModule,
     MatCheckboxModule,
     CdkTableModule,
-    MatTableModule
+    MatTableModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRadioModule
   ],
   providers: [
     GetService,
     PostService,
-    RoleGuardService,
+    JwtHelperService,
     AuthGuardService,
     AuthService
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

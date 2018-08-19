@@ -1,12 +1,12 @@
-import {Teaching} from "./Teaching";
-import {Aula} from "./Room";
+import {Room} from "./Room";
 import {Hours} from "./Hours";
-import {StudyCourse} from "./StudyCourse";
+import {Module} from "./Module";
+import {Course} from "./Course";
 
 export interface Calendar {
-  aula?: Array<Aula>;
-  teaching?: Array<Teaching>;
+  aula?: Array<Room>;
+  teaching?: Array<Module>;
   hours?: Array<Hours>;
   semester?: number;
-  studyCourse?: StudyCourse;
+  studyCourse?: Course;
 }

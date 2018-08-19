@@ -2,8 +2,12 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Observable } from "rxjs";
 import {Room} from "../components/models/Room";
-import {Teaching} from "../components/models/Teaching";
-import {StudyCourse} from "../components/models/StudyCourse";
+import {Module} from "../components/models/Module";
+import {Course} from "../components/models/Course";
+import {Professor} from "../components/models/Professor";
+import {Student} from "../components/models/Student";
+import {Secretary} from "../components/models/Secretary";
+import {RoomEquipment} from "../components/models/RoomEquipment";
 
 
 const httpOptions = {
@@ -13,29 +17,47 @@ const httpOptions = {
 @Injectable()
 export class PostService {
 
-  saveAulaUrl: string = "http://localhost:8080/SEAppBackend/aula/save";
-  saveTeachingUrl: string = "http://localhost:8080/SEAppBackend/teaching/save";
-  saveStudyCourseUrl: string = "http://localhost:8080/SEAppBackend/studyCourse/saveCourse";
+  saveAulaUrl: string = "http://localhost:8080/SpringApp/roomEquipment/add";
+  saveModuleUrl: string = "http://localhost:8080/SpringApp/module/save";
+  saveStudyCourseUrl: string = "http://localhost:8080/SpringApp/course/save";
+  saveUserUrl: string = "http://localhost:8080/SpringApp/user/save";
+  saveProfessorUrl: string = "http://localhost:8080/SpringApp/professor/add";
+  saveSecretaryUrl: string = "http://localhost:8080/SpringApp/secretary/add";
+  saveStudentUrl: string = "http://localhost:8080/SpringApp/student/add";
   getAulasUrl: string = "http://localhost:8080/SEAppBackend/aula/getFreeAula";
 
 
   constructor(private http: HttpClient) { }
 
-  saveNewAula(aula: Room): Observable<Room>{
-        return this.http.post<Room>(this.saveAulaUrl, aula, httpOptions);
+  saveNewAula(aula: Array<RoomEquipment>): Observable<Array<RoomEquipment>>{
+    return this.http.post<Array<RoomEquipment>>(this.saveAulaUrl, aula, httpOptions);
   }
 
-  saveTeaching(teaching: Teaching): Observable<Teaching>{
-    return this.http.post<Teaching>(this.saveTeachingUrl, teaching, httpOptions);
+  saveModule(teaching: Module): Observable<Module>{
+    return this.http.post<Module>(this.saveModuleUrl, teaching, httpOptions);
   }
 
-  saveStudyCourse(studyCourse: StudyCourse): Observable<StudyCourse>{
-    console.log(studyCourse.typeStudyCourse.id);
-    return this.http.post<StudyCourse>(this.saveStudyCourseUrl, studyCourse, httpOptions);
+  saveCourse(studyCourse: Course): Observable<Course>{
+    return this.http.post<Course>(this.saveStudyCourseUrl, studyCourse, httpOptions);
   }
 
   getAulas(): Observable<Room[]>{
     return this.http.get<Room[]>(this.getAulasUrl);
   }
 
+  saveUser(user: any): Observable<any>{
+    return this.http.post<any>(this.saveUserUrl, user, httpOptions);
+  }
+
+  saveProfessor(user: Professor): Observable<Professor>{
+    return this.http.post<Professor>(this.saveProfessorUrl, user, httpOptions);
+  }
+
+  saveStudent(user: Student): Observable<Student>{
+    return this.http.post<Student>(this.saveStudentUrl, user, httpOptions);
+  }
+
+  saveSecretary(user: Secretary): Observable<Secretary>{
+    return this.http.post<Secretary>(this.saveSecretaryUrl, user, httpOptions);
+  }
 }

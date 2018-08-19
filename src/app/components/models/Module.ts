@@ -1,4 +1,8 @@
 export interface Module {
-  name: string;
+  id?: number;
+  title: string;
   description: string;
+  credit?: number;
+  semester?: number;
+  year?: number;
 }
