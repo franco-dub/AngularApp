@@ -1,9 +1,11 @@
-import {Professor} from "./Professor";
-
 export interface Course {
-  courseDto: Course;
-  professorDto: Professor;
-  title: string;
-  credits: number;
-  semester: string;
+  courseId?: number;
+  name: string;
+  description?: string;
+  title?: string;
+  credits?: number;
+  semester?: string;
+  courseType?: string;
+  cfu?: number;
+  year?: number;
 }

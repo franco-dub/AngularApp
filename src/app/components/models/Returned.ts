@@ -1,3 +1,3 @@
 export interface returned {
-  userType: string;
+  name: string;
 }

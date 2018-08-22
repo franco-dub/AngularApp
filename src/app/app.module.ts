@@ -9,10 +9,9 @@ import { SegHomeComponent } from './components/secretary/seg-home/seg-home.compo
 import { NavbarComponent } from './components/navbar/navbar.component';
 import {AppRoutingModule} from "./app-routing.module";
 import {PostService} from "./servicies/post.service";
-import { AddAulaComponent } from './components/secretary/add-aula/add-aula.component';
+import { AddAulaComponent } from './components/secretary/create/add-aula/add-aula.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { ProvaComponent } from './components/prova/prova.component';
-import { AddUserComponent } from './components/secretary/add-user/add-user.component';
+import { AddUserComponent } from './components/secretary/create/add-user/add-user.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatButtonModule,
@@ -24,15 +23,28 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatSelectModule,
-  MatOptionModule, MatGridListModule, MatCheckboxModule, MatTableModule
+  MatOptionModule,
+  MatGridListModule,
+  MatCheckboxModule,
+  MatTableModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatRadioModule,
+  MatBottomSheetModule
 } from "@angular/material";
-import { AddTeachingComponent } from './components/secretary/add-teaching/add-teaching.component';
-import { AddStudyCourseComponent } from './components/secretary/add-study-course/add-study-course.component';
-import { AddCalendarComponent } from './components/secretary/add-calendar/add-calendar.component';
+import { AddTeachingComponent } from './components/secretary/create/add-teaching/add-teaching.component';
+import { AddStudyCourseComponent } from './components/secretary/create/add-study-course/add-study-course.component';
+import { AddCalendarComponent } from './components/secretary/create/add-calendar/add-calendar.component';
 import {CdkTableModule} from "@angular/cdk/table";
-import {RoleGuardService} from "./servicies/role-guard.service";
 import {AuthGuardService} from "./servicies/auth-guard.service";
 import {AuthService} from "./servicies/auth.service";
+import {JwtHelperService} from "@auth0/angular-jwt";
+import { ModifyAulaComponent } from './components/secretary/modify/modify-aula/modify-aula.component';
+import {PutService} from "./servicies/put.service";
+import { ModifyUserComponent } from './components/secretary/modify/modify-user/modify-user.component';
+import {DatePipe} from "@angular/common";
+import {DlDateTimePickerDateModule} from "angular-bootstrap-datetimepicker";
+import { BottomSheetComponent } from './components/bottom-sheet/bottom-sheet.component';
 
 @NgModule({
   declarations: [
@@ -42,11 +54,13 @@ import {AuthService} from "./servicies/auth.service";
     SegHomeComponent,
     NavbarComponent,
     AddAulaComponent,
-    ProvaComponent,
     AddUserComponent,
     AddTeachingComponent,
     AddStudyCourseComponent,
-    AddCalendarComponent
+    AddCalendarComponent,
+    ModifyAulaComponent,
+    ModifyUserComponent,
+    BottomSheetComponent
   ],
   imports: [
     BrowserModule,
@@ -68,15 +82,25 @@ import {AuthService} from "./servicies/auth.service";
     MatGridListModule,
     MatCheckboxModule,
     CdkTableModule,
-    MatTableModule
+    MatTableModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRadioModule,
+    DlDateTimePickerDateModule,
+    MatBottomSheetModule
   ],
   providers: [
     GetService,
     PostService,
-    RoleGuardService,
+    JwtHelperService,
     AuthGuardService,
-    AuthService
+    AuthService,
+    PutService,
+    DatePipe
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+
+  entryComponents: [BottomSheetComponent]
 })
+
 export class AppModule { }

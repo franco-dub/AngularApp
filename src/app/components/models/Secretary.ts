@@ -1,9 +1,9 @@
 import {Person} from "./Person";
 
 export interface Secretary {
-  secretaryId: number;
+  secretaryId?: number;
   person: Person;
   hireDate: Date;
-  endEngagement:Date;
-  task: string;
+  endEngagement?: Date;
+  task?: string;
 }

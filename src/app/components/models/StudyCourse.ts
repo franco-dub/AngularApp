@@ -1,10 +1,8 @@
-import {Teaching} from "./Teaching";
-import {StudyCourseType} from "./StudyCourseType";
+import {Module} from "./Module";
 
 export interface StudyCourse {
   id?: number;
   name: string;
   description: string;
-  typeStudyCourse?: StudyCourseType;
-  teachings?: Array<Teaching>;
+  teachings?: Array<Module>;
 }

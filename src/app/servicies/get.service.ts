@@ -1,69 +1,97 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from "rxjs";
-import {Person} from "../components/models/Person";
 import {Login} from "../components/models/Login";
-
-import {Equipments} from "../components/models/Equipments";
-import {StudyCourseType} from "../components/models/StudyCourseType";
-import {Teaching} from "../components/models/Teaching";
-import {StudyCourse} from "../components/models/StudyCourse";
-import {Calendar} from "../components/models/Calendar";
 import {Room} from "../components/models/Room";
-import {returned} from "../components/models/Returned";
+import {Course} from "../components/models/Course";
+import {Module} from "../components/models/Module";
+import {Professor} from "../components/models/Professor";
+import {RoomEquipment} from "../components/models/RoomEquipment";
+import {Equipments} from "../components/models/Equipments";
+import {Student} from "../components/models/Student";
+import {Secretary} from "../components/models/Secretary";
+import {LectureCalendar} from "../components/models/LectureCalendar";
 
+const httpOptions = {
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
+};
 
 @Injectable()
 export class GetService {
 
-  loginUrl: string = "http://localhost:8080/SpringApp/user/login/"; // /{email}/{passwd}
+  loginUrl: string = "http://localhost:8080/SpringApp/login/"; // /{email}/{passwd}
 
-  equipmentList: string = "http://localhost:8080/SEAppBackend/equipment/getAll";
+  findAllCoursesUrl: string = "http://localhost:8080/SpringApp/course/findAll";
 
-  studyCourseType: string = "http://localhost:8080/SEAppBackend/typestudycourse/getall";
+  findAllTeachingByCourseUrl: string = "http://localhost:8080/SpringApp/module/findAll";
 
-  getTeachingsUrl: string = "http://localhost:8080/SEAppBackend/teaching/getAll";
+  findAllTeachingUrl: string = "http://localhost:8080/SpringApp/module/findAll";
 
-  getTeachingByIdStudyCourse: string = "http://localhost:8080/SEAppBackend/teaching/getByIdCourse/";
+  findAllProfessorUrl: string = "http://localhost:8080/SpringApp/professor/findAll";
 
-  getAllStudyCourseUrl: string = "http://localhost:8080/SEAppBackend/studyCourse/getAll";
+  equipmentList: string = "http://localhost:8080/SpringApp/equipment/findAll";
 
-  getCalendarByCourseUrl: string = "http://localhost:8080/SEAppBackend/calendar/getByCourse";
+  findAllRoomUrl: string = "http://localhost:8080/SpringApp/room/findAll";
 
-  getAulasUrl: string = "http://localhost:8080/SEAppBackend/aula/getFreeAula";
+  findEquipmentByRoomUrl: string = "http://localhost:8080/SpringApp/roomEquipment/findByRoomId";
+
+  findAllStudentUrl: string = "http://localhost:8080/SpringApp/student/findAll";
+
+  findAllSecretartUrl: string = "http://localhost:8080/SpringApp/secretary/findAll";
+
+  findAllFreeAulasUrl: string = "http://localhost:8080/SpringApp/scheduling/findFreeRooms";
+
+  findAllLectureCalendarUrl: string = "http://localhost:8080/SpringApp/lectureCalendar/findAll";
+
 
   constructor(private http: HttpClient) { }
 
-  login(user: Login): Observable<returned>{
-    return this.http.get<returned>(this.loginUrl + user.email + "/" + user.password );
+  login(user: Login): Observable<any>{
+    return this.http.get<any>(this.loginUrl + user.email + "/" + user.password );
+  }
+
+  findAllCourses(): Observable<Array<Course>>{
+    return this.http.get<Array<Course>>(this.findAllCoursesUrl);
+  }
+
+  findAllModulesByCourse(course: Course): Observable<Array<Module>>{
+    return this.http.get<Array<Module>>(this.findAllTeachingByCourseUrl + "/" + course.courseId);
+  }
+
+  findAllModule(): Observable<any>{
+    return this.http.get<any>(this.findAllTeachingUrl);
+  }
+
+  findAllProfessor(): Observable<Array<Professor>>{
+    return this.http.get<Array<Professor>>(this.findAllProfessorUrl);
+  }
+
+  findAllRoom(): Observable<Array<Room>>{
+    return this.http.get<Array<Room>>(this.findAllRoomUrl);
+  }
+
+  findEquipmentByRoom(room: Room): Observable<Array<RoomEquipment>>{
+    return this.http.get<Array<RoomEquipment>>(this.findEquipmentByRoomUrl + "/" + room.roomId);
+  }
+
+  findAllStudent(): Observable<Array<Student>>{
+    return this.http.get<Array<Student>>(this.findAllStudentUrl);
+  }
+
+  findAllSecretary(): Observable<Array<Secretary>>{
+    return this.http.get<Array<Secretary>>(this.findAllSecretartUrl);
   }
 
   getEquipmentData(): Observable<Equipments[]>{
     return this.http.get<Equipments[]>(this.equipmentList);
   }
 
-  getStudyCourseTypeList(): Observable<StudyCourseType[]>{
-    return this.http.get<StudyCourseType[]>(this.studyCourseType);
+  findAllFreeAulas(lectureCalendar: LectureCalendar): Observable<Array<Room>>{
+    return this.http.post<Array<Room>>(this.findAllFreeAulasUrl, lectureCalendar, httpOptions);
   }
 
-  getTeachings(): Observable<Teaching[]>{
-    return this.http.get<Teaching[]>(this.getTeachingsUrl);
-  }
-
-  getTeachingsById(id:number): Observable<Teaching[]>{
-    return this.http.get<Teaching[]>(this.getTeachingByIdStudyCourse + id);
-  }
-
-  getStudyCourseList(): Observable<StudyCourse[]>{
-    return this.http.get<StudyCourse[]>(this.getAllStudyCourseUrl);
-  }
-
-  getCalendarByCourse(): Observable<Calendar>{
-    return this.http.get<Calendar>(this.getCalendarByCourseUrl);
-  }
-
-  getAulas(): Observable<Room[]>{
-    return this.http.get<Room[]>(this.getAulasUrl);
+  findAllLectureCalendar(): Observable<Array<LectureCalendar>>{
+    return this.http.get<Array<LectureCalendar>>(this.findAllLectureCalendarUrl);
   }
 
 }

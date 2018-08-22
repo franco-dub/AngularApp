@@ -2,8 +2,9 @@ import {Person} from "./Person";
 import {Course} from "./Course";
 
 export interface Student{
-  courseDto: Course;
-  personDto: Person;
+  studentId?: number;
+  course: Course;
+  person: Person;
   registrationDate: Date;
-  graduationDate: Date;
+  graduationDate?: Date;
 }
