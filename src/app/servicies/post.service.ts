@@ -8,6 +8,7 @@ import {Professor} from "../components/models/Professor";
 import {Student} from "../components/models/Student";
 import {Secretary} from "../components/models/Secretary";
 import {RoomEquipment} from "../components/models/RoomEquipment";
+import {LectureCalendar} from "../components/models/LectureCalendar";
 
 
 const httpOptions = {
@@ -26,6 +27,7 @@ export class PostService {
   saveSecretaryUrl: string = "http://localhost:8080/SpringApp/secretary/add";
   saveStudentUrl: string = "http://localhost:8080/SpringApp/student/add";
   getAulasUrl: string = "http://localhost:8080/SEAppBackend/aula/getFreeAula";
+  addNewDayLectureUrl: string = "http://localhost:8080/SpringApp/lectureCalendar/add";
 
 
   constructor(private http: HttpClient) { }
@@ -46,14 +48,6 @@ export class PostService {
     return this.http.post<Course>(this.saveStudyCourseUrl, studyCourse, httpOptions);
   }
 
-  getAulas(): Observable<Room[]>{
-    return this.http.get<Room[]>(this.getAulasUrl);
-  }
-
-  saveUser(user: any): Observable<any>{
-    return this.http.post<any>(this.saveUserUrl, user, httpOptions);
-  }
-
   saveProfessor(user: Professor): Observable<Professor>{
     return this.http.post<Professor>(this.saveProfessorUrl, user, httpOptions);
   }
@@ -62,7 +56,12 @@ export class PostService {
     return this.http.post<Student>(this.saveStudentUrl, user, httpOptions);
   }
 
-  saveSecretary(user: Secretary): Observable<Secretary>{
+  saveSecretary(user: Secretary): Observable<Secretary> {
     return this.http.post<Secretary>(this.saveSecretaryUrl, user, httpOptions);
   }
+
+  addNewDayLecture(lectureCalendar: LectureCalendar): Observable<LectureCalendar>{
+    return this.http.post<LectureCalendar>(this.addNewDayLectureUrl, lectureCalendar, httpOptions);
+  }
+
 }

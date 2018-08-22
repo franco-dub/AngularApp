@@ -27,6 +27,10 @@ export class AuthService {
 
   }
 
+  getData(tokenName: string): any{
+    return sessionStorage.getItem(tokenName);
+  }
+
   logout() {
 
     sessionStorage.removeItem("token");
@@ -35,9 +39,9 @@ export class AuthService {
 
   }
 
-  expireToken(){
+  deleteToken(){
     sessionStorage.removeItem("token");
-    this.router.navigate([""]);
+    //this.router.navigate([""]);
   }
 
 }

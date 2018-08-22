@@ -1,0 +1,26 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <h1>{{ lectureCalendar.module.title.toUpperCase() }}</h1>
+    </mat-card-title>
+    <mat-card-subtitle>
+      <h3>{{ lectureCalendar.startTime }} - {{ lectureCalendar.endTime }}</h3>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-card-title>
+      <h4>{{ lectureCalendar.room.name}}</h4>
+    </mat-card-title>
+    <div layout="column" layout-align="center center">
+      <div>
+        <h4>{{ lectureCalendar.room.location }}; Capacity: {{ lectureCalendar.room.capacity }}</h4>
+      </div>
+      <div>
+        <span layout="column" *ngFor="let equip of lectureCalendar.roomEquipment"
+              style="font-weight: bold; display: table-row">
+          {{ equip.equipment.name }}: {{ equip.work == 1 ? 'working' : 'not working' }}
+        </span>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

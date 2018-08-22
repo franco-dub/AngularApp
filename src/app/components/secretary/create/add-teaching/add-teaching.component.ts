@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {PostService} from "../../../servicies/post.service";
-import {Module} from "../../models/Module";
-import {GetService} from "../../../servicies/get.service";
-import {Course} from "../../models/Course";
-import {Professor} from "../../models/Professor";
+import {PostService} from "../../../../servicies/post.service";
+import {Module} from "../../../models/Module";
+import {GetService} from "../../../../servicies/get.service";
+import {Course} from "../../../models/Course";
+import {Professor} from "../../../models/Professor";
 import {Router} from "@angular/router";
 
 @Component({

@@ -9,4 +9,6 @@ export interface Module {
   year?: number;
   course?: Course;
   professor?: Professor;
+  creditHour?: number;
+  leftHours?: number;
 }

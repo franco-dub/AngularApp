@@ -1,13 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {PostService} from "../../../servicies/post.service";
-import {FormBuilder} from "@angular/forms";
-import {Person} from "../../models/Person";
-import {GetService} from "../../../servicies/get.service";
-import {Course} from "../../models/Course";
-import {Student} from "../../models/Student";
-import {Professor} from "../../models/Professor";
-import {Secretary} from "../../models/Secretary";
-import {Module} from "../../models/Module";
+import {PostService} from "../../../../servicies/post.service";
+import {Person} from "../../../models/Person";
+import {GetService} from "../../../../servicies/get.service";
+import {Course} from "../../../models/Course";
+import {Student} from "../../../models/Student";
+import {Professor} from "../../../models/Professor";
+import {Secretary} from "../../../models/Secretary";
+import {Module} from "../../../models/Module";
 import {Router} from "@angular/router";
 
 @Component({
@@ -37,9 +36,11 @@ export class AddUserComponent implements OnInit {
   gender: string = '';
   number: number;
 
-  courses : Array<Course> = [];
+  level = '';
 
-  modules: Array<Module> = [];
+  levels = ['prima', 'seconda', 'ordinario', 'straordinario', 'ruolo'];
+
+  courses : Array<Course> = [];
 
   constructor(private postService: PostService, private router: Router, private getService: GetService) {}
 
@@ -49,22 +50,15 @@ export class AddUserComponent implements OnInit {
     });
   }
 
-  findAllModuleByCourse(){
-    this.getService.findAllModulesByCourse(this.selectedCourse).subscribe(modules=>{
-      this.modules = modules;
-    });
-  }
+  submit(selectedUser: string, selectedCourse?: Course){
 
-  submit(selectedUser: string, selectedCourse?: Course, selectedTeaching?: Module){
-
-    if (this.checkData(selectedUser, selectedCourse, selectedTeaching)) {
+    if (this.checkData(selectedUser, selectedCourse)) {
       let person = this.newPerson();
 
       switch (selectedUser) {
         case "STUDENT":
           let student: Student;
           student = this.newStudent(person, selectedCourse);
-          console.log(student);
           this.postService.saveStudent(student).subscribe(saved=>{
             if (saved != null)
               this.router.navigate(['seg-home']);
@@ -73,8 +67,7 @@ export class AddUserComponent implements OnInit {
 
         case "PROFESSOR":
           let professor: Professor;
-          console.log(selectedUser + " " + selectedTeaching);
-          professor = this.newProfessor(person, selectedTeaching);
+          professor = this.newProfessor(person);
           this.selectedCourse = null;
           this.postService.saveProfessor(professor).subscribe(saved=>{
             if (saved != null)
@@ -100,14 +93,14 @@ export class AddUserComponent implements OnInit {
     }
   }
 
-  private checkData(selectedUser: string, selectedCourse: Course, selectedTeaching: Module): boolean{
+  private checkData(selectedUser: string, selectedCourse: Course): boolean{
 
     if((this.firstName || this.lastName ||
       this.email || selectedUser || this.number || this.address || this.phone || this. dateOfBirth) == null) {
       return false
     }else{
       if(selectedUser != "Secretary") {
-        return (selectedCourse || selectedTeaching) != null;
+        return (selectedCourse) != null;
       }else{
         return true;
       }
@@ -134,17 +127,17 @@ export class AddUserComponent implements OnInit {
   private newStudent(person: Person, course: Course): Student{
 
     return {
-      courseDto: course,
-      personDto: person,
+      course: course,
+      person: person,
       registrationDate: new Date()
     }
   }
 
-  private  newProfessor(person: Person, teaching: Module): Professor{
+  private  newProfessor(person: Person): Professor{
 
     return {
       person: person,
-      level: 'first',
+      level: this.level,
       hireDate: new Date()
     }
   }

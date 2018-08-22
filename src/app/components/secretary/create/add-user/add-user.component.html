@@ -140,38 +140,23 @@
     </mat-form-field>
   </div>
 
-  <div layout="row" layout-align="center center" align="center" *ngIf="selectedUser == type[1]" >
-    <div>
-      <h3>Course</h3>
-      <mat-form-field appearance="legacy">
-        <mat-select placeholder="select study course" [(ngModel)]="selectedCourse" required>
-          <mat-option *ngFor="let course of courses"
-                      [value]="course" (click)="findAllModuleByCourse()">
-            {{course.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div *ngIf="modules != null">
-      <h3>Module</h3>
-      <mat-form-field appearance="legacy">
-        <mat-select placeholder="select study course" [(ngModel)]="selectedModule" required>
-          <mat-option *ngFor="let module of modules"
-                      [value]="module">
-            {{module.title}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+  <div align="center" *ngIf="selectedUser == type[1]" >
+    <h3>Level</h3>
+    <mat-form-field appearance="legacy">
+      <mat-select placeholder="select study course" [(ngModel)]="level" required>
+        <mat-option *ngFor="let lev of levels"
+                    [value]="lev">
+          {{ lev }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
-
-
 
   <div>
     <mat-card-actions align="center" class="example-card">
       <mat-card-content>
         <button mat-raised-button color="warn"
-                (click)="submit(selectedUser, selectedCourse, selectedTeaching)" >
+                (click)="submit(selectedUser, selectedCourse)" >
           Add new User
         </button>
       </mat-card-content>

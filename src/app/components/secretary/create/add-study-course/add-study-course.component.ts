@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {GetService} from "../../../servicies/get.service";
-import {PostService} from "../../../servicies/post.service";
+import {GetService} from "../../../../servicies/get.service";
+import {PostService} from "../../../../servicies/post.service";
 import {Router} from "@angular/router";
-import {Course} from "../../models/Course";
+import {Course} from "../../../models/Course";
 
 @Component({
   selector: 'app-add-study-course',

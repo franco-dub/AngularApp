@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {Equipments} from "../../models/Equipments";
-import {GetService} from "../../../servicies/get.service";
+import {Equipments} from "../../../models/Equipments";
+import {GetService} from "../../../../servicies/get.service";
 import {Router} from "@angular/router";
-import {PostService} from "../../../servicies/post.service";
-import {Room} from "../../models/Room";
-import {RoomEquipment} from "../../models/RoomEquipment";
+import {PostService} from "../../../../servicies/post.service";
+import {Room} from "../../../models/Room";
+import {RoomEquipment} from "../../../models/RoomEquipment";
 
 
 @Component({

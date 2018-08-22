@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from "rxjs";
 import {Login} from "../components/models/Login";
-import {Equipments} from "../components/models/Equipments";
-import {Calendar} from "../components/models/Calendar";
 import {Room} from "../components/models/Room";
 import {Course} from "../components/models/Course";
 import {Module} from "../components/models/Module";
 import {Professor} from "../components/models/Professor";
+import {RoomEquipment} from "../components/models/RoomEquipment";
+import {Equipments} from "../components/models/Equipments";
+import {Student} from "../components/models/Student";
+import {Secretary} from "../components/models/Secretary";
+import {LectureCalendar} from "../components/models/LectureCalendar";
 
+const httpOptions = {
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
+};
 
 @Injectable()
 export class GetService {
@@ -25,17 +31,17 @@ export class GetService {
 
   equipmentList: string = "http://localhost:8080/SpringApp/equipment/findAll";
 
-  studyCourseType: string = "http://localhost:8080/SEAppBackend/typestudycourse/getall";
+  findAllRoomUrl: string = "http://localhost:8080/SpringApp/room/findAll";
 
-  getTeachingsUrl: string = "http://localhost:8080/SEAppBackend/teaching/getAll";
+  findEquipmentByRoomUrl: string = "http://localhost:8080/SpringApp/roomEquipment/findByRoomId";
 
-  getTeachingByIdStudyCourse: string = "http://localhost:8080/SEAppBackend/teaching/getByIdCourse/";
+  findAllStudentUrl: string = "http://localhost:8080/SpringApp/student/findAll";
 
-  getAllStudyCourseUrl: string = "http://localhost:8080/SEAppBackend/studyCourse/getAll";
+  findAllSecretartUrl: string = "http://localhost:8080/SpringApp/secretary/findAll";
 
-  getCalendarByCourseUrl: string = "http://localhost:8080/SEAppBackend/calendar/getByCourse";
+  findAllFreeAulasUrl: string = "http://localhost:8080/SpringApp/scheduling/findFreeRooms";
 
-  getAulasUrl: string = "http://localhost:8080/SEAppBackend/aula/getFreeAula";
+  findAllLectureCalendarUrl: string = "http://localhost:8080/SpringApp/lectureCalendar/findAll";
 
 
   constructor(private http: HttpClient) { }
@@ -49,7 +55,6 @@ export class GetService {
   }
 
   findAllModulesByCourse(course: Course): Observable<Array<Module>>{
-    console.log(course.courseId);
     return this.http.get<Array<Module>>(this.findAllTeachingByCourseUrl + "/" + course.courseId);
   }
 
@@ -61,24 +66,32 @@ export class GetService {
     return this.http.get<Array<Professor>>(this.findAllProfessorUrl);
   }
 
+  findAllRoom(): Observable<Array<Room>>{
+    return this.http.get<Array<Room>>(this.findAllRoomUrl);
+  }
+
+  findEquipmentByRoom(room: Room): Observable<Array<RoomEquipment>>{
+    return this.http.get<Array<RoomEquipment>>(this.findEquipmentByRoomUrl + "/" + room.roomId);
+  }
+
+  findAllStudent(): Observable<Array<Student>>{
+    return this.http.get<Array<Student>>(this.findAllStudentUrl);
+  }
+
+  findAllSecretary(): Observable<Array<Secretary>>{
+    return this.http.get<Array<Secretary>>(this.findAllSecretartUrl);
+  }
+
   getEquipmentData(): Observable<Equipments[]>{
     return this.http.get<Equipments[]>(this.equipmentList);
   }
 
-  getTeachingsById(id:number): Observable<Module[]>{
-    return this.http.get<Module[]>(this.getTeachingByIdStudyCourse + id);
+  findAllFreeAulas(lectureCalendar: LectureCalendar): Observable<Array<Room>>{
+    return this.http.post<Array<Room>>(this.findAllFreeAulasUrl, lectureCalendar, httpOptions);
   }
 
-  getStudyCourseList(): Observable<Course[]>{
-    return this.http.get<Course[]>(this.getAllStudyCourseUrl);
-  }
-
-  getCalendarByCourse(): Observable<Calendar>{
-    return this.http.get<Calendar>(this.getCalendarByCourseUrl);
-  }
-
-  getAulas(): Observable<Room[]>{
-    return this.http.get<Room[]>(this.getAulasUrl);
+  findAllLectureCalendar(): Observable<Array<LectureCalendar>>{
+    return this.http.get<Array<LectureCalendar>>(this.findAllLectureCalendarUrl);
   }
 
 }
