@@ -8,6 +8,7 @@ import {Professor} from "../../../models/Professor";
 import {Secretary} from "../../../models/Secretary";
 import {Module} from "../../../models/Module";
 import {Router} from "@angular/router";
+import {RoutingService} from "../../../../servicies/routing.service";
 
 @Component({
   selector: 'app-add-user',
@@ -23,7 +24,6 @@ export class AddUserComponent implements OnInit {
 
   selectedCourse: Course;
 
-  selectedModule: Module;
 
   error: boolean = false;
 
@@ -42,9 +42,12 @@ export class AddUserComponent implements OnInit {
 
   courses : Array<Course> = [];
 
-  constructor(private postService: PostService, private router: Router, private getService: GetService) {}
+  constructor(private postService: PostService, private router: RoutingService, private getService: GetService) {}
 
   ngOnInit() {
+    if(this.router.getHistory()[this.router.getHistory().length - 1] != 'add-user') {
+      this.router.loadUrl('add-user');
+    }
     this.getService.findAllCourses().subscribe(courses =>{
       this.courses = courses;
     });
@@ -61,7 +64,7 @@ export class AddUserComponent implements OnInit {
           student = this.newStudent(person, selectedCourse);
           this.postService.saveStudent(student).subscribe(saved=>{
             if (saved != null)
-              this.router.navigate(['seg-home']);
+              this.router.navigate('seg-home');
           });
           break;
 
@@ -71,7 +74,7 @@ export class AddUserComponent implements OnInit {
           this.selectedCourse = null;
           this.postService.saveProfessor(professor).subscribe(saved=>{
             if (saved != null)
-              this.router.navigate(['seg-home']);
+              this.router.navigate('seg-home');
           });
           break;
 
@@ -81,7 +84,7 @@ export class AddUserComponent implements OnInit {
           this.selectedCourse = null;
           this.postService.saveSecretary(secretary).subscribe(saved=>{
             if (saved != null)
-              this.router.navigate(['seg-home']);
+              this.router.navigate('seg-home');
           });
           break;
       }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {PostService} from "../../../../servicies/post.service";
 import {GetService} from "../../../../servicies/get.service";
-import {Router} from "@angular/router";
 import {Module} from "../../../models/Module";
 import {Room} from "../../../models/Room";
 import {Course} from "../../../models/Course";
@@ -9,7 +8,7 @@ import {LectureCalendar} from "../../../models/LectureCalendar";
 import {DatePipe} from "@angular/common";
 import {MatBottomSheet} from "@angular/material";
 import {BottomSheetComponent} from "../../../bottom-sheet/bottom-sheet.component";
-import {AuthService} from "../../../../servicies/auth.service";
+import {RoutingService} from "../../../../servicies/routing.service";
 
 @Component({
   selector: 'app-add-calendar',
@@ -127,13 +126,18 @@ export class AddCalendarComponent implements OnInit {
 
   errorLogRoom = '';
 
+  calendarKind = ['LECTURE', 'EXAM'];
+
   constructor(private postService: PostService,
               private getService: GetService,
-              private router: Router,
+              private router: RoutingService,
               private datepipe: DatePipe,
               private bottomSheet: MatBottomSheet) { }
 
   ngOnInit() {
+    if(this.router.getHistory()[this.router.getHistory().length - 1] != 'add-calendar') {
+      this.router.loadUrl('add-calendar');
+    }
     this.getService.findAllCourses().subscribe(studyCourses => {
       this.studyCourses = studyCourses;
       this.populateCalendar();
@@ -148,22 +152,27 @@ export class AddCalendarComponent implements OnInit {
   }
 
   populateCalendar() {
-    if(((this.semester && this.year && this.studyCourse) != null)) {
+    if(((this.semester && this.year && this.studyCourse && this.lectureCalendar.type) != null)) {
       this.getService.findAllLectureCalendar().subscribe(lectureCalendars => {
         this.resetTable();
         this.lectureCalendars = [];
         for (let lectureCalendar of lectureCalendars) {
           if (lectureCalendar.module.year == this.year &&
-            lectureCalendar.module.semester == this.semester &&
-            lectureCalendar.module.course.courseId == this.studyCourse.courseId) {
+                lectureCalendar.module.semester == this.semester &&
+                lectureCalendar.module.course.courseId == this.studyCourse.courseId) {
+            if((this.lectureCalendar.type == 'LECTURE') && (lectureCalendar.type == 'LECTURE')) {
+              this.lectureCalendars.push(lectureCalendar);
+              this.setHours(lectureCalendar.module.title, lectureCalendar.startTime,
+                lectureCalendar.endTime, lectureCalendar.date);
 
-            this.lectureCalendars.push(lectureCalendar);
+              this.leftHoursForModule(lectureCalendar.module, lectureCalendar.startTime,
+                lectureCalendar.endTime);
+            }else if((this.lectureCalendar.type == 'EXAM') && (lectureCalendar.type == 'EXAM')){
+              this.lectureCalendars.push(lectureCalendar);
 
-            this.setHours(lectureCalendar.module.title, lectureCalendar.startTime,
-              lectureCalendar.endTime, lectureCalendar.date);
-
-            this.leftHoursForModule(lectureCalendar.module, lectureCalendar.startTime,
-              lectureCalendar.endTime);
+              this.setHours(lectureCalendar.module.title, lectureCalendar.startTime,
+                lectureCalendar.endTime, lectureCalendar.date);
+            }
           }
         }
       });
@@ -285,7 +294,7 @@ export class AddCalendarComponent implements OnInit {
         }
         break;
 
-  }
+    }
 
   }
 
@@ -374,7 +383,7 @@ export class AddCalendarComponent implements OnInit {
   }
 
   finished(){
-    this.router.navigate(['seg-home']);
+    this.router.navigate('seg-home');
   }
 
   checkAulasSearched(){
@@ -387,11 +396,12 @@ export class AddCalendarComponent implements OnInit {
   checkData(key: string): boolean{
     switch (key) {
       case 'find':
-        return (this.module != null && this.startingHour != '' && this.endingHour != '' && this.dayLecture != null);
+        return (this.module != null && this.startingHour != '' && this.endingHour != '' &&
+          this.dayLecture != null);
 
       case 'save':
         return (this.module != null && this.startingHour != '' &&
-          this.endingHour != '' && this.dayLecture != null && this.selectedAula != null);
+          this.endingHour != '' && this.dayLecture != null && this.selectedAula != null && this.lectureCalendar.type != '');
     }
   }
 

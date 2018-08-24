@@ -6,6 +6,7 @@ import {RoomEquipment} from "../components/models/RoomEquipment";
 import {Student} from "../components/models/Student";
 import {Secretary} from "../components/models/Secretary";
 import {Professor} from "../components/models/Professor";
+import {Ticket} from "../components/models/Ticket";
 
 
 const httpOptions = {
@@ -24,6 +25,8 @@ export class PutService {
   updateSecretaryUrl: string = "http://localhost:8080/SpringApp/secretary/update";
 
   updateProfessorUrl: string = "http://localhost:8080/SpringApp/professor/update";
+
+  updateTicketUrl: string = "http://localhost:8080/SpringApp/ticket/";
 
   constructor(private http: HttpClient) { }
 
@@ -45,6 +48,10 @@ export class PutService {
 
   updateProfessor(professor: Professor): Observable<Professor>{
     return this.http.post<Professor>(this.updateProfessorUrl, professor, httpOptions);
+  }
+
+  updateTicket(ticket: Ticket): Observable<Ticket>{
+    return this.http.put<Ticket>(this.updateTicketUrl + ticket.ticketId, ticket, httpOptions);
   }
 
 }

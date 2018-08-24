@@ -1,7 +1,100 @@
-<div>
-  <button mat-raised-button (click)="addAula()">Add aula</button>
-  <button mat-raised-button (click)="addUser()">Add User</button>
-  <button mat-raised-button (click)="addTeaching()">Add Teaching</button>
-  <button mat-raised-button (click)="addStudyCourse()">Add StudyCourse</button>
-  <button mat-raised-button (click)="addCalendar()">Add Calendar</button>
+<div [style.margin]="'15px'" class="my-class">
+  <div align="center" class="list-container">
+    <h1>
+      Issue
+    </h1>
+    <mat-list align="center" *ngIf="tickets.length != 0">
+      <mat-list-item align="center" *ngFor="let ticket of tickets; last as last"
+                     [style.font-size]="'tiny'" [style.width]="'100%'" [style.height]="'150px'">
+        <mat-card [style.width]="'100%'" [style.height]="'100px'" >
+
+          <div class="title">
+            <b>{{ ticket.title }} room: {{ ticket.room.name }}
+              professor: {{ ticket.professor.person.firstName}} {{ ticket.professor.person.lastName}}</b>
+          </div>
+
+          <div class="description">
+            <b> {{ ticket.comment }} </b>
+            <b [style.color]="'blue'">status: {{ ticket.status }}</b>
+          </div>
+
+          <mat-card-actions>
+            <button mat-flat-button class="my-green" [style.color]="'white'" (click)="resume(ticket)">
+              Resolve</button>
+            <button mat-flat-button color="warn" (click)="delete(ticket)">Delete</button>
+            <button mat-flat-button [style.background-color]="'blue'" [style.color]="'white'"
+                    *ngIf="ticket.status == 'PENDING'" (click)="accept(ticket)">Accept</button>
+          </mat-card-actions>
+        </mat-card>
+      </mat-list-item>
+    </mat-list>
+    <div *ngIf="tickets.length == 0" [style.color]="'red'">
+      <h1>No Tickets Found</h1>
+    </div>
+  </div>
+
+  <div class="button-container">
+    <mat-grid-list [cols]="5" rowHeight="2:1">
+      <mat-grid-tile>
+        <div align="center">
+          <h3>
+            User
+          </h3>
+          <div>
+            <button mat-raised-button [style.background-color]="'blue'" [style.color]="'white'"
+                          (click)="addUser()">Add new User</button>
+            <button mat-raised-button class="my-green" (click)="modifyUser()">Edit User</button>
+          </div>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div align="center">
+          <h3>
+            Room
+          </h3>
+          <div>
+            <button mat-raised-button [style.background-color]="'blue'" [style.color]="'white'"
+                    (click)="addAula()">Add new Room</button>
+            <button mat-raised-button class="my-green" (click)="modifyAula()">Edit Room</button>
+          </div>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div align="center">
+          <h3>
+            Course
+          </h3>
+          <div>
+            <button mat-raised-button [style.background-color]="'blue'" [style.color]="'white'"
+                        (click)="addStudyCourse()">Add new Course</button>
+            <button mat-raised-button class="my-green" (click)="modifyStudyCourse()">Edit Course</button>
+          </div>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div align="center">
+          <h3>
+            Module
+          </h3>
+          <div>
+            <button mat-raised-button [style.background-color]="'blue'" [style.color]="'white'"
+                          (click)="addTeaching()">Add new Module</button>
+            <button mat-raised-button class="my-green" (click)="modifyTeaching()">Edit Module</button>
+          </div>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div align="center">
+          <h3>
+            Calendar
+          </h3>
+          <div>
+            <button mat-raised-button [style.background-color]="'blue'" [style.color]="'white'"
+                      (click)="addCalendar()">Add new Calendar</button>
+            <button mat-raised-button class="my-green" (click)="modifyCalendar()">Edit Calendar</button>
+          </div>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
 </div>

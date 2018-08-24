@@ -30,7 +30,8 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
   MatRadioModule,
-  MatBottomSheetModule
+  MatBottomSheetModule,
+  MatDividerModule, MatTreeModule
 } from "@angular/material";
 import { AddTeachingComponent } from './components/secretary/create/add-teaching/add-teaching.component';
 import { AddStudyCourseComponent } from './components/secretary/create/add-study-course/add-study-course.component';
@@ -45,6 +46,8 @@ import { ModifyUserComponent } from './components/secretary/modify/modify-user/m
 import {DatePipe} from "@angular/common";
 import {DlDateTimePickerDateModule} from "angular-bootstrap-datetimepicker";
 import { BottomSheetComponent } from './components/bottom-sheet/bottom-sheet.component';
+import {RoutingService} from "./servicies/routing.service";
+import { BottomSheetSecretaryComponent } from './components/secretary/bottom-sheet-secretary/bottom-sheet-secretary.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +63,8 @@ import { BottomSheetComponent } from './components/bottom-sheet/bottom-sheet.com
     AddCalendarComponent,
     ModifyAulaComponent,
     ModifyUserComponent,
-    BottomSheetComponent
+    BottomSheetComponent,
+    BottomSheetSecretaryComponent
   ],
   imports: [
     BrowserModule,
@@ -87,7 +91,9 @@ import { BottomSheetComponent } from './components/bottom-sheet/bottom-sheet.com
     MatNativeDateModule,
     MatRadioModule,
     DlDateTimePickerDateModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    MatDividerModule,
+    MatTreeModule
   ],
   providers: [
     GetService,
@@ -96,7 +102,8 @@ import { BottomSheetComponent } from './components/bottom-sheet/bottom-sheet.com
     AuthGuardService,
     AuthService,
     PutService,
-    DatePipe
+    DatePipe,
+    RoutingService
   ],
   bootstrap: [AppComponent],
 

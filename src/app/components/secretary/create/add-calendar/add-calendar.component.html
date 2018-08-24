@@ -1,4 +1,4 @@
-<div class="page">
+<div class="page" [style.font-size]="'x-large'">
   <mat-grid-list [cols]="4" rowHeight="2:1">
 
     <mat-grid-tile>
@@ -7,7 +7,7 @@
         <mat-form-field appearance="legacy">
           <mat-select placeholder="Select course" [(ngModel)]="studyCourse">
             <mat-option *ngFor="let course of studyCourses"
-                    style="font-size: medium" [value]="course" (click)="populateYear(); populateCalendar()">
+                    [value]="course" (click)="populateYear(); populateCalendar()">
               {{ course.name }}
             </mat-option>
           </mat-select>
@@ -20,7 +20,7 @@
         <h3 class="unSelectable">Select year</h3>
         <mat-form-field appearance="legacy">
           <mat-select placeholder="Semester" [(ngModel)]="year">
-            <mat-option style="font-size: medium" *ngFor="let ye of years" [value]="ye"
+            <mat-option *ngFor="let ye of years" [value]="ye"
                         (click)="getModules(); populateCalendar()">
             {{ ye }}
             </mat-option>
@@ -35,10 +35,10 @@
         <h3 class="unSelectable">Select Semester</h3>
         <mat-form-field appearance="legacy">
           <mat-select placeholder="Semester" [(ngModel)]="semester">
-            <mat-option style="font-size: medium" value="1" (click)="getModules(); populateCalendar()">
+            <mat-option value="1" (click)="getModules(); populateCalendar()">
               1
             </mat-option>
-            <mat-option style="font-size: medium" value="2" (click)="getModules(); populateCalendar()">
+            <mat-option value="2" (click)="getModules(); populateCalendar()">
               2
             </mat-option>
           </mat-select>
@@ -63,6 +63,15 @@
       </div>
     </mat-grid-tile>
   </mat-grid-list>
+
+  <div align="center">
+    <mat-radio-group [(ngModel)]="lectureCalendar.type">
+      <mat-radio-button *ngFor="let kind of calendarKind" [value]="kind"
+                        class="radio-button" (change)="populateCalendar()">
+        <b>{{ kind }}</b>
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
 
   <div>
     <div>
@@ -108,10 +117,10 @@
 
         <mat-grid-tile>
           <div align="center">
-            <h3 class="unSelectable">Select End Day Lecture</h3>
-            <mat-form-field appearance="legacy">
+            <h3 class="unSelectable">Select End Day</h3>
+            <mat-form-field appearance="legacy" >
               <input matInput [matDatepicker]="pickerEnd" placeholder="Insert lecture day"
-                     [(ngModel)]="endDate" required>
+                     [(ngModel)]="endDate" required [disabled]="lectureCalendar.type == 'EXAM'">
             </mat-form-field>
             <mat-datepicker-toggle [for]="pickerEnd" ></mat-datepicker-toggle>
             <mat-datepicker #pickerEnd ></mat-datepicker>
@@ -127,7 +136,7 @@
           <div align="center">
             <mat-card-actions align="center" class="example-card unSelectable">
               <mat-card-content>
-                <button style="font-size: large" color="warn" mat-raised-button
+                <button [style.font-size]="'x-large'" color="warn" mat-raised-button
                         (click)="findAula(); populateCalendar()">
                   Find Aula
                 </button>
@@ -157,8 +166,8 @@
           <div align="center" class="button-container">
             <mat-card-actions align="center" class="example-card">
               <mat-card-content>
-                <button style="font-size: large" color="warn"
-                        mat-raised-button (click)="addDayLecture(); populateCalendar()">Add Day Lecture</button>
+                <button color="warn" [style.font-size]="'x-large'"
+                        mat-raised-button (click)="addDayLecture(); populateCalendar()">Add Day</button>
               </mat-card-content>
             </mat-card-actions>
           </div>
@@ -174,7 +183,7 @@
   <div align="center" class="button-container">
     <mat-card-actions align="center" class="example-card">
       <mat-card-content>
-        <button style="font-size: large; background-color: blue; color: white;"
+        <button [style.font-size]="'x-large'" [style.background-color]="'blue'" [style.color]="'white'"
                 mat-raised-button (click)="finished()">Finished</button>
       </mat-card-content>
     </mat-card-actions>
