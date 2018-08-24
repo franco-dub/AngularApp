@@ -13,4 +13,5 @@ export interface LectureCalendar {
   startDate?: string;
   endDate?: string;
   roomEquipment?: Array<RoomEquipment>;
+  type?: string;
 }

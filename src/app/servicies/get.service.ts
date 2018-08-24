@@ -11,6 +11,7 @@ import {Equipments} from "../components/models/Equipments";
 import {Student} from "../components/models/Student";
 import {Secretary} from "../components/models/Secretary";
 import {LectureCalendar} from "../components/models/LectureCalendar";
+import {Ticket} from "../components/models/Ticket";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -42,6 +43,8 @@ export class GetService {
   findAllFreeAulasUrl: string = "http://localhost:8080/SpringApp/scheduling/findFreeRooms";
 
   findAllLectureCalendarUrl: string = "http://localhost:8080/SpringApp/lectureCalendar/findAll";
+
+  findAllTicketUrl: string = "http://localhost:8080/SpringApp/ticket/findAll";
 
 
   constructor(private http: HttpClient) { }
@@ -92,6 +95,10 @@ export class GetService {
 
   findAllLectureCalendar(): Observable<Array<LectureCalendar>>{
     return this.http.get<Array<LectureCalendar>>(this.findAllLectureCalendarUrl);
+  }
+
+  findAllTicket(): Observable<Array<Ticket>>{
+    return this.http.get<Array<Ticket>>(this.findAllTicketUrl);
   }
 
 }

@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
 
         this.user.hide = false;
 
-        switch (loggedUser.name) {
+        switch (loggedUser.type) {
 
           case "SECRETARY":
             console.log("ok il prezzo è giusto");

@@ -5,6 +5,6 @@ export interface RoomEquipment {
   room: Room;
   equipment: Equipments;
   issue?: string;
-  work?: number
+  work?: number;
 
 }

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {Equipments} from "../../../models/Equipments";
 import {GetService} from "../../../../servicies/get.service";
-import {Router} from "@angular/router";
 import {PostService} from "../../../../servicies/post.service";
 import {Room} from "../../../models/Room";
 import {RoomEquipment} from "../../../models/RoomEquipment";
+import {RoutingService} from "../../../../servicies/routing.service";
 
 
 @Component({
@@ -31,11 +31,14 @@ export class AddAulaComponent implements OnInit {
   latitude: string = '';
 
   constructor(private getService: GetService,
-              private router: Router,
+              private router: RoutingService,
               private postService: PostService) { }
 
   ngOnInit() {
 
+    if(this.router.getHistory()[this.router.getHistory().length - 1] != 'add-aula') {
+      this.router.loadUrl('add-aula');
+    }
     this.getService.getEquipmentData().subscribe(equipments => {
 
       this.equipments = equipments;
@@ -98,7 +101,7 @@ export class AddAulaComponent implements OnInit {
         console.log(roomEquipment);
         this.postService.saveAulaEquipments(roomEquipment).subscribe(roomEquipments => {
           if (roomEquipments != null)
-            this.router.navigate(['seg-home']);
+            this.router.navigate('seg-home');
         });
       }
     });

@@ -39,3 +39,5 @@ testem.log
 Thumbs.db
 
 e2e/
+
+src/app/copied table

@@ -5,6 +5,7 @@ import {GetService} from "../../../../servicies/get.service";
 import {Course} from "../../../models/Course";
 import {Professor} from "../../../models/Professor";
 import {Router} from "@angular/router";
+import {RoutingService} from "../../../../servicies/routing.service";
 
 @Component({
   selector: 'app-add-teaching',
@@ -35,9 +36,13 @@ export class AddTeachingComponent implements OnInit {
 
   constructor(private postService: PostService,
               private getService: GetService,
-              private router: Router) { }
+              private router: RoutingService) { }
 
-  ngOnInit() {
+  ngOnInit(){
+    if(this.router.getHistory()[this.router.getHistory().length - 1] != 'add-teaching') {
+    this.router.loadUrl('add-teaching');
+    }
+
     this.getService.findAllCourses().subscribe(courses =>{
       console.log(courses);
       this.courses = courses;
@@ -73,7 +78,7 @@ export class AddTeachingComponent implements OnInit {
       this.postService.saveModule(teaching).subscribe(teaching => {
         console.log(teaching);
         if(teaching != null)
-          this.router.navigate(['seg-home']);
+          this.router.navigate('seg-home');
       });
 
     }

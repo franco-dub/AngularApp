@@ -3,6 +3,7 @@ import {GetService} from "../../../../servicies/get.service";
 import {PostService} from "../../../../servicies/post.service";
 import {Router} from "@angular/router";
 import {Course} from "../../../models/Course";
+import {RoutingService} from "../../../../servicies/routing.service";
 
 @Component({
   selector: 'app-add-study-course',
@@ -31,9 +32,13 @@ export class AddStudyCourseComponent implements OnInit {
 
   constructor(private getService:GetService,
               private postService: PostService,
-              private router: Router) { }
+              private router: RoutingService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if(this.router.getHistory()[this.router.getHistory().length - 1] != 'add-course') {
+      this.router.loadUrl('add-course');
+    }
+  }
 
   onSubmit(){
     this.missingArguments = ((this.name || this.description) == '');
@@ -49,7 +54,7 @@ export class AddStudyCourseComponent implements OnInit {
 
       this.postService.saveCourse(this.studyCourse).subscribe(returned => {
         if(returned != null) {
-          this.router.navigate(['seg-home']);
+          this.router.navigate('seg-home');
         }
       });
 
