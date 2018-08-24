@@ -128,8 +128,6 @@ export class AddCalendarComponent implements OnInit {
 
   calendarKind = ['LECTURE', 'EXAM'];
 
-  type = '';
-
   constructor(private postService: PostService,
               private getService: GetService,
               private router: RoutingService,
@@ -154,7 +152,7 @@ export class AddCalendarComponent implements OnInit {
   }
 
   populateCalendar() {
-    if(((this.semester && this.year && this.studyCourse && this.type) != null)) {
+    if(((this.semester && this.year && this.studyCourse && this.lectureCalendar.type) != null)) {
       this.getService.findAllLectureCalendar().subscribe(lectureCalendars => {
         this.resetTable();
         this.lectureCalendars = [];
@@ -403,7 +401,7 @@ export class AddCalendarComponent implements OnInit {
 
       case 'save':
         return (this.module != null && this.startingHour != '' &&
-          this.endingHour != '' && this.dayLecture != null && this.selectedAula != null && this.type != '');
+          this.endingHour != '' && this.dayLecture != null && this.selectedAula != null && this.lectureCalendar.type != '');
     }
   }
 

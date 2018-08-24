@@ -120,7 +120,7 @@
             <h3 class="unSelectable">Select End Day</h3>
             <mat-form-field appearance="legacy" >
               <input matInput [matDatepicker]="pickerEnd" placeholder="Insert lecture day"
-                     [(ngModel)]="endDate" required [disabled]="prenotationKind == 'EXAM'">
+                     [(ngModel)]="endDate" required [disabled]="lectureCalendar.type == 'EXAM'">
             </mat-form-field>
             <mat-datepicker-toggle [for]="pickerEnd" ></mat-datepicker-toggle>
             <mat-datepicker #pickerEnd ></mat-datepicker>

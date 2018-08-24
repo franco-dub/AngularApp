@@ -24,7 +24,6 @@ export class AddUserComponent implements OnInit {
 
   selectedCourse: Course;
 
-  selectedModule: Module;
 
   error: boolean = false;
 

@@ -1,0 +1,35 @@
+.list-container{
+  margin: 10px;
+  height: 600px;
+  overflow: auto;
+}
+
+.my-class{
+  margin: 10px;
+  overflow: auto;
+}
+
+.button-container{
+  margin: 10px;
+  overflow: auto;
+}
+
+.title{
+  font-size: x-large;
+}
+
+.description{
+  font-size: large;
+}
+
+button{
+  font-size: medium;
+  margin: 1px;
+}
+
+
+.my-green{
+  background-color: #09ba00;
+  color: white;
+}
+
