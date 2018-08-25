@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {RoutingService} from "../../../servicies/routing.service";
-import {GetService} from "../../../servicies/get.service";
-import {Ticket} from "../../models/Ticket";
-import {PostService} from "../../../servicies/post.service";
-import {MatBottomSheet} from "@angular/material";
-import {BottomSheetComponent} from "../../bottom-sheet/bottom-sheet.component";
+import {RoutingService} from '../../../servicies/routing.service';
+import {GetService} from '../../../servicies/get.service';
+import {Ticket} from '../../models/Ticket';
+import {PostService} from '../../../servicies/post.service';
+import {MatBottomSheet} from '@angular/material';
+import {BottomSheetComponent} from '../../bottom-sheet/bottom-sheet.component';
 
 @Component({
   selector: 'app-seg-home',
@@ -21,69 +21,69 @@ export class SegHomeComponent implements OnInit {
               private bottomSheet: MatBottomSheet) { }
 
   ngOnInit() {
-    if(this.router.getHistory()[this.router.getHistory().length - 1] != 'seg-home') {
+    if (this.router.getHistory()[this.router.getHistory().length - 1] !== 'seg-home') {
       this.router.loadUrl('seg-home');
     }
     this.refreshTicket();
   }
 
-  addAula(): void{
-    this.router.navigate("add-aula");
+  addAula(): void {
+    this.router.navigate('add-aula');
   }
 
-  modifyAula(){
-    this.router.navigate("modify-aula");
+  modifyAula() {
+    this.router.navigate('modify-aula');
   }
 
-  addUser(): void{
-    this.router.navigate("add-user");
+  addUser(): void {
+    this.router.navigate('add-user');
   }
 
-  modifyUser(){
-
-  }
-
-  addTeaching():void{
-    this.router.navigate("add-teaching");
-  }
-
-  modifyTeaching(){
+  modifyUser() {
 
   }
 
-  addStudyCourse(): void{
-    this.router.navigate("add-course");
+  addTeaching(): void {
+    this.router.navigate('add-teaching');
   }
 
-  modifyStudyCourse(){
-
-  }
-
-  addCalendar(): void{
-    this.router.navigate("add-calendar");
-  }
-
-  modifyCalendar(){
+  modifyTeaching() {
 
   }
 
-  resume(ticket: Ticket){
+  addStudyCourse(): void {
+    this.router.navigate('add-course');
+  }
+
+  modifyStudyCourse() {
+
+  }
+
+  addCalendar(): void {
+    this.router.navigate('add-calendar');
+  }
+
+  modifyCalendar() {
+
+  }
+
+  resume(ticket: Ticket) {
     ticket.status = 'ACCEPTED';
-    this.bottomSheet.open(BottomSheetComponent, {data: [{type: 'RESUME'}, {ticket: ticket}]}).dismiss(result=>{
-      this.postService.sendTicket(result).subscribe(ticket => {
-        if (ticket != null){
+    this.bottomSheet.open(BottomSheetComponent, {data: [{type: 'RESUME'}, {ticket: ticket}]}).dismiss(result => {
+      this.postService.sendTicket(result).subscribe(tickett => {
+        if (tickett != null) {
           this.refreshTicket();
         }
       });
     });
   }
 
-  delete(ticket: Ticket){
+  delete(ticket: Ticket) {
     ticket.status = 'REJECTED';
-    this.bottomSheet.open(BottomSheetComponent,{data: [{type: 'REJECTED'}, {ticket: ticket}]})
-      .dismiss(result=> {
-        this.postService.sendTicket(result).subscribe(ticket => {
-          if (ticket != null) {
+    this.bottomSheet.open(BottomSheetComponent, {data: [{type: 'REJECTED'}, {ticket: ticket}]})
+      .dismiss(result => {
+        this.postService.sendTicket(result).subscribe(tickett => {
+          if (tickett != null) {
             this.refreshTicket();
           }
         });
@@ -91,16 +91,16 @@ export class SegHomeComponent implements OnInit {
     );
   }
 
-  accept(ticket: Ticket){
+  accept(ticket: Ticket) {
     ticket.status = 'ACCEPTED';
-    this.postService.sendTicket(ticket).subscribe(ticket => {
-      if (ticket != null){
+    this.postService.sendTicket(ticket).subscribe(tickett => {
+      if (tickett != null) {
         this.refreshTicket();
       }
     });
   }
 
-  refreshTicket(){
+  refreshTicket() {
     this.getService.findAllTicket().subscribe(tickets => {
       this.tickets = tickets;
       this.tickets.sort();
