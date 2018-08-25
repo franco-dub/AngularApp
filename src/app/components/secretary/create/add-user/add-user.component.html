@@ -1,0 +1,165 @@
+<div class="mat-container-fluid">
+
+  <div>
+    <mat-grid-list [cols]="2" rowHeight="3:1">
+      <mat-grid-tile>
+        <div align="center">
+          <h3>First Name</h3>
+          <mat-form-field appearance="legacy">
+            <input matInput placeholder="Insert first name" [(ngModel)]="firstName" required>
+          </mat-form-field>
+        </div>
+      </mat-grid-tile>
+
+
+      <mat-grid-tile>
+        <div align="center">
+          <h3>Last Name</h3>
+          <mat-form-field appearance="legacy">
+            <input matInput placeholder="Insert last name" [(ngModel)]="lastName" required>
+          </mat-form-field>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  <div>
+    <mat-grid-list [cols]="3" rowHeight="2:1">
+      <mat-grid-tile>
+        <mat-card align="center" class="grid-tile">
+          <mat-card-content>
+            <mat-card-title>
+              <h4>Email</h4>
+            </mat-card-title>
+            <mat-form-field appearance="legacy">
+              <input matInput="e-mail" type="email" placeholder="Insert e-mail" [(ngModel)]="email" required>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-card class="grid-tile" align="center">
+          <mat-card-content>
+            <mat-card-title>
+              <h4>Phone number</h4>
+            </mat-card-title>
+            <mat-form-field appearance="legacy">
+              <input matInput placeholder="Insert phone number" type="tel" [(ngModel)]="phone" required>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile >
+        <mat-card class="grid-tile" align="center">
+          <mat-card-content>
+            <mat-card-title>
+              <h4>Birth date</h4>
+            </mat-card-title>
+            <mat-form-field appearance="legacy">
+              <input matInput [matDatepicker]="picker" placeholder="Insert Date of birth"
+                     [(ngModel)]="dateOfBirth" required>
+            </mat-form-field>
+            <mat-datepicker-toggle [for]="picker" ></mat-datepicker-toggle>
+            <mat-datepicker #picker align="right"></mat-datepicker>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+
+  <div>
+    <mat-grid-list [cols]="3" rowHeight="2:1">
+      <mat-grid-tile>
+        <mat-card class="grid-tile" align="center">
+          <mat-card-content>
+            <mat-card-title>
+              <h4>Gender</h4>
+            </mat-card-title>
+            <mat-radio-group [(ngModel)]="gender" >
+              <mat-radio-button *ngFor="let ge of gends"
+                                [value]="ge" class="radio-button" >
+                {{ ge }}
+              </mat-radio-button>
+            </mat-radio-group>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-card class="grid-tile" align="center">
+          <mat-card-content>
+            <mat-card-title>
+              <h4>Address</h4>
+            </mat-card-title>
+            <mat-form-field appearance="legacy">
+              <input matInput [(ngModel)]="address" placeholder="Insert address" required>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-card class="grid-tile" align="center">
+          <mat-card-content>
+            <mat-card-title>
+              <h4>N°</h4>
+            </mat-card-title>
+            <mat-form-field appearance="legacy">
+              <input matInput placeholder="number" type="number" [(ngModel)]="number" required>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+
+  <div  class="example-card" align="center">
+    <mat-card-content>
+      <mat-card-title>
+        <h3>User Type</h3>
+      </mat-card-title>
+      <mat-form-field appearance="legacy">
+        <mat-select placeholder="select user type" [(ngModel)]="selectedUser" required>
+          <mat-option *ngFor="let ty of type" [value]="ty">
+            {{ty}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card-content>
+  </div>
+
+  <div align="center" *ngIf="selectedUser == type[0]" >
+    <h3>Study Course</h3>
+    <mat-form-field appearance="legacy">
+      <mat-select placeholder="select study course" [(ngModel)]="selectedCourse" required>
+        <mat-option *ngFor="let course of courses"
+                    [value]="course">
+          {{course.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div align="center" *ngIf="selectedUser == type[1]" >
+    <h3>Level</h3>
+    <mat-form-field appearance="legacy">
+      <mat-select placeholder="select study course" [(ngModel)]="level" required>
+        <mat-option *ngFor="let lev of levels"
+                    [value]="lev">
+          {{ lev }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-card-actions align="center" class="example-card">
+      <mat-card-content>
+        <button mat-raised-button color="warn"
+                (click)="submit(selectedUser, selectedCourse)" >
+          Add new User
+        </button>
+      </mat-card-content>
+    </mat-card-actions>
+  </div>
+</div>

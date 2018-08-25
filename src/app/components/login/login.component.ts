@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Login } from "../models/Login";
 import { GetService } from "../../servicies/get.service";
-import { User } from "../models/User";
 import { Router } from "@angular/router";
+import {Professor} from "../models/Professor";
+import {Secretary} from "../models/Secretary";
+import {AuthService} from "../../servicies/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -15,10 +17,13 @@ export class LoginComponent implements OnInit {
                 password: "",
                 hide: false};
 
-  loggedUser: User;
   errorLog: string = "";
 
-  constructor(private getService: GetService, private router: Router) { }
+  professor: Professor;
+
+  secretary: Secretary;
+
+  constructor(private getService: GetService, private router: Router, private authService: AuthService) { }
 
   ngOnInit() { }
 
@@ -29,29 +34,39 @@ export class LoginComponent implements OnInit {
 
     this.getService.login(this.user).subscribe(loggedUser => {
 
-      this.loggedUser = loggedUser;
+      console.log(loggedUser);
 
-      if(this.loggedUser!= null) {
+      if(loggedUser!= null) {
 
         this.user.hide = false;
-        console.log(this.loggedUser.type);
 
-        switch (this.loggedUser.type) {
+        switch (loggedUser.type) {
 
-          case "Segretario":
+          case "SECRETARY":
             console.log("ok il prezzo è giusto");
+            this.secretary = loggedUser.secretary;
+            this.authService.sendToken('loggedSecretary', 'token');
+            this.authService.sendToken(this.secretary, 'user');
+            this.router.navigate(["seg-home"], {queryParams: {user: this.secretary}});
+            break;
+
+          case "PROFESSOR":
+            console.log("ok il prezzo è giusto professore");
+            this.professor = loggedUser.professor;
+            this.authService.sendToken('loggedProfessor', 'token');
+            this.authService.sendToken(this.professor, 'user');
             this.router.navigate(["seg-home"]);
             break;
 
-          case "Docente":
-            console.log("ok il prezzo è giusto");
-            break;
-
-          case "Studente":
+          case "STUDENT":
             this.errorLog = "Student can\'t login from website";
             this.user.hide = true;
             break;
 
+          default:
+            this.errorLog = "Wrong email or password";
+            this.user.hide = true;
+            break;
         }
 
       }else {
