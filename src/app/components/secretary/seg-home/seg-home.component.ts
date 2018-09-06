@@ -40,7 +40,7 @@ export class SegHomeComponent implements OnInit {
   }
 
   modifyUser() {
-
+    this.router.navigate('modify-user');
   }
 
   addTeaching(): void {
@@ -48,7 +48,7 @@ export class SegHomeComponent implements OnInit {
   }
 
   modifyTeaching() {
-
+    this.router.navigate('modify-teaching');
   }
 
   addStudyCourse(): void {
@@ -56,7 +56,7 @@ export class SegHomeComponent implements OnInit {
   }
 
   modifyStudyCourse() {
-
+    this.router.navigate('modify-course');
   }
 
   addCalendar(): void {

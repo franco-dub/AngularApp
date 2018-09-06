@@ -1,0 +1,97 @@
+<div class="my_class">
+
+  <h2 align="center">Edit Module</h2>
+
+  <form novalidate [formGroup]="editModuleForm" (ngSubmit)="onSubmitForm()">
+
+
+    <div align="center">
+      <mat-form-field>
+        <mat-select placeholder="Select Module" formControlName="module" required>
+          <mat-option *ngFor="let module of modules" [value]="module">
+            {{ module.title }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+
+    <div *ngIf="editModuleForm.get('module').value" align="center">
+
+      <div>
+        <mat-grid-list [cols]="2" rowHeight="3:1">
+
+          <mat-grid-tile>
+            <div align="center">
+              <mat-form-field>
+                <mat-select placeholder="Select Course" formControlName="course">
+                  <mat-option *ngFor="let course of courses" [value]="course.courseId" >
+                    {{ course.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <div align="center">
+              <mat-form-field>
+                <mat-select placeholder="Select Professor" formControlName="professor">
+                  <mat-option *ngFor="let professor of professors" [value]="professor.professorId">
+                    {{ professor.person.lastName }} {{ professor.person.firstName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+
+      </div>
+
+      <div>
+        <mat-grid-list [cols]="3"  rowHeight="3:1">
+          <mat-grid-tile>
+            <div align="center">
+              <h3>Insert credits</h3>
+              <mat-form-field >
+                <input matInput type="number" placeholder="Insert credits" formControlName="credits">
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <div align="center">
+              <h3>Insert semester</h3>
+              <mat-form-field>
+                <input matInput type="text" placeholder="Insert semester" formControlName="semester">
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <div align="center">
+              <h3>Insert year</h3>
+              <mat-form-field>
+                <input matInput type="number" placeholder="Insert year" formControlName="year">
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+
+        </mat-grid-list>
+      </div>
+
+
+
+      <div class="my_class">
+        <mat-card-actions align="center" class="example-card">
+          <mat-card-content>
+            <button mat-raised-button color="warn"
+                    type="submit">
+              Update
+            </button>
+          </mat-card-content>
+        </mat-card-actions>
+      </div>
+
+    </div>
+  </form>

@@ -90,9 +90,9 @@ export class ModifyUserComponent implements OnInit {
   }
 
   populateData() {
-    const splitter = this.selectedPerson.person.address.split(' n° ');
-    this.address = splitter[0];
-    this.number = parseInt(splitter[1]);
+    //const splitter = this.selectedPerson.person.address.split(' n° ');
+    //this.address = splitter[0];
+    //this.number = parseInt(splitter[1], 10);
 
     if (this.selectedPerson.professorId != null) {
       this.professor = this.selectedPerson;

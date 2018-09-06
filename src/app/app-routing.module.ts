@@ -10,17 +10,21 @@ import {AddCalendarComponent} from './components/secretary/create/add-calendar/a
 import { AuthGuardService as AuthGuard } from './servicies/auth-guard.service';
 import {ModifyAulaComponent} from './components/secretary/modify/modify-aula/modify-aula.component';
 import {ModifyUserComponent} from './components/secretary/modify/modify-user/modify-user.component';
+import {ModifyTeachingComponent} from './components/secretary/modify/modify-teaching/modify-teaching.component';
+import {ModifyCourseComponent} from './components/secretary/modify/modify-course/modify-course.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
-  {path: 'seg-home', component: SegHomeComponent, canActivate: [AuthGuard]},
-  {path: 'add-aula', component: AddAulaComponent},
+  {path: 'seg-home', component: SegHomeComponent, },
+  {path: 'add-aula', component: AddAulaComponent, canActivate: [AuthGuard]},
   {path: 'add-user', component: AddUserComponent},
   {path: 'add-teaching', component: AddTeachingComponent},
   {path: 'add-course', component: AddStudyCourseComponent},
   {path: 'add-calendar', component: AddCalendarComponent},
   {path: 'modify-aula', component: ModifyAulaComponent},
-  {path: 'modify-user', component: ModifyUserComponent}
+  {path: 'modify-user', component: ModifyUserComponent},
+  {path: 'modify-teaching', component: ModifyTeachingComponent},
+  {path: 'modify-course', component: ModifyCourseComponent}
 ];
 
 @NgModule({
