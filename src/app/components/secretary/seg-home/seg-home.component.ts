@@ -5,6 +5,8 @@ import {Ticket} from '../../models/Ticket';
 import {PostService} from '../../../servicies/post.service';
 import {MatBottomSheet} from '@angular/material';
 import {BottomSheetComponent} from '../../bottom-sheet/bottom-sheet.component';
+import {AuthService} from '../../../servicies/auth.service';
+import {Secretary} from '../../models/Secretary';
 
 @Component({
   selector: 'app-seg-home',
@@ -18,7 +20,7 @@ export class SegHomeComponent implements OnInit {
   constructor(private router: RoutingService,
               private getService: GetService,
               private postService: PostService,
-              private bottomSheet: MatBottomSheet) { }
+              private bottomSheet: MatBottomSheet) {}
 
   ngOnInit() {
     if (this.router.getHistory()[this.router.getHistory().length - 1] !== 'seg-home') {

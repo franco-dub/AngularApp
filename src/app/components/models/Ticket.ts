@@ -9,6 +9,7 @@ export interface Ticket {
   room?: Room;
   secretary?: Secretary;
   date?: Date;
+  description?: string;
   status: string;
   comment?: string;
   lastModified?: Date;

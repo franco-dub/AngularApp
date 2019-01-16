@@ -22,6 +22,8 @@ export class PutService {
 
   updateRoomEquipmentUrl = 'http://localhost:8080/SpringApp/roomEquipment/updateByRoom';
 
+  updateRoomEquipmentUrl2 = 'http://localhost:8080/SpringApp/roomEquipment/updateById/';
+
   updateStudentUrl = 'http://localhost:8080/SpringApp/student/update';
 
   updateSecretaryUrl = 'http://localhost:8080/SpringApp/secretary/update';
@@ -42,6 +44,10 @@ export class PutService {
 
   updateRoomEquipment(roomEquipments: Array<RoomEquipment>): Observable<Array<RoomEquipment>> {
     return this.http.post<Array<RoomEquipment>>(this.updateRoomEquipmentUrl, roomEquipments, httpOptions);
+  }
+
+  updateRoomEquipment2(roomEquipment: RoomEquipment): Observable<RoomEquipment> {
+    return this.http.put<RoomEquipment>(this.updateRoomEquipmentUrl2 + roomEquipment.roomEquipmentId, roomEquipment, httpOptions);
   }
 
   updateStudent(student: Student): Observable<Student> {

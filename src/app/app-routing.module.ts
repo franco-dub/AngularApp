@@ -12,6 +12,7 @@ import {ModifyAulaComponent} from './components/secretary/modify/modify-aula/mod
 import {ModifyUserComponent} from './components/secretary/modify/modify-user/modify-user.component';
 import {ModifyTeachingComponent} from './components/secretary/modify/modify-teaching/modify-teaching.component';
 import {ModifyCourseComponent} from './components/secretary/modify/modify-course/modify-course.component';
+import {OpenTicketComponent} from './components/professor/open-ticket/open-ticket.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -24,7 +25,8 @@ const routes: Routes = [
   {path: 'modify-aula', component: ModifyAulaComponent},
   {path: 'modify-user', component: ModifyUserComponent},
   {path: 'modify-teaching', component: ModifyTeachingComponent},
-  {path: 'modify-course', component: ModifyCourseComponent}
+  {path: 'modify-course', component: ModifyCourseComponent},
+  {path: 'open-ticket', component: OpenTicketComponent}
 ];
 
 @NgModule({

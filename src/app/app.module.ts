@@ -50,6 +50,8 @@ import {RoutingService} from './servicies/routing.service';
 import { BottomSheetSecretaryComponent } from './components/secretary/bottom-sheet-secretary/bottom-sheet-secretary.component';
 import { ModifyTeachingComponent } from './components/secretary/modify/modify-teaching/modify-teaching.component';
 import { ModifyCourseComponent } from './components/secretary/modify/modify-course/modify-course.component';
+import { OpenTicketComponent } from './components/professor/open-ticket/open-ticket.component';
+
 
 @NgModule({
   declarations: [
@@ -68,7 +70,9 @@ import { ModifyCourseComponent } from './components/secretary/modify/modify-cour
     BottomSheetComponent,
     BottomSheetSecretaryComponent,
     ModifyTeachingComponent,
-    ModifyCourseComponent
+    ModifyCourseComponent,
+    OpenTicketComponent,
+
   ],
   imports: [
     BrowserModule,
