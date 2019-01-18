@@ -18,7 +18,6 @@ import { PutService } from '../../../servicies/put.service';
 })
 export class OpenTicketComponent implements OnInit {
 
-  loggedUser: any;
   openTicketForm: FormGroup;
   rooms: Array<Room> = [];
   roomEquipments: Array<RoomEquipment> = [];
@@ -35,11 +34,9 @@ export class OpenTicketComponent implements OnInit {
               private authent: AuthService) { }
 
   ngOnInit() {
-    this.authent.currentUser.subscribe(loggedUser => this.loggedUser = loggedUser)
     this.getService.findAllRoom().subscribe(rooms => {
       this.rooms = rooms;
     });
-
     this.openTicketForm = this.formBuilder.group({
       title: null,
       room: null,
@@ -63,7 +60,7 @@ export class OpenTicketComponent implements OnInit {
     this.ticket.room = this.openTicketForm.controls['room'].value;
     this.ticket.description = this.openTicketForm.controls['description'].value;
     this.ticket.title = this.openTicketForm.controls['title'].value;
-    this.ticket.professor = this.loggedUser;
+    this.ticket.professor = this.authent.getLoggedUser('user');
     // update roomequipment
     this.selectedRoomEquipment = this.openTicketForm.controls['room'].value;
     this.selectedRoomEquipment = this.openTicketForm.controls['equipment'].value;
