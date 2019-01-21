@@ -39,12 +39,12 @@ import { AddCalendarComponent } from './components/secretary/create/add-calendar
 import {CdkTableModule} from "@angular/cdk/table";
 import {AuthGuardService} from "./servicies/auth-guard.service";
 import {AuthService} from "./servicies/auth.service";
-import {JwtHelperService} from "@auth0/angular-jwt";
+import {JwtHelperService} from '@auth0/angular-jwt';
 import { ModifyAulaComponent } from './components/secretary/modify/modify-aula/modify-aula.component';
 import {PutService} from "./servicies/put.service";
 import { ModifyUserComponent } from './components/secretary/modify/modify-user/modify-user.component';
 import {DatePipe} from "@angular/common";
-import {DlDateTimePickerDateModule} from "angular-bootstrap-datetimepicker";
+import {DlDateTimePickerDateModule} from 'angular-bootstrap-datetimepicker';
 import { BottomSheetComponent } from './components/bottom-sheet/bottom-sheet.component';
 import {RoutingService} from "./servicies/routing.service";
 import { BottomSheetSecretaryComponent } from './components/secretary/bottom-sheet-secretary/bottom-sheet-secretary.component';
@@ -107,7 +107,10 @@ import { BottomSheetSecretaryComponent } from './components/secretary/bottom-she
   ],
   bootstrap: [AppComponent],
 
-  entryComponents: [BottomSheetComponent]
+  entryComponents: [
+    BottomSheetComponent,
+    BottomSheetSecretaryComponent
+  ]
 })
 
 export class AppModule { }
