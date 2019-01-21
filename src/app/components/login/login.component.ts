@@ -13,7 +13,7 @@ import {AuthService} from "../../servicies/auth.service";
 })
 export class LoginComponent implements OnInit {
 
-  loggedUser: any;
+  logged: any;
 
   user: Login= {email: "",
                 password: "",
@@ -25,11 +25,11 @@ export class LoginComponent implements OnInit {
 
   secretary: Secretary;
 
-  constructor(private getService: GetService, private router: Router, private authService: AuthService) { }
+  constructor(private getService: GetService, 
+    private router: Router, 
+    private authService: AuthService) { }
 
-  ngOnInit() { 
-    this.authService.currentUser.subscribe(loggedUser => this.loggedUser = loggedUser)
-  }
+  ngOnInit() {}
 
   login(email, password) {
 
@@ -59,8 +59,6 @@ export class LoginComponent implements OnInit {
             this.professor = loggedUser.professor;
             this.authService.sendToken('loggedProfessor', 'token');
             this.authService.sendToken(this.professor, 'user');
-            this.loggedUser = this.professor;
-            this.authService.changeMessage(this.loggedUser);
             this.router.navigate(["open-ticket"]);
             break;
 

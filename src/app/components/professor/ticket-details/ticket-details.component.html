@@ -1,0 +1,11 @@
+<div *ngIf="ticket">
+  <form novalidate [formGroup]="ticketDetails" (ngSubmit)="onSubmitForm()">
+      <h2 align="center">{{this.ticketDetails.controls['room'].value.name}}</h2>
+    <mat-form-field class="example-full-width">
+      <textarea matInput placeholder="Title" formControlName="title"></textarea>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <textarea matInput placeholder="Description" formControlName="description"></textarea>
+    </mat-form-field>
+  </form>
+</div>

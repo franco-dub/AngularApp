@@ -51,7 +51,9 @@ import { BottomSheetSecretaryComponent } from './components/secretary/bottom-she
 import { ModifyTeachingComponent } from './components/secretary/modify/modify-teaching/modify-teaching.component';
 import { ModifyCourseComponent } from './components/secretary/modify/modify-course/modify-course.component';
 import { OpenTicketComponent } from './components/professor/open-ticket/open-ticket.component';
-
+import { StorageServiceModule } from 'angular-webstorage-service';
+import { MenageTicketsComponent } from './components/professor/menage-tickets/menage-tickets.component';
+import { TicketDetailsComponent } from './components/professor/ticket-details/ticket-details.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +74,8 @@ import { OpenTicketComponent } from './components/professor/open-ticket/open-tic
     ModifyTeachingComponent,
     ModifyCourseComponent,
     OpenTicketComponent,
+    MenageTicketsComponent,
+    TicketDetailsComponent,
 
   ],
   imports: [
@@ -101,7 +105,8 @@ import { OpenTicketComponent } from './components/professor/open-ticket/open-tic
     DlDateTimePickerDateModule,
     MatBottomSheetModule,
     MatDividerModule,
-    MatTreeModule
+    MatTreeModule,
+    StorageServiceModule
   ],
   providers: [
     GetService,

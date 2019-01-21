@@ -26,7 +26,7 @@ export class OpenTicketComponent implements OnInit {
   ticket: Ticket = {};
   prof: Professor;
 
-  constructor( public putService: PutService,
+  constructor(private putService: PutService,
               private postService: PostService,
               private getService: GetService,
               private router: RoutingService,

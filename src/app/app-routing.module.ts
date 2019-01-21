@@ -13,6 +13,7 @@ import {ModifyUserComponent} from './components/secretary/modify/modify-user/mod
 import {ModifyTeachingComponent} from './components/secretary/modify/modify-teaching/modify-teaching.component';
 import {ModifyCourseComponent} from './components/secretary/modify/modify-course/modify-course.component';
 import {OpenTicketComponent} from './components/professor/open-ticket/open-ticket.component';
+import { MenageTicketsComponent } from './components/professor/menage-tickets/menage-tickets.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -26,7 +27,8 @@ const routes: Routes = [
   {path: 'modify-user', component: ModifyUserComponent},
   {path: 'modify-teaching', component: ModifyTeachingComponent},
   {path: 'modify-course', component: ModifyCourseComponent},
-  {path: 'open-ticket', component: OpenTicketComponent}
+  {path: 'open-ticket', component: OpenTicketComponent},
+  {path: 'menage-tickets', component: MenageTicketsComponent}
 ];
 
 @NgModule({
