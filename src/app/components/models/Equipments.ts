@@ -1,5 +1,5 @@
 export interface Equipments{
   name: string;
-  idequipment: number;
+  equipmentId: number;
   aulaHasEquipment: boolean;
 }

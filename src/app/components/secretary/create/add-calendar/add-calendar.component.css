@@ -1,0 +1,81 @@
+
+
+.table-container {
+  height: 600px;
+  overflow: auto;
+}
+
+.radio-button{
+  display: inline-flex;
+  margin: 5px;
+}
+
+.page{
+  width: 100%;
+  overflow: auto;
+  margin-bottom: 30px;
+}
+
+.button-container{
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.first-box-container{
+  text-align: center;
+  color: black;
+  width: 80px;
+  height: 50px;
+  overflow: auto;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.other-box-container{
+  color: dimgrey;
+  width: 150px;
+  height: 60px;
+  overflow: auto;
+  text-align: center;
+}
+
+.column-title{
+  font-size: x-large;
+}
+
+.column-data{
+  font-size: large;
+}
+
+table {
+  width: 100%;
+  height: 400px;
+}
+
+td.mat-column-star {
+  width: 20px;
+  padding-right: 8px;
+}
+
+th.mat-column-position, td.mat-column-position {
+  padding-left: 8px;
+}
+
+.mat-table-sticky:first-child {
+  border-right: 1px solid #000000;
+
+}
+
+.mat-table-sticky:last-child {
+  border-left: 1px solid #000000;
+}
+
+.unSelectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+

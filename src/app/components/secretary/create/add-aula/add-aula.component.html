@@ -1,0 +1,74 @@
+<div class="container-fluid">
+
+  <mat-grid-list [cols]="2" rowHeight="2:1">
+    <mat-grid-tile>
+      <div align="center">
+        <h3>Insert Aula name</h3>
+        <mat-form-field appearance="legacy">
+          <input matInput class="form-control form-control-sm"
+                 id="name" placeholder="Insert Aula name"
+                 [(ngModel)]="name">
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div align="center">
+        <h4>Insert capacity</h4>
+        <mat-form-field appearance="legacy">
+          <input matInput type="number" min="0" step="1" id="capacity"
+                 placeholder="Insert capacity"
+                 [(ngModel)]="capacity">
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <div>
+    <mat-grid-list [cols]="2"  rowHeight="3:1">
+      <mat-grid-tile>
+        <div align="center">
+          <h3>Insert Longitude</h3>
+          <mat-form-field appearance="legacy">
+            <input matInput type="number" id="longitude" placeholder="Insert longitude"
+                   [(ngModel)]="longitude">
+          </mat-form-field>
+        </div>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <div align="center">
+          <h3>Insert Latitude</h3>
+          <mat-form-field appearance="legacy" >
+            <input matInput type="number" id="latitude" placeholder="Insert latitude"
+                   [(ngModel)]="latitude">
+          </mat-form-field>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+
+
+  <div>
+    <mat-grid-list [cols]="columns" rowHeight="4:1">
+      <mat-grid-tile *ngFor="let item of equipments; let i = index">
+        <div align="center">
+          <mat-checkbox (change)="optionsChecked(i)">
+            {{ item.name }}
+          </mat-checkbox>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+
+  <div align="center">
+    <mat-card-actions align="center" class="example-card">
+      <mat-card-content>
+        <button color="warn" mat-raised-button (click)="onSubmit()">Submit</button>
+      </mat-card-content>
+    </mat-card-actions>
+  </div>
+  <div>
+
+
+  </div>
+</div>
