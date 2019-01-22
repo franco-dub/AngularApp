@@ -30,7 +30,7 @@ export class AddStudyCourseComponent implements OnInit {
 
   missingArguments: boolean;
 
-  constructor(private getService:GetService,
+  constructor(private getService: GetService,
               private postService: PostService,
               private router: RoutingService) { }
 

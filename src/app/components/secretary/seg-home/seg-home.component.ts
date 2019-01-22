@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {RoutingService} from "../../../servicies/routing.service";
-import {GetService} from "../../../servicies/get.service";
-import {Ticket} from "../../models/Ticket";
-import {PostService} from "../../../servicies/post.service";
-import {MatBottomSheet} from "@angular/material";
+import {RoutingService} from '../../../servicies/routing.service';
+import {GetService} from '../../../servicies/get.service';
+import {Ticket} from '../../models/Ticket';
+import {PostService} from '../../../servicies/post.service';
+import {MatBottomSheet} from '@angular/material';
+import {BottomSheetComponent} from '../../bottom-sheet/bottom-sheet.component';
+import {AuthService} from '../../../servicies/auth.service';
+import {Secretary} from '../../models/Secretary';
 import {BottomSheetSecretaryComponent} from '../bottom-sheet-secretary/bottom-sheet-secretary.component';
 import {Observable} from 'rxjs';
 
@@ -29,49 +32,50 @@ export class SegHomeComponent implements OnInit {
   constructor(private router: RoutingService,
               private getService: GetService,
               private postService: PostService,
-              private bottomSheet: MatBottomSheet) { }
+              private bottomSheet: MatBottomSheet) {}
 
   ngOnInit() {
-    if(this.router.getHistory()[this.router.getHistory().length - 1] != 'seg-home') {
+    if (this.router.getHistory()[this.router.getHistory().length - 1] !== 'seg-home') {
       this.router.loadUrl('seg-home');
     }
     this.refresh();
   }
 
-  addAula(): void{
-    this.router.navigate("add-aula");
+  addAula(): void {
+    this.router.navigate('add-aula');
   }
 
-  modifyAula(){
-    this.router.navigate("modify-aula");
+  modifyAula() {
+    this.router.navigate('modify-aula');
   }
 
-  addUser(): void{
-    this.router.navigate("add-user");
+  addUser(): void {
+    this.router.navigate('add-user');
   }
 
-  modifyUser(){
-    this.router.navigate("modify-user")
+
+  modifyUser() {
+    this.router.navigate('modify-user');
   }
 
-  addTeaching():void{
-    this.router.navigate("add-teaching");
+  addTeaching(): void {
+    this.router.navigate('add-teaching');
   }
 
-  modifyTeaching(){
-    this.router.navigate("modify-teaching");
+  modifyTeaching() {
+    this.router.navigate('modify-teaching');
   }
 
-  addStudyCourse(): void{
-    this.router.navigate("add-course");
+  addStudyCourse(): void {
+    this.router.navigate('add-course');
   }
 
-  modifyStudyCourse(){
-    this.router.navigate("modify-course")
+  modifyStudyCourse() {
+    this.router.navigate('modify-course');
   }
 
-  addCalendar(): void{
-    this.router.navigate("add-calendar");
+  addCalendar(): void {
+    this.router.navigate('add-calendar');
   }
 
   modifyCalendar(){
@@ -94,7 +98,7 @@ export class SegHomeComponent implements OnInit {
     });
   }
 
-  accept(ticket: Ticket){
+  accept(ticket: Ticket) {
     ticket.status = 'ACCEPTED';
     this.postService.sendTicket(ticket).subscribe(ticket => {
       if (ticket != null){

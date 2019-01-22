@@ -1,0 +1,13 @@
+<h2 align="center">Menage Tickets</h2>
+<mat-list>
+  <h3 mat-subheader>Tickets</h3>
+  <mat-list-item *ngFor="let ticket of tickets" [class.selected]="ticket === selectedTicket"(click)="loadDetails(ticket)">
+    <mat-icon mat-list-icon>create</mat-icon>
+    <h4 mat-line>{{ticket.room.name}}</h4>
+    <p mat-line> {{ticket.title}} </p>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+  <div *ngIf= 'ticketDetails'>
+    <app-ticket-details [ticket]="selectedTicket"></app-ticket-details>
+  </div>
+</mat-list>

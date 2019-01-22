@@ -46,6 +46,8 @@ export class GetService {
 
   findAllTicketUrl: string = "http://localhost:8080/SpringApp/ticket/findAll";
 
+  findByProfIdUrl: string = "http://localhost:8080/SpringApp/ticket/findByProfId/";
+
 
   constructor(private http: HttpClient) { }
 
@@ -99,6 +101,10 @@ export class GetService {
 
   findAllTicket(): Observable<Array<Ticket>>{
     return this.http.get<Array<Ticket>>(this.findAllTicketUrl);
+  }
+
+  findByProfId(id: number): Observable<Array<Ticket>>{
+    return this.http.get<Array<Ticket>>(this.findByProfIdUrl + id);
   }
 
 }
