@@ -1,12 +1,18 @@
 .list-container{
   margin: 10px;
-  height: 600px;
   overflow: auto;
 }
 
 .my-class{
-  margin: 10px;
   overflow: auto;
+  height: -webkit-calc(100% - 80px);
+}
+
+.tab {
+  overflow: hidden;
+  margin-left: 5px;
+  border-left: 5px solid;
+  background-color: #f1f1f1;
 }
 
 .button-container{
@@ -22,14 +28,23 @@
   font-size: large;
 }
 
-button{
+.button{
   font-size: medium;
   margin: 1px;
 }
 
+button{
+  border: 1px;
+  font-size: medium;
+}
 
 .my-green{
   background-color: #09ba00;
   color: white;
+}
+
+
+mat-sidenav {
+  border: none !important;
 }
 

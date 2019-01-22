@@ -7,6 +7,9 @@ import {MatBottomSheet} from '@angular/material';
 import {BottomSheetComponent} from '../../bottom-sheet/bottom-sheet.component';
 import {AuthService} from '../../../servicies/auth.service';
 import {Secretary} from '../../models/Secretary';
+import {BottomSheetSecretaryComponent} from '../bottom-sheet-secretary/bottom-sheet-secretary.component';
+import {Observable} from 'rxjs';
+
 
 @Component({
   selector: 'app-seg-home',
@@ -16,6 +19,15 @@ import {Secretary} from '../../models/Secretary';
 export class SegHomeComponent implements OnInit {
 
   tickets: Array<Ticket> = [];
+  closed: Array<Ticket> = [];
+  opened: Array<Ticket> = [];
+
+  SUser: boolean = false;
+  SAula: boolean = false;
+  SCalendar: boolean = false;
+  STeaching: boolean = false;
+  SCourse: boolean = false;
+
 
   constructor(private router: RoutingService,
               private getService: GetService,
@@ -26,7 +38,7 @@ export class SegHomeComponent implements OnInit {
     if (this.router.getHistory()[this.router.getHistory().length - 1] !== 'seg-home') {
       this.router.loadUrl('seg-home');
     }
-    this.refreshTicket();
+    this.refresh();
   }
 
   addAula(): void {
@@ -40,6 +52,7 @@ export class SegHomeComponent implements OnInit {
   addUser(): void {
     this.router.navigate('add-user');
   }
+
 
   modifyUser() {
     this.router.navigate('modify-user');
@@ -65,49 +78,77 @@ export class SegHomeComponent implements OnInit {
     this.router.navigate('add-calendar');
   }
 
-  modifyCalendar() {
-
+  modifyCalendar(){
+    this.router.navigate("modify-calendar");
   }
 
-  resume(ticket: Ticket) {
-    ticket.status = 'ACCEPTED';
-    this.bottomSheet.open(BottomSheetComponent, {data: [{type: 'RESUME'}, {ticket: ticket}]}).dismiss(result => {
-      this.postService.sendTicket(result).subscribe(tickett => {
-        if (tickett != null) {
-          this.refreshTicket();
-        }
-      });
+  resume(ticket: Ticket){
+//    ticket.status = 'ACCEPTED';
+    const bottomsheet = this.bottomSheet.open(BottomSheetSecretaryComponent, {data: [{type: 'RESUME'}, {ticket: ticket}]});
+    bottomsheet.afterDismissed().subscribe(()=>{
+      this.refresh();
     });
   }
 
-  delete(ticket: Ticket) {
-    ticket.status = 'REJECTED';
-    this.bottomSheet.open(BottomSheetComponent, {data: [{type: 'REJECTED'}, {ticket: ticket}]})
-      .dismiss(result => {
-        this.postService.sendTicket(result).subscribe(tickett => {
-          if (tickett != null) {
-            this.refreshTicket();
-          }
-        });
-      }
-    );
+  delete(ticket: Ticket){
+    const bottomsheet = this.bottomSheet.open(BottomSheetSecretaryComponent,{data: [{type: 'REJECTED'}, {ticket: ticket}]});
+    bottomsheet.afterDismissed().subscribe(()=>{
+      this.refresh();
+
+    });
   }
 
   accept(ticket: Ticket) {
     ticket.status = 'ACCEPTED';
-    this.postService.sendTicket(ticket).subscribe(tickett => {
-      if (tickett != null) {
-        this.refreshTicket();
+    this.postService.sendTicket(ticket).subscribe(ticket => {
+      if (ticket != null){
+        this.refresh();
       }
     });
   }
 
-  refreshTicket() {
-    this.getService.findAllTicket().subscribe(tickets => {
-      this.tickets = tickets;
+  refresh(){
+    this.tickets = [];
+    this.opened = [];
+    this.closed = [];
+
+    this.getService.findAllTicket().subscribe(ticket => {
+      this.tickets = ticket;
       this.tickets.sort();
+      this.tickets.forEach(ticket => {
+        if (ticket.status == "REJECTED") {
+          this.closed.push(ticket);
+        } else if (ticket.status == "SOLVED") {
+          this.closed.push(ticket);
+        } else {
+          this.opened.push(ticket);
+        }
+        console.log(this.opened);
+        console.log(this.closed);
+      });
     });
+
   }
 
+}
 
+function refreshTicket(tickets: Array<Ticket>, opened: Array<Ticket>, closed: Array<Ticket>, getService: GetService){
+  tickets = [];
+  opened = [];
+  closed = [];
+  getService.findAllTicket().subscribe(ticket => {
+    tickets = ticket;
+    tickets.sort();
+    tickets.forEach( ticket=>{
+      if (ticket.status == "REJECTED") {
+        closed.push(ticket);
+      }else if (ticket.status == "SOLVED"){
+        closed.push(ticket);
+      }else{
+        opened.push(ticket);
+      }
+      console.log(opened);
+      console.log(closed);
+    });
+  });
 }

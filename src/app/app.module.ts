@@ -125,7 +125,10 @@ import { DeleteService } from './servicies/delete.service';
   ],
   bootstrap: [AppComponent],
 
-  entryComponents: [BottomSheetComponent]
+  entryComponents: [
+    BottomSheetComponent,
+    BottomSheetSecretaryComponent
+  ]
 })
 
 export class AppModule { }

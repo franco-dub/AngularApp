@@ -1,9 +1,10 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_BOTTOM_SHEET_DATA} from '@angular/material';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef} from '@angular/material';
 import {Ticket} from '../../models/Ticket';
 import {RoomEquipment} from '../../models/RoomEquipment';
 import {GetService} from '../../../servicies/get.service';
 import {PutService} from '../../../servicies/put.service';
+import {SegHomeComponent} from '../seg-home/seg-home.component';
 
 @Component({
   selector: 'app-bottom-sheet-secretary',
@@ -19,26 +20,33 @@ export class BottomSheetSecretaryComponent implements OnInit {
   newComment = '';
 
   constructor(@Inject(MAT_BOTTOM_SHEET_DATA) private data: any, private getService: GetService,
-              private putService: PutService) { }
+              private putService: PutService, private bottomSheetRef: MatBottomSheetRef<SegHomeComponent>) {
+  }
 
   ngOnInit() {
-    this.ticket = this.data.ticket as Ticket;
-    this.type = this.data.type as string;
+    this.ticket = this.data[1].ticket as Ticket;
+    this.type = this.data[0].type as string;
     this.getService.findEquipmentByRoom(this.ticket.room).subscribe(roomEquipments => {
       this.roomEquipments = roomEquipments;
+      console.log(this.type);
+      console.log(this.ticket);
+      console.log(this.roomEquipments);
     });
   }
-  saveStatus() {
+
+  saveStatus(stat:string) {
     this.ticket.comment = this.newComment;
-    this.ticket.status = this.type;
+    this.ticket.status = stat;
+
     if (this.roomEquipments.length != 0) {
       this.putService.updateRoomEquipment(this.roomEquipments).subscribe();
-
     }
 
     this.putService.updateTicket(this.ticket).subscribe(ticket => {
       this.data = ticket;
     });
+
+    this.bottomSheetRef.dismiss();
 
   }
 
@@ -50,3 +58,4 @@ export class BottomSheetSecretaryComponent implements OnInit {
     }
   }
 }
+
