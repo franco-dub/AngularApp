@@ -31,7 +31,9 @@ import {
   MatNativeDateModule,
   MatRadioModule,
   MatBottomSheetModule,
-  MatDividerModule, MatTreeModule
+  MatDividerModule,
+  MatTreeModule,
+  MatDialogModule
 } from '@angular/material';
 import { AddTeachingComponent } from './components/secretary/create/add-teaching/add-teaching.component';
 import { AddStudyCourseComponent } from './components/secretary/create/add-study-course/add-study-course.component';
@@ -54,6 +56,7 @@ import { OpenTicketComponent } from './components/professor/open-ticket/open-tic
 import { StorageServiceModule } from 'angular-webstorage-service';
 import { MenageTicketsComponent } from './components/professor/menage-tickets/menage-tickets.component';
 import { TicketDetailsComponent } from './components/professor/ticket-details/ticket-details.component';
+import { DeleteService } from './servicies/delete.service';
 
 @NgModule({
   declarations: [
@@ -106,7 +109,8 @@ import { TicketDetailsComponent } from './components/professor/ticket-details/ti
     MatBottomSheetModule,
     MatDividerModule,
     MatTreeModule,
-    StorageServiceModule
+    StorageServiceModule,
+    MatDialogModule
   ],
   providers: [
     GetService,
@@ -116,7 +120,8 @@ import { TicketDetailsComponent } from './components/professor/ticket-details/ti
     AuthService,
     PutService,
     DatePipe,
-    RoutingService
+    RoutingService,
+    DeleteService
   ],
   bootstrap: [AppComponent],
 

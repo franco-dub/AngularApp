@@ -12,11 +12,13 @@
     <div class="my_class">
         <mat-card-actions align="center" class="example-card">
           <mat-card-content>
-            <button mat-raised-button color="warn" type="submit">
+            <button mat-raised-button type="submit">
               Submit
             </button>
+            <button mat-raised-button (click)="onDelete()" color="warn" type="button">
+                DELETE
+              </button>
           </mat-card-content>
         </mat-card-actions>
       </div>
   </form>
-</div>

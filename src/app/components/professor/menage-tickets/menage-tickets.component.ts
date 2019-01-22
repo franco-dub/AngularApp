@@ -21,10 +21,10 @@ export class MenageTicketsComponent implements OnInit {
               }
 
   ngOnInit() {
-    this.getService.findByProfId(this.profId).subscribe(tickets => {
+     this.getService.findByProfId(this.profId).subscribe(tickets => {
       this.tickets = tickets;
       this.tickets.sort();
-    });
+    }); 
   }
 
   private ticketDetails = false;
