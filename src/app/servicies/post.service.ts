@@ -35,7 +35,7 @@ export class PostService {
 
   addNewDayLectureUrl: string = "http://localhost:8080/SpringApp/lectureCalendar/add";
 
-  sendTicketUrl: string = "http://localhost:8080/SpringApp/ticket/";
+  sendTicketUrl: string = "http://localhost:8080/SpringApp/ticket/add";
 
 
   constructor(private http: HttpClient) { }
@@ -73,7 +73,7 @@ export class PostService {
   }
 
   sendTicket(ticket: Ticket): Observable<Ticket>{
-    return this.http.put<Ticket>(this.sendTicketUrl + ticket.ticketId, ticket, httpOptions);
+    return this.http.post<Ticket>(this.sendTicketUrl, ticket, httpOptions);
   }
 
 }

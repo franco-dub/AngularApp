@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {GetService} from "../../../../servicies/get.service";
-import {Router} from "@angular/router";
-import {Room} from "../../../models/Room";
-import {RoomEquipment} from "../../../models/RoomEquipment";
-import {Equipments} from "../../../models/Equipments";
-import {PutService} from "../../../../servicies/put.service";
+import {GetService} from '../../../../servicies/get.service';
+import {Router} from '@angular/router';
+import {Room} from '../../../models/Room';
+import {RoomEquipment} from '../../../models/RoomEquipment';
+import {Equipments} from '../../../models/Equipments';
+import {PutService} from '../../../../servicies/put.service';
 
 @Component({
   selector: 'app-modify-aula',
@@ -21,18 +21,18 @@ export class ModifyAulaComponent implements OnInit {
 
   equipments: Array<Equipments> = [];
 
-  columns: number = 4;
+  columns = 4;
 
-  latitude: string = '';
+  latitude = '';
 
-  longitude: string = '';
+  longitude = '';
 
-  location: string = '';
+  location = '';
 
   constructor(private putService: PutService, private getService: GetService, private router: Router) { }
 
   ngOnInit() {
-    this.getService.findAllRoom().subscribe(rooms=>{
+    this.getService.findAllRoom().subscribe(rooms => {
       this.rooms = rooms;
     });
   }
@@ -41,25 +41,25 @@ export class ModifyAulaComponent implements OnInit {
     this.equipments[index].aulaHasEquipment = !this.equipments[index].aulaHasEquipment;
   }
 
-  findRoomEquipment(){
-    this.getService.getEquipmentData().subscribe(equipments=>{
+  findRoomEquipment() {
+    this.getService.getEquipmentData().subscribe(equipments => {
 
-      if(equipments!=null){
+      if (equipments != null) {
 
         this.equipments = equipments;
 
-        this.getService.findEquipmentByRoom(this.selectedRoom).subscribe(roomEquipments=>{
+        this.getService.findEquipmentByRoom(this.selectedRoom).subscribe(roomEquipments => {
 
           this.roomEquipments = roomEquipments;
-          let location = this.selectedRoom.location.split(', ');
+          const location = this.selectedRoom.location.split(', ');
           console.log(location);
           this.longitude = location[0];
           this.latitude = location[1];
 
           let i = 0;
-          for (let equipment of this.equipments){
-            for (let roomEquipment of this.roomEquipments){
-              if (equipment.equipmentId == roomEquipment.equipment.equipmentId){
+          for (const equipment of this.equipments) {
+            for (const roomEquipment of this.roomEquipments) {
+              if (equipment.equipmentId == roomEquipment.equipment.equipmentId) {
                 console.log(equipment);
                 console.log(roomEquipment);
                 this.equipments[i].aulaHasEquipment = true;
@@ -77,24 +77,24 @@ export class ModifyAulaComponent implements OnInit {
 
 
     let i: number;
-    let checkedEquipments = [];
+    const checkedEquipments = [];
 
     for (i = 0; i < this.equipments.length; i++) {
       if (this.equipments[i].aulaHasEquipment == null) {
-        this.equipments[i].aulaHasEquipment = false
+        this.equipments[i].aulaHasEquipment = false;
       }
       if (this.equipments[i].aulaHasEquipment) {
         checkedEquipments.push(this.equipments[i]);
       }
     }
-    this.selectedRoom.location = this.longitude + ", " + this.latitude;
+    this.selectedRoom.location = this.longitude + ', ' + this.latitude;
 
-    let roomEquipment: Array<RoomEquipment> = [];
+    const roomEquipment: Array<RoomEquipment> = [];
 
     this.putService.updateRoom(this.selectedRoom).subscribe(aula => {
       console.log(aula);
-      if(aula != null) {
-        for(let equipmen of checkedEquipments) {
+      if (aula != null) {
+        for (const equipmen of checkedEquipments) {
           roomEquipment.push({
             room: aula,
             equipment: equipmen,
@@ -104,8 +104,9 @@ export class ModifyAulaComponent implements OnInit {
         }
         console.log(roomEquipment);
         this.putService.updateRoomEquipment(roomEquipment).subscribe(roomEquipments => {
-          if (roomEquipments != null)
+          if (roomEquipments != null) {
             this.router.navigate(['seg-home']);
+          }
         });
       }
     });

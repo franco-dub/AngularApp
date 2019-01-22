@@ -13,6 +13,8 @@ import {AuthService} from "../../servicies/auth.service";
 })
 export class LoginComponent implements OnInit {
 
+  logged: any;
+
   user: Login= {email: "",
                 password: "",
                 hide: false};
@@ -23,9 +25,11 @@ export class LoginComponent implements OnInit {
 
   secretary: Secretary;
 
-  constructor(private getService: GetService, private router: Router, private authService: AuthService) { }
+  constructor(private getService: GetService, 
+    private router: Router, 
+    private authService: AuthService) { }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   login(email, password) {
 
@@ -55,7 +59,7 @@ export class LoginComponent implements OnInit {
             this.professor = loggedUser.professor;
             this.authService.sendToken('loggedProfessor', 'token');
             this.authService.sendToken(this.professor, 'user');
-            this.router.navigate(["seg-home"]);
+            this.router.navigate(["menage-tickets"]);
             break;
 
           case "STUDENT":
