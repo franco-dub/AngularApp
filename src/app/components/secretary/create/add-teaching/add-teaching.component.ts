@@ -6,6 +6,7 @@ import {Course} from '../../../models/Course';
 import {Professor} from '../../../models/Professor';
 import {Router} from '@angular/router';
 import {RoutingService} from '../../../../servicies/routing.service';
+import {AuthService} from '../../../../servicies/auth.service';
 
 @Component({
   selector: 'app-add-teaching',
@@ -36,20 +37,23 @@ export class AddTeachingComponent implements OnInit {
 
   constructor(private postService: PostService,
               private getService: GetService,
-              private router: RoutingService) { }
+              private router: RoutingService,
+              private authService: AuthService) { }
 
   ngOnInit() {
-    if (this.router.getHistory()[this.router.getHistory().length - 1] != 'add-teaching') {
-    this.router.loadUrl('add-teaching');
-    }
+    this.router.currentLocation('add-teaching');
+    if(this.authService.isLoggednIn()) {
 
-    this.getService.findAllCourses().subscribe(courses => {
-      console.log(courses);
-      this.courses = courses;
-      this.getService.findAllProfessor().subscribe(professors => {
-        this.professors = professors;
+      this.getService.findAllCourses().subscribe(courses => {
+        console.log(courses);
+        this.courses = courses;
+        this.getService.findAllProfessor().subscribe(professors => {
+          this.professors = professors;
+        });
       });
-    });
+    }else{
+      this.router.navigate('');
+    }
   }
 
   fillVector() {

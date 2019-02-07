@@ -2,20 +2,20 @@
   <mat-sidenav  mode="side" opened [style.background-color]="'#f4ce42'">
     <mat-list>
       <mat-list-item>
-        <button  [style.background-color]="'#f4ce42'" mat-button [style.font-size]="'large'"
-                 [style.color]="'black'" (click)="SUser = !SUser">User</button>
+        <button  color="primary" mat-flat-button [style.font-size]="'large'"
+                 (click)="SUser = !SUser">User</button>
       </mat-list-item>
       <mat-divider></mat-divider>
       <mat-divider></mat-divider>
 
       <div *ngIf="SUser">
         <mat-list-item>
-          <button class="tab" mat-button [style.background-color]="'#f4ce42'" mat-flat-button [style.color]="'black'"
+          <button class="tab" mat-flat-button color="primary" mat-flat-button
                   (click)="addUser()">Add new User</button>
         </mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item>
-          <button class="tab" mat-button [style.background-color]="'#f4ce42'" [style.color]="'black'"
+          <button class="tab" mat-flat-button color="primary"
                   (click)="modifyUser()">Edit User</button>
         </mat-list-item>
         <mat-divider></mat-divider>
@@ -25,7 +25,7 @@
       <mat-divider></mat-divider>
 
       <mat-list-item>
-        <button  [style.background-color]="'#f4ce42'" mat-button [style.color]="'black'"
+        <button mat-flat-button color="primary"
                  [style.font-size]="'large'" (click)="SAula = !SAula">Room</button>
       </mat-list-item>
       <mat-divider></mat-divider>
@@ -33,12 +33,12 @@
 
       <div *ngIf="SAula">
         <mat-list-item>
-          <button class="tab" mat-button [style.background-color]="'#f4ce42'" [style.color]="'black'"
+          <button class="tab" mat-flat-button color="primary"
                   (click)="addAula()">Add new Room</button>
         </mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item>
-          <button class="tab" mat-button [style.background-color]="'#f4ce42'" [style.color]="'black'"
+          <button class="tab" mat-flat-button color="primary"
                   (click)="modifyAula()">Edit Room</button>
         </mat-list-item>
         <mat-divider></mat-divider>
@@ -48,7 +48,7 @@
       <mat-divider></mat-divider>
 
       <mat-list-item>
-        <button  [style.background-color]="'#f4ce42'" mat-button [style.color]="'black'"
+        <button  color="primary" mat-flat-button
                  [style.font-size]="'large'" (click)="SCalendar = !SCalendar">Calendar</button>
       </mat-list-item>
       <mat-divider></mat-divider>
@@ -56,12 +56,12 @@
 
       <div *ngIf="SCalendar">
         <mat-list-item>
-          <button class="tab" mat-button [style.background-color]="'#f4ce42'" [style.color]="'black'"
+          <button class="tab" mat-flat-button color="primary"
                   (click)="addCalendar()">Add new Calendar</button>
         </mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item>
-          <button class="tab" mat-button [style.background-color]="'#f4ce42'" [style.color]="'black'"
+          <button class="tab" mat-flat-button color="primary"
                   (click)="modifyCalendar()">Edit Calendar</button>
         </mat-list-item>
         <mat-divider></mat-divider>
@@ -71,7 +71,7 @@
       <mat-divider></mat-divider>
 
       <mat-list-item>
-        <button  [style.background-color]="'#f4ce42'" mat-button [style.color]="'black'"
+        <button  color="primary" mat-flat-button
                  [style.font-size]="'large'"  (click)="SCourse = !SCourse">Course</button>
       </mat-list-item>
       <mat-divider></mat-divider>
@@ -80,12 +80,12 @@
       <div *ngIf="SCourse">
         <mat-list-item>
 
-          <button class="tab" mat-button [style.background-color]="'#f4ce42'" [style.color]="'black'"
+          <button class="tab" mat-flat-button color="primary"
                   (click)="addStudyCourse()">Add new Course</button>
         </mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item>
-          <button class="tab" mat-button [style.background-color]="'#f4ce42'" [style.color]="'black'"
+          <button class="tab" mat-flat-button color="primary"
                   (click)="modifyStudyCourse()">Edit Course</button>
         </mat-list-item>
         <mat-divider></mat-divider>
@@ -95,7 +95,7 @@
       <mat-divider></mat-divider>
 
       <mat-list-item>
-        <button  [style.background-color]="'#f4ce42'" mat-button [style.color]="'black'"
+        <button  color="primary" mat-flat-button
                  [style.font-size]="'large'" (click)="STeaching = !STeaching">Module</button>
       </mat-list-item>
       <mat-divider></mat-divider>
@@ -103,12 +103,12 @@
 
       <div *ngIf="STeaching">
         <mat-list-item>
-          <button class="tab" mat-button [style.background-color]="'#f4ce42'" [style.color]="'black'"
+          <button class="tab" mat-flat-button color="primary"
                   (click)="addTeaching()">Add new Module</button>
         </mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item>
-          <button class="tab" mat-button [style.background-color]="'#f4ce42'" [style.color]="'black'"
+          <button class="tab" mat-flat-button color="primary"
                   (click)="modifyTeaching()">Edit Module</button>
         </mat-list-item>
         <mat-divider></mat-divider>
@@ -142,7 +142,7 @@
                 <button mat-flat-button class="my-green" [style.color]="'white'" (click)="resume(ticket)">
                   Resolve</button>
                 <button mat-flat-button color="warn" (click)="delete(ticket)">Delete</button>
-                <button mat-flat-button [style.background-color]="'blue'" [style.color]="'white'"
+                <button mat-flat-button color="accent"
                         *ngIf="ticket.status == 'PENDING'" (click)="accept(ticket)">Accept</button>
               </mat-card-actions>
             </mat-card>

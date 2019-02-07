@@ -33,7 +33,7 @@ import {
   MatBottomSheetModule,
   MatDividerModule,
   MatTreeModule,
-  MatDialogModule
+  MatDialogModule, MatSnackBarModule
 } from '@angular/material';
 import { AddTeachingComponent } from './components/secretary/create/add-teaching/add-teaching.component';
 import { AddStudyCourseComponent } from './components/secretary/create/add-study-course/add-study-course.component';
@@ -57,6 +57,14 @@ import { StorageServiceModule } from 'angular-webstorage-service';
 import { MenageTicketsComponent } from './components/professor/menage-tickets/menage-tickets.component';
 import { TicketDetailsComponent } from './components/professor/ticket-details/ticket-details.component';
 import { DeleteService } from './servicies/delete.service';
+import { ModifyCalendarComponent } from './components/secretary/modify/modify-calendar/modify-calendar.component';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import {AngularFireAuthModule} from '@angular/fire/auth';
+import {AngularFireStorageModule} from '@angular/fire/storage';
+import {AngularFireModule} from '@angular/fire';
+import {environment} from '../environments/environment';
+
 
 @NgModule({
   declarations: [
@@ -79,6 +87,8 @@ import { DeleteService } from './servicies/delete.service';
     OpenTicketComponent,
     MenageTicketsComponent,
     TicketDetailsComponent,
+    ModifyCalendarComponent,
+
 
   ],
   imports: [
@@ -110,7 +120,14 @@ import { DeleteService } from './servicies/delete.service';
     MatDividerModule,
     MatTreeModule,
     StorageServiceModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    AngularFireStorageModule,
+    AngularFireModule
   ],
   providers: [
     GetService,
@@ -121,13 +138,17 @@ import { DeleteService } from './servicies/delete.service';
     PutService,
     DatePipe,
     RoutingService,
-    DeleteService
+    DeleteService,
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    AngularFireDatabaseModule,
+    AngularFireStorageModule
   ],
   bootstrap: [AppComponent],
 
   entryComponents: [
     BottomSheetComponent,
-    BottomSheetSecretaryComponent
+    BottomSheetSecretaryComponent,
   ]
 })
 

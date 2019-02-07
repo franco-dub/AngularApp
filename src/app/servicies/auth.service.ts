@@ -1,15 +1,12 @@
 import { Injectable } from '@angular/core';
-import {Router} from "@angular/router";
-import { BehaviorSubject } from 'rxjs';
-import { Professor } from '../components/models/Professor';
-import { Token, tokenName } from '@angular/compiler';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import {MatSnackBar} from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private router: Router) { }
+
+  constructor(private snackBar: MatSnackBar) { }
 
 
   sendToken(token: any, tokenName:string) {
@@ -21,7 +18,8 @@ export class AuthService {
   }
 
   isLoggednIn() {
-    return this.getToken('token') !== null;
+    return this.getToken('token') != null;
+    //return true;
   }
 
   getLoggedUser(tokenName: string): any{
@@ -30,12 +28,11 @@ export class AuthService {
 
   logout() {
     sessionStorage.removeItem("token");
-    this.router.navigate([""]);
+    sessionStorage.removeItem('user');
   }
 
-  deleteToken(){
-    sessionStorage.removeItem("token");
-    //this.router.navigate([""]);
+  toast(message: string){
+    this.snackBar.open(message, '', {duration: 2000});
   }
 
 }

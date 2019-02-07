@@ -20,33 +20,35 @@ const httpOptions = {
 @Injectable()
 export class GetService {
 
-  loginUrl: string = "http://localhost:8080/SpringApp/login/"; // /{email}/{passwd}
+  private loginUrl: string = "http://localhost:8080/SpringApp/login/"; // /{email}/{passwd}
 
-  findAllCoursesUrl: string = "http://localhost:8080/SpringApp/course/findAll";
+  private findAllCoursesUrl: string = "http://localhost:8080/SpringApp/course/findAll";
 
-  findAllTeachingByCourseUrl: string = "http://localhost:8080/SpringApp/module/findAll";
+  private findAllTeachingByCourseUrl: string = "http://localhost:8080/SpringApp/module/findAll";
 
-  findAllTeachingUrl: string = "http://localhost:8080/SpringApp/module/findAll";
+  private findAllTeachingUrl: string = "http://localhost:8080/SpringApp/module/findAll";
 
-  findAllProfessorUrl: string = "http://localhost:8080/SpringApp/professor/findAll";
+  private findAllProfessorUrl: string = "http://localhost:8080/SpringApp/professor/findAll";
 
-  equipmentList: string = "http://localhost:8080/SpringApp/equipment/findAll";
+  private equipmentList: string = "http://localhost:8080/SpringApp/equipment/findAll";
 
-  findAllRoomUrl: string = "http://localhost:8080/SpringApp/room/findAll";
+  private findAllRoomUrl: string = "http://localhost:8080/SpringApp/room/findAll";
 
-  findEquipmentByRoomUrl: string = "http://localhost:8080/SpringApp/roomEquipment/findByRoomId";
+  private findEquipmentByRoomUrl: string = "http://localhost:8080/SpringApp/roomEquipment/findByRoomId";
 
-  findAllStudentUrl: string = "http://localhost:8080/SpringApp/student/findAll";
+  private findAllStudentUrl: string = "http://localhost:8080/SpringApp/student/findAll";
 
-  findAllSecretartUrl: string = "http://localhost:8080/SpringApp/secretary/findAll";
+  private findAllSecretartUrl: string = "http://localhost:8080/SpringApp/secretary/findAll";
 
-  findAllFreeAulasUrl: string = "http://localhost:8080/SpringApp/scheduling/findFreeRooms";
+  private findAllFreeAulasUrl: string = "http://localhost:8080/SpringApp/scheduling/findFreeRooms";
 
-  findAllLectureCalendarUrl: string = "http://localhost:8080/SpringApp/lectureCalendar/findAll";
+  private findAllLectureCalendarUrl: string = "http://localhost:8080/SpringApp/calendar/findAll";
 
-  findAllTicketUrl: string = "http://localhost:8080/SpringApp/ticket/findAll";
+  private findAllTicketUrl: string = "http://localhost:8080/SpringApp/ticket/findAll";
 
-  findByProfIdUrl: string = "http://localhost:8080/SpringApp/ticket/findByProfId/";
+  private findByProfIdUrl: string = "http://localhost:8080/SpringApp/ticket/findByProfId/";
+
+  private findLessonByTeachingUrl: string = "http://localhost:8080/SpringApp/calendar/getModuleCalendar";
 
 
   constructor(private http: HttpClient) { }
@@ -105,6 +107,10 @@ export class GetService {
 
   findByProfId(id: number): Observable<Array<Ticket>>{
     return this.http.get<Array<Ticket>>(this.findByProfIdUrl + id);
+  }
+
+  findLessonByTeaching(teaching: Module): Observable<Array<LectureCalendar>>{
+    return this.http.post<Array<LectureCalendar>>(this.findLessonByTeachingUrl, teaching, httpOptions);
   }
 
 }

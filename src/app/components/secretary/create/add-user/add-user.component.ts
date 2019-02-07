@@ -6,9 +6,10 @@ import {Course} from "../../../models/Course";
 import {Student} from "../../../models/Student";
 import {Professor} from "../../../models/Professor";
 import {Secretary} from "../../../models/Secretary";
-import {Module} from "../../../models/Module";
-import {Router} from "@angular/router";
 import {RoutingService} from "../../../../servicies/routing.service";
+import {AuthService} from '../../../../servicies/auth.service';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {AngularFireStorage} from '@angular/fire/storage';
 
 @Component({
   selector: 'app-add-user',
@@ -38,19 +39,29 @@ export class AddUserComponent implements OnInit {
 
   level = '';
 
+  photo: any;
+
   levels = ['prima', 'seconda', 'ordinario', 'straordinario', 'ruolo'];
 
   courses : Array<Course> = [];
 
-  constructor(private postService: PostService, private router: RoutingService, private getService: GetService) {}
+  constructor(private postService: PostService,
+              private router: RoutingService,
+              private getService: GetService,
+              private authService: AuthService,
+              private angularFireAuth: AngularFireAuth,
+              private angularFiredatabase: AngularFireStorage) {}
 
   ngOnInit() {
-    if(this.router.getHistory()[this.router.getHistory().length - 1] != 'add-user') {
-      this.router.loadUrl('add-user');
+    this.router.currentLocation('add-user');
+    if(this.authService.isLoggednIn()) {
+
+      this.getService.findAllCourses().subscribe(courses => {
+        this.courses = courses;
+      });
+    }else{
+      this.router.navigate('');
     }
-    this.getService.findAllCourses().subscribe(courses =>{
-      this.courses = courses;
-    });
   }
 
   submit(selectedUser: string, selectedCourse?: Course){
@@ -62,9 +73,20 @@ export class AddUserComponent implements OnInit {
         case "STUDENT":
           let student: Student;
           student = this.newStudent(person, selectedCourse);
-          this.postService.saveStudent(student).subscribe(saved=>{
-            if (saved != null)
-              this.router.navigate('seg-home');
+
+          this.createNewFirebase(student.person.email, student.person.password).then(ret=>{
+            console.log(ret);
+            this.postService.saveStudent(student).subscribe(saved=>{
+              console.log(saved);
+              this.angularFiredatabase.storage.ref('images/' + saved.person.personId + '/firebase-ico.jpg').put(this.photo[0]).
+              then(returned=> {
+                console.log(returned);
+              }).catch(err=>{
+                console.log(err);
+              });
+              if (saved != null)
+                this.router.navigate('seg-home');
+            });
           });
           break;
 
@@ -72,9 +94,12 @@ export class AddUserComponent implements OnInit {
           let professor: Professor;
           professor = this.newProfessor(person);
           this.selectedCourse = null;
-          this.postService.saveProfessor(professor).subscribe(saved=>{
-            if (saved != null)
-              this.router.navigate('seg-home');
+          this.createNewFirebase(professor.person.email, professor.person.password).then(ret=>{
+            console.log(ret);
+            this.postService.saveProfessor(professor).subscribe(saved=>{
+              if (saved != null)
+                this.router.navigate('seg-home');
+            });
           });
           break;
 
@@ -136,6 +161,10 @@ export class AddUserComponent implements OnInit {
     }
   }
 
+  private createNewFirebase(email: string, pass: string) {
+    return this.angularFireAuth.auth.createUserWithEmailAndPassword(email, pass)
+  }
+
   private  newProfessor(person: Person): Professor{
 
     return {
@@ -150,6 +179,10 @@ export class AddUserComponent implements OnInit {
       person: person,
       hireDate: new Date()
     };
+  }
+
+  private onUpload(file: any){
+    this.photo = file;
   }
 
 }

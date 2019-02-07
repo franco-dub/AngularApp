@@ -9,6 +9,9 @@ import {DatePipe} from "@angular/common";
 import {MatBottomSheet} from "@angular/material";
 import {BottomSheetComponent} from "../../../bottom-sheet/bottom-sheet.component";
 import {RoutingService} from "../../../../servicies/routing.service";
+import {of} from 'rxjs';
+import {and} from '@angular/router/src/utils/collection';
+import {AuthService} from '../../../../servicies/auth.service';
 
 @Component({
   selector: 'app-add-calendar',
@@ -81,7 +84,7 @@ export class AddCalendarComponent implements OnInit {
 
   endingHour = '';
 
-  endDate = '';
+  endDate: Date;
 
   dayLecture: Date;
 
@@ -132,16 +135,20 @@ export class AddCalendarComponent implements OnInit {
               private getService: GetService,
               private router: RoutingService,
               private datepipe: DatePipe,
-              private bottomSheet: MatBottomSheet) { }
+              private bottomSheet: MatBottomSheet,
+              private authService: AuthService) { }
 
   ngOnInit() {
-    if(this.router.getHistory()[this.router.getHistory().length - 1] != 'add-calendar') {
-      this.router.loadUrl('add-calendar');
+    this.router.currentLocation('add-calendar');
+    if(this.authService.isLoggednIn()) {
+
+      this.getService.findAllCourses().subscribe(studyCourses => {
+        this.studyCourses = studyCourses;
+        this.populateCalendar();
+      });
+    }else{
+      this.router.navigate('');
     }
-    this.getService.findAllCourses().subscribe(studyCourses => {
-      this.studyCourses = studyCourses;
-      this.populateCalendar();
-    });
   }
 
   populateYear(){
@@ -163,15 +170,14 @@ export class AddCalendarComponent implements OnInit {
             if((this.lectureCalendar.type == 'LECTURE') && (lectureCalendar.type == 'LECTURE')) {
               this.lectureCalendars.push(lectureCalendar);
               this.setHours(lectureCalendar.module.title, lectureCalendar.startTime,
-                lectureCalendar.endTime, lectureCalendar.date);
+                lectureCalendar.endTime, new Date(lectureCalendar.date));
 
-              this.leftHoursForModule(lectureCalendar.module, lectureCalendar.startTime,
-                lectureCalendar.endTime);
+              this.leftHoursForModule(lectureCalendar.module);
             }else if((this.lectureCalendar.type == 'EXAM') && (lectureCalendar.type == 'EXAM')){
               this.lectureCalendars.push(lectureCalendar);
 
               this.setHours(lectureCalendar.module.title, lectureCalendar.startTime,
-                lectureCalendar.endTime, lectureCalendar.date);
+                lectureCalendar.endTime, new Date(lectureCalendar.date));
             }
           }
         }
@@ -179,24 +185,67 @@ export class AddCalendarComponent implements OnInit {
     }
   }
 
-  leftHoursForModule(module: Module, startTime: string, endTime: string){
+  leftHoursForModule(module: Module){
     for(let i = 0; i < this.teachings.length; i++){
       if(this.teachings[i].moduleId == module.moduleId){
         let count = 0;
         let hourPicker = false;
         for(let k = 0; k < this.Hours.length; k++){
-          if(startTime == this.tableEments[k].Hour){
+            if (module.title == this.tableEments[k].Monday) {
+              hourPicker = true;
+            } else if (module.title != this.tableEments[k].Monday) {
+              hourPicker = false;
+            }
+            if (hourPicker) {
+              count++;
+            }
+
+        }
+        for(let k = 0; k < this.Hours.length; k++){
+          if (module.title == this.tableEments[k].Tuesday) {
             hourPicker = true;
-          }else if(endTime == this.tableEments[k].Hour){
+          } else if (module.title != this.tableEments[k].Tuesday) {
             hourPicker = false;
           }
           if (hourPicker) {
             count++;
           }
+
         }
+        for(let k = 0; k < this.Hours.length; k++){
+          if (module.title == this.tableEments[k].Wednesday) {
+            hourPicker = true;
+          } else if (module.title != this.tableEments[k].Wednesday) {
+            hourPicker = false;
+          }
+          if (hourPicker) {
+            count++;
+          }
 
+        }
+        for(let k = 0; k < this.Hours.length; k++){
+          if (module.title == this.tableEments[k].Thursday) {
+            hourPicker = true;
+          } else if (module.title != this.tableEments[k].Thursday) {
+            hourPicker = false;
+          }
+          if (hourPicker) {
+            count++;
+          }
+
+        }
+        for(let k = 0; k < this.Hours.length; k++){
+          if (module.title == this.tableEments[k].Friday) {
+            hourPicker = true;
+          } else if (module.title != this.tableEments[k].Friday) {
+            hourPicker = false;
+          }
+          if (hourPicker) {
+            count++;
+          }
+
+        }
         this.teachings[i].leftHours = this.teachings[i].creditHour - (count / 2);
-
       }
     }
   }
@@ -212,10 +261,9 @@ export class AddCalendarComponent implements OnInit {
     }
   }
 
-  setHours(title: string, startTime: string, endTime: string, date: string){
-    let dateNumber = new Date(date).getDay();
+  setHours(title: string, startTime: string, endTime: string, date: Date){
     let hourPicker = false;
-    switch (dateNumber) {
+    switch (date.getDay()) {
       case 1:
         for(let i = 0; i < this.tableEments.length; i++) {
           if(startTime == this.tableEments[i].Hour){
@@ -354,6 +402,7 @@ export class AddCalendarComponent implements OnInit {
       this.lectureCalendar.startTime = this.startingHour;
       this.lectureCalendar.endTime = this.endingHour;
       this.lectureCalendar.date = this.datepipe.transform(this.dayLecture, 'yyyy-MM-dd');
+      this.lectureCalendar.dDate = new Date(this.datepipe.transform(this.dayLecture, 'yyyy-MM-dd'));
       this.lectureCalendar.day = this.dayLecture.getDay().toString().toUpperCase();
       this.lectureCalendar.startDate = this.datepipe.transform(this.dayLecture, 'yyyy-MM-dd');
       this.lectureCalendar.endDate = this.datepipe.transform(this.endDate, 'yyyy-MM-dd');
@@ -373,10 +422,21 @@ export class AddCalendarComponent implements OnInit {
 
   addDayLecture(){
 
+
     if(this.checkData('save')) {
       this.errorLog = '';
       this.lectureCalendar.room = this.selectedAula;
-      this.postService.addNewDayLecture(this.lectureCalendar).subscribe();
+      for(let k = this.dayLecture;
+          k.getMonth() < this.endDate.getMonth() || k.getDate() <= this.endDate.getDate();
+          ){
+        this.lectureCalendar.date = this.datepipe.transform(k, "yyyy-MM-dd");
+        this.postService.addNewDayLecture(this.lectureCalendar).subscribe();
+        k.setDate(k.getDate() + 7);
+      }
+      this.dayLecture = null;
+      this.startingHour = '';
+      this.endingHour = '';
+      this.endDate = null;
     }else{
       this.errorLog = 'Insert all data';
     }
