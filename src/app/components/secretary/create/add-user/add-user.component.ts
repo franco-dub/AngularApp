@@ -10,6 +10,7 @@ import {RoutingService} from "../../../../servicies/routing.service";
 import {AuthService} from '../../../../servicies/auth.service';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {AngularFireStorage} from '@angular/fire/storage';
+import {AngularFirestore} from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-add-user',
@@ -50,7 +51,8 @@ export class AddUserComponent implements OnInit {
               private getService: GetService,
               private authService: AuthService,
               private angularFireAuth: AngularFireAuth,
-              private angularFiredatabase: AngularFireStorage) {}
+              private angularFiredatabase: AngularFireStorage,
+              private angularFirestore: AngularFirestore) {}
 
   ngOnInit() {
     this.router.currentLocation('add-user');
@@ -97,6 +99,16 @@ export class AddUserComponent implements OnInit {
           this.createNewFirebase(professor.person.email, professor.person.password).then(ret=>{
             console.log(ret);
             this.postService.saveProfessor(professor).subscribe(saved=>{
+              let firstNotification = {
+                title: 'notification init',
+                ans: 'dala segreteria'
+              };
+              console.log(saved);
+              console.log(saved.person);
+              this.angularFirestore.collection('tickets').doc(''+saved.person.personId)
+                .collection('notifications').add(firstNotification).then(ret=>{
+                  console.log(ret);
+              });
               if (saved != null)
                 this.router.navigate('seg-home');
             });
@@ -127,10 +139,15 @@ export class AddUserComponent implements OnInit {
       this.email || selectedUser || this.number || this.address || this.phone || this. dateOfBirth) == null) {
       return false
     }else{
-      if(selectedUser != "Secretary") {
-        return (selectedCourse) != null;
-      }else{
-        return true;
+      switch(selectedUser) {
+        case 'STUDENT':
+          return (selectedCourse) != null;
+
+        case 'PROFESSOR':
+          return (this.level) != null;
+
+        case 'SECRETARY':
+          return true;
       }
     }
   }

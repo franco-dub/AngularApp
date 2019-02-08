@@ -64,6 +64,7 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
+import {AngularFireFunctionsModule} from '@angular/fire/functions';
 
 
 @NgModule({
@@ -149,7 +150,8 @@ import {environment} from '../environments/environment';
   entryComponents: [
     BottomSheetComponent,
     BottomSheetSecretaryComponent,
-  ]
+  ],
+
 })
 
 export class AppModule { }

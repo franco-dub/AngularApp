@@ -10,6 +10,7 @@ import {Room} from '../../../models/Room';
 import {DatePipe} from '@angular/common';
 import {PutService} from '../../../../servicies/put.service';
 import {calcPossibleSecurityContexts} from '@angular/compiler/src/template_parser/binding_parser';
+import {AngularFirestore} from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-modify-calendar',
@@ -65,7 +66,8 @@ export class ModifyCalendarComponent implements OnInit {
               private authService: AuthService,
               private datepipe: DatePipe,
               private getService: GetService,
-              private putService: PutService) { }
+              private putService: PutService,
+              private angularFirestore: AngularFirestore) { }
 
   ngOnInit() {
     this.router.currentLocation('modify-calendar');
@@ -126,6 +128,7 @@ export class ModifyCalendarComponent implements OnInit {
   }
 
   submit() {
+    console.log(this.selectedTeaching);
     if (this.all == 'true') {
       let lessBuff: Array<LectureCalendar> = [];
       this.lessons.forEach(lesson => {
@@ -145,10 +148,30 @@ export class ModifyCalendarComponent implements OnInit {
         this.putService.updateDayLecture(lessBuff[k]).subscribe();
         this.selectedLesson.dDate.setDate(this.selectedLesson.dDate.getDate() + 7);
       }
+      let moduleId = this.selectedTeaching.moduleId;
+      let notify = {
+        mod: moduleId,
+        text: 'Updated calendar'
+      };
+      console.log(notify);
+      this.angularFirestore.collection('modules').doc(''+moduleId)
+        .collection('notifications').add(notify).then(ret=>{
+        this.router.backUrl('modify-calendar');
+      });
     } else {
+      let moduleId = this.selectedTeaching.moduleId;
       this.selectedLesson.date = this.datepipe.transform(this.selectedLesson.dDate, "yyyy-MM-dd");
-      this.putService.updateDayLecture(this.selectedLesson).subscribe();
+      this.putService.updateDayLecture(this.selectedLesson).subscribe(ret=>{
+        let notify = {
+          mod: moduleId,
+          text: 'Updated calendar'
+        };
+        console.log(notify);
+        this.angularFirestore.collection('modules').doc(''+moduleId)
+          .collection('notifications').add(notify).then();
+      });
     }
+
     this.lessons = [];
     this.teachings = [];
     this.selectedTeaching = null;

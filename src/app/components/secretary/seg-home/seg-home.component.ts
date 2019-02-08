@@ -8,7 +8,6 @@ import {AuthService} from '../../../servicies/auth.service';
 import {BottomSheetSecretaryComponent} from '../bottom-sheet-secretary/bottom-sheet-secretary.component';
 import {PutService} from '../../../servicies/put.service';
 
-
 @Component({
   selector: 'app-seg-home',
   templateUrl: './seg-home.component.html',

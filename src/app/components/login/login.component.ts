@@ -13,7 +13,6 @@ import {RoutingService} from '../../servicies/routing.service';
 })
 export class LoginComponent implements OnInit {
 
-  logged: any;
 
   user: Login= {email: "",
                 password: "",
@@ -27,7 +26,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private getService: GetService, 
     private router: RoutingService,
-    private authService: AuthService) { }
+    private authService: AuthService) {
+  }
 
   ngOnInit() {
     this.router.currentLocation('login');
