@@ -9,7 +9,7 @@
         <h4>E-mail</h4>
       </mat-card-title>
       <mat-form-field appearance="legacy">
-        <input matInput="password" placeholder="Insert email" #email>
+        <input matInput="password" (keydown.enter)="login(email.value, password.value)" placeholder="Insert email" #email>
       </mat-form-field>
     </mat-card-content>
   </mat-card>
@@ -21,7 +21,7 @@
         <h4>Password</h4>
       </mat-card-title>
       <mat-form-field appearance="legacy">
-        <input matInput="password" type="password" placeholder="Insert password" #password>
+        <input matInput="password" type="password" (keydown.enter)="login(email.value, password.value)" placeholder="Insert password" #password>
       </mat-form-field>
     </mat-card-content>
   </mat-card>
