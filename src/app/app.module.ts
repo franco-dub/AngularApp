@@ -33,7 +33,7 @@ import {
   MatBottomSheetModule,
   MatDividerModule,
   MatTreeModule,
-  MatDialogModule
+  MatDialogModule, MatSnackBarModule
 } from '@angular/material';
 import { AddTeachingComponent } from './components/secretary/create/add-teaching/add-teaching.component';
 import { AddStudyCourseComponent } from './components/secretary/create/add-study-course/add-study-course.component';
@@ -57,6 +57,14 @@ import { StorageServiceModule } from 'angular-webstorage-service';
 import { MenageTicketsComponent } from './components/professor/menage-tickets/menage-tickets.component';
 import { TicketDetailsComponent } from './components/professor/ticket-details/ticket-details.component';
 import { DeleteService } from './servicies/delete.service';
+import { ModifyCalendarComponent } from './components/secretary/modify/modify-calendar/modify-calendar.component';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import {AngularFireAuthModule} from '@angular/fire/auth';
+import {AngularFireStorageModule} from '@angular/fire/storage';
+import {AngularFireModule} from '@angular/fire';
+import {environment} from '../environments/environment';
+import {AngularFireFunctionsModule} from '@angular/fire/functions';
 import { UploadFileComponent } from './components/professor/upload-file/upload-file.component';
 import { FilesListComponent } from './components/professor/files-list/files-list.component';
 
@@ -81,6 +89,7 @@ import { FilesListComponent } from './components/professor/files-list/files-list
     OpenTicketComponent,
     MenageTicketsComponent,
     TicketDetailsComponent,
+    ModifyCalendarComponent,
     UploadFileComponent,
     FilesListComponent,
 
@@ -114,7 +123,14 @@ import { FilesListComponent } from './components/professor/files-list/files-list
     MatDividerModule,
     MatTreeModule,
     StorageServiceModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    AngularFireStorageModule,
+    AngularFireModule
   ],
   providers: [
     GetService,
@@ -125,14 +141,19 @@ import { FilesListComponent } from './components/professor/files-list/files-list
     PutService,
     DatePipe,
     RoutingService,
-    DeleteService
+    DeleteService,
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    AngularFireDatabaseModule,
+    AngularFireStorageModule
   ],
   bootstrap: [AppComponent],
 
   entryComponents: [
     BottomSheetComponent,
-    BottomSheetSecretaryComponent
-  ]
+    BottomSheetSecretaryComponent,
+  ],
+
 })
 
 export class AppModule { }

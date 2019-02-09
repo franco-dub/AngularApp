@@ -5,6 +5,8 @@ import {Room} from '../../../models/Room';
 import {RoomEquipment} from '../../../models/RoomEquipment';
 import {Equipments} from '../../../models/Equipments';
 import {PutService} from '../../../../servicies/put.service';
+import {RoutingService} from '../../../../servicies/routing.service';
+import {AuthService} from '../../../../servicies/auth.service';
 
 @Component({
   selector: 'app-modify-aula',
@@ -29,12 +31,21 @@ export class ModifyAulaComponent implements OnInit {
 
   location = '';
 
-  constructor(private putService: PutService, private getService: GetService, private router: Router) { }
+  constructor(private putService: PutService,
+              private getService: GetService,
+              private router: RoutingService,
+              private authService: AuthService) { }
 
   ngOnInit() {
-    this.getService.findAllRoom().subscribe(rooms => {
-      this.rooms = rooms;
-    });
+    this.router.currentLocation('modify-aula');
+    if(this.authService.isLoggednIn()) {
+
+      this.getService.findAllRoom().subscribe(rooms => {
+        this.rooms = rooms;
+      });
+    }else{
+      this.router.navigate('');
+    }
   }
 
   optionsChecked(index: number): void {
@@ -105,7 +116,7 @@ export class ModifyAulaComponent implements OnInit {
         console.log(roomEquipment);
         this.putService.updateRoomEquipment(roomEquipment).subscribe(roomEquipments => {
           if (roomEquipments != null) {
-            this.router.navigate(['seg-home']);
+            this.router.navigate('seg-home');
           }
         });
       }

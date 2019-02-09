@@ -1,0 +1,13 @@
+.my-tile-header, .mat-grid-tile .mat-grid-tile-header{
+  background-color: transparent;
+  color: #424242;
+  text-align: center;
+  left: auto;
+  right: auto;
+  font-size: x-large;
+}
+
+.my-bold{
+  font-weight: bold!important;
+  font-size: x-large!important;
+}

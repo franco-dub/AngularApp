@@ -1,0 +1,112 @@
+<div>
+  <mat-grid-list [cols]="3" rowHeight="2:1">
+      <mat-grid-tile >
+        <mat-grid-tile-header class="my-tile-header">
+          <div class="my-bold">Select Course</div>
+        </mat-grid-tile-header>
+        <mat-form-field appearance="legacy" color="accent" size="large">
+          <mat-select placeholder="Select Course" [style.color]="'blue'" [style.font-size]="'large'" [(ngModel)]="selectedCourse">
+            <mat-option *ngFor="let course of courses" size="large" [value]="course"
+                        [style.font-size]="'large'" (click)="findTeachings(course)">
+              {{ course.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile >
+        <mat-grid-tile-header class="my-tile-header">
+          <div class="my-bold">Select Teaching</div>
+        </mat-grid-tile-header>
+        <mat-form-field appearance="legacy" color="accent" >
+          <mat-select placeholder="Select Teaching" [(ngModel)]="selectedTeaching" [disabled]="teachings == null">
+            <mat-option size="medium" *ngFor="let teaching of teachings" [value]="teaching" (click)="findLessons(teaching)">
+              {{ teaching.title }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile >
+        <mat-grid-tile-header class="my-tile-header">
+          <div class="my-bold">Select Lesson</div>
+        </mat-grid-tile-header>
+        <mat-form-field appearance="legacy" color="accent" >
+          <mat-select placeholder="Select Lesson" [(ngModel)]="selectedLesson" [disabled]="teachings == null">
+            <mat-option size="medium" *ngFor="let lesson of lessons" [value]="lesson" (click)="validateDate()">
+              {{ lesson.date }} - {{ lesson.day }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+
+  </mat-grid-list>
+  <mat-grid-list [cols]="4" *ngIf="selectedLesson != null">
+    <mat-grid-tile>
+      <mat-grid-tile-header class="my-tile-header">
+        <div class="my-bold">Date</div>
+      </mat-grid-tile-header>
+      <mat-form-field appearance="legacy" >
+        <input matInput [matDatepicker]="picker"
+               placeholder="Insert lecture day"
+               [(ngModel)]="selectedLesson.dDate" required>
+      </mat-form-field>
+      <mat-datepicker-toggle [for]="picker" ></mat-datepicker-toggle>
+      <mat-datepicker #picker ></mat-datepicker>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <div layout-align="vertical" align="center">
+        <h2>Start hour</h2>
+        <mat-form-field appearance="legacy" [color]="errorColor">
+          <mat-select placeholder="Select starting hour" (selectionChange)="findAula()" [(ngModel)]="selectedLesson.startTime" >
+            <mat-option *ngFor="let hour of Hours" [value]="hour" (select)="findAula()">
+              {{ hour }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <h2>End hour</h2>
+        <mat-form-field appearance="legacy" color="accent">
+          <mat-select placeholder="Select ending hour" (selectionChange)="findAula()" [(ngModel)]="selectedLesson.endTime">
+            <mat-option *ngFor="let hour of Hours" [value]="hour" (select)="findAula()">
+              {{ hour }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-grid-tile-header class="my-tile-header">
+        <div class="my-bold">Aula</div>
+      </mat-grid-tile-header>
+      <mat-form-field appearance="legacy" color="accent">
+        <mat-select placeholder="Select new aula"  [(ngModel)]="selectedLesson.room">
+          <mat-option *ngFor="let aula of aulasFounded" [value]="aula">
+            {{ aula.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-grid-tile-header class="my-tile-header">
+
+      </mat-grid-tile-header>
+      <mat-radio-group [(ngModel)]="all">
+        <mat-radio-button  class="radio-button" value=false [style.margin]="'3px'">
+          <h2>Only this lecture</h2>
+        </mat-radio-button>
+        <mat-radio-button  class="radio-button" value="true" [style.margin]="'3px'">
+          <h2>All next lecture</h2>
+        </mat-radio-button>
+      </mat-radio-group>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <div align="center">
+    <button mat-raised-button color="primary" [style.font-size]="'large'"  (click)="submit()" *ngIf="selectedLesson != null">
+      <b>Submit update</b>
+    </button>
+  </div>
+</div>

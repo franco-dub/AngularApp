@@ -4,8 +4,9 @@ import {Module} from '../../../models/Module';
 import {GetService} from '../../../../servicies/get.service';
 import {Course} from '../../../models/Course';
 import {Professor} from '../../../models/Professor';
-import {Router} from '@angular/router';
 import {RoutingService} from '../../../../servicies/routing.service';
+import {AuthService} from '../../../../servicies/auth.service';
+import {AngularFirestore} from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-add-teaching',
@@ -36,20 +37,24 @@ export class AddTeachingComponent implements OnInit {
 
   constructor(private postService: PostService,
               private getService: GetService,
-              private router: RoutingService) { }
+              private router: RoutingService,
+              private authService: AuthService,
+              private angularFirestore: AngularFirestore) { }
 
   ngOnInit() {
-    if (this.router.getHistory()[this.router.getHistory().length - 1] != 'add-teaching') {
-    this.router.loadUrl('add-teaching');
-    }
+    this.router.currentLocation('add-teaching');
+    if(this.authService.isLoggednIn()) {
 
-    this.getService.findAllCourses().subscribe(courses => {
-      console.log(courses);
-      this.courses = courses;
-      this.getService.findAllProfessor().subscribe(professors => {
-        this.professors = professors;
+      this.getService.findAllCourses().subscribe(courses => {
+        console.log(courses);
+        this.courses = courses;
+        this.getService.findAllProfessor().subscribe(professors => {
+          this.professors = professors;
+        });
       });
-    });
+    }else{
+      this.router.navigate('');
+    }
   }
 
   fillVector() {
@@ -77,6 +82,37 @@ export class AddTeachingComponent implements OnInit {
 
       this.postService.saveModule(teaching).subscribe(teaching => {
         console.log(teaching);
+        let chat = {
+          chatId: teaching.moduleId,
+          chatName: teaching.title,
+          chatType: 'Public',
+          courseId: teaching.course.courseId,
+          moudleId: teaching.moduleId
+        };
+        this.angularFirestore.collection('chat').doc('kmrVt4jEZwOltgE9sNvR').
+        collection('privateChat').add(chat).then(ret=>{
+          console.log(ret);
+          let firstMessg = {
+            chatId: chat.chatId,
+            chatType: chat.chatType,
+            date: new Date(),
+            message: 'first message',
+            senderType: 'system',
+          };
+          this.angularFirestore.collection('modules').doc(''+chat.chatId).collection('chat')
+            .add(firstMessg).then(ret=>{
+            console.log(ret);
+            let firstNotification = {
+              message: 'first notification',
+              moduleId: chat.moudleId,
+              ans: 'init notification'
+            };
+            this.angularFirestore.collection('modules').doc(''+chat.chatId).collection('notifications')
+              .add(firstNotification).then(ret=>{
+               console.log(ret);
+            });
+          });
+        });
         if (teaching != null) {
           this.router.navigate('seg-home');
         }

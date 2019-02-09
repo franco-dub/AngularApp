@@ -1,8 +1,8 @@
-<mat-toolbar class="my-color" style="height: 55px;">
-  <span>Università del Salento</span>
+<mat-toolbar  color="primary" style="height: 55px;">
+  <h3>Università del Salento</h3>
 </mat-toolbar>
-<mat-toolbar class="my-color" style="height: 25px;">
-  <button mat-icon-button (click)="goBack()">
+<mat-toolbar color="primary" style="height: 35px;">
+  <button *ngIf="canGoBack != 'login'" mat-icon-button (click)="goBack()">
     <mat-icon aria-label="back" >arrow_back</mat-icon>
   </button>
 </mat-toolbar>

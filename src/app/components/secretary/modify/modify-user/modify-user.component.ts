@@ -5,7 +5,9 @@ import {Student} from '../../../models/Student';
 import {Professor} from '../../../models/Professor';
 import {Secretary} from '../../../models/Secretary';
 import {PutService} from '../../../../servicies/put.service';
-import {Router} from '@angular/router';
+import {RoutingService} from '../../../../servicies/routing.service';
+import {AuthService} from '../../../../servicies/auth.service';
+import {AngularFireStorage} from '@angular/fire/storage';
 
 @Component({
   selector: 'app-modify-user',
@@ -33,6 +35,8 @@ export class ModifyUserComponent implements OnInit {
   gender = '';
   number: number;
 
+  photo: any;
+
   hireDate: Date = null;
 
   courses: Array<Course> = [];
@@ -53,9 +57,17 @@ export class ModifyUserComponent implements OnInit {
 
   endEngagement: Date = null;
 
-  constructor(private getService: GetService, private putService: PutService, private router: Router) { }
+  constructor(private getService: GetService,
+              private putService: PutService,
+              private router: RoutingService,
+              private authService: AuthService,
+              private angularFiredatabase: AngularFireStorage) { }
 
   ngOnInit() {
+    this.router.currentLocation('modify-user');
+    if(!this.authService.isLoggednIn()){
+      this.router.navigate('');
+    }
   }
 
   findPersons() {
@@ -87,6 +99,7 @@ export class ModifyUserComponent implements OnInit {
         });
         break;
     }
+
   }
 
   populateData() {
@@ -140,73 +153,93 @@ export class ModifyUserComponent implements OnInit {
   }
 
   submit() {
+    if(this.authService.isLoggednIn()) {
 
-    if (this.checkData()) {
+      if (this.checkData()) {
 
-      switch (this.selectedType) {
-        case 'STUDENT':
-          const address = this.address + ' n° ' + this.number;
-          this.student.person.firstName = this.firstName;
-          this.student.person.lastName = this.lastName;
-          this.student.person.gender = this.gender;
-          this.student.person.phone = this.phone;
-          this.student.person.email = this.email;
-          this.student.person.dateOfBirth = this.dateOfBirth;
-          this.student.person.address = this.address;
-          this.student.person.password = this.password;
-          for (const course of this.courses) {
-            if (course.name == this.courseName) {
-              this.student.course = course;
+        switch (this.selectedType) {
+          case 'STUDENT':
+            const address = this.address + ' n° ' + this.number;
+            this.student.person.firstName = this.firstName;
+            this.student.person.lastName = this.lastName;
+            this.student.person.gender = this.gender;
+            this.student.person.phone = this.phone;
+            this.student.person.email = this.email;
+            this.student.person.dateOfBirth = this.dateOfBirth;
+            this.student.person.address = this.address;
+            this.student.person.password = this.password;
+            for (const course of this.courses) {
+              if (course.name == this.courseName) {
+                this.student.course = course;
+              }
             }
-          }
-          this.putService.updateStudent(this.student).subscribe(student => {
-            if (student != null) {
-              this.router.navigate(['seg-home']);
-            }
-          });
-          break;
+            this.angularFiredatabase.storage.ref('images/' + this.student.person.personId + '/firebase-ico.jpg').put(this.photo[0]).
+              then(returned=> {
+                console.log(returned);
+              }).catch(err=>{
+                console.log(err);
+              });
+            this.putService.updateStudent(this.student).subscribe(student => {
+              if (student != null) {
+                this.router.navigate('seg-home');
+              }
+            });
+            break;
 
-        case 'PROFESSOR':
-          this.professor.person.firstName = this.firstName;
-          this.professor.person.lastName = this.lastName;
-          this.professor.person.gender = this.gender;
-          this.professor.person.phone = this.phone;
-          this.professor.person.email = this.email;
-          this.professor.person.dateOfBirth = this.dateOfBirth;
-          this.professor.person.password = this.password;
-          this.professor.person.address = this.address;
-          this.professor.endEngagement = this.endEngagement;
-          this.putService.updateProfessor(this.professor).subscribe(professor => {
-            if (professor != null) {
-              this.router.navigate(['seg-home']);
-            }
-          });
+          case 'PROFESSOR':
+            this.professor.person.firstName = this.firstName;
+            this.professor.person.lastName = this.lastName;
+            this.professor.person.gender = this.gender;
+            this.professor.person.phone = this.phone;
+            this.professor.person.email = this.email;
+            this.professor.person.dateOfBirth = this.dateOfBirth;
+            this.professor.person.password = this.password;
+            this.professor.person.address = this.address;
+            this.professor.endEngagement = this.endEngagement;
+            this.angularFiredatabase.storage.ref('images/' + this.professor.person.personId + '/firebase-ico.jpg').put(this.photo[0]).
+              then(returned=> {
+                console.log(returned);
+              }).catch(err=>{
+                console.log(err);
+              });
+            this.putService.updateProfessor(this.professor).subscribe(professor => {
+              if (professor != null) {
+                this.router.navigate('seg-home');
+              }
+            });
 
-          break;
+            break;
 
-        case 'SECRETARY':
-          this.secretary.person.firstName = this.firstName;
-          this.secretary.person.lastName = this.lastName;
-          this.secretary.person.gender = this.gender;
-          this.secretary.person.phone = this.phone;
-          this.secretary.person.email = this.email;
-          this.secretary.person.dateOfBirth = this.dateOfBirth;
-          this.secretary.person.password = this.password;
-          this.secretary.person.address = this.address;
-          this.secretary.endEngagement = this.endEngagement;
-          this.putService.updateSecretary(this.secretary).subscribe(secretary => {
-            if (secretary != null) {
-              this.router.navigate(['seg-home']);
-            }
-          });
-          break;
+          case 'SECRETARY':
+            this.secretary.person.firstName = this.firstName;
+            this.secretary.person.lastName = this.lastName;
+            this.secretary.person.gender = this.gender;
+            this.secretary.person.phone = this.phone;
+            this.secretary.person.email = this.email;
+            this.secretary.person.dateOfBirth = this.dateOfBirth;
+            this.secretary.person.password = this.password;
+            this.secretary.person.address = this.address;
+            this.secretary.endEngagement = this.endEngagement;
+            this.putService.updateSecretary(this.secretary).subscribe(secretary => {
+              if (secretary != null) {
+                this.router.navigate('seg-home');
+              }
+            });
+            break;
+        }
+
+      } else {
+        console.log('wrong data');
+        this.error = true;
+        this.selectedCourse = null;
       }
-
-    } else {
-      console.log('wrong data');
-      this.error = true;
-      this.selectedCourse = null;
+    }else{
+      this.authService.toast('Not logged in');
     }
+  }
+
+  private onUpload(file: any){
+    this.photo = file;
   }
 
 

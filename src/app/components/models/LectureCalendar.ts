@@ -2,13 +2,14 @@ import {Module} from "./Module";
 import {Room} from "./Room";
 import {RoomEquipment} from "./RoomEquipment";
 
-export interface LectureCalendar {
+export interface  LectureCalendar {
   module?: Module;
   room?: Room;
-  lectureCalendarId?: number;
+  calendarId?: number;
   startTime?: string;
   endTime?: string;
   date?: string;
+  dDate?: Date;
   day?: string;
   startDate?: string;
   endDate?: string;

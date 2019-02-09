@@ -1,10 +1,11 @@
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef} from '@angular/material';
 import {Ticket} from '../../models/Ticket';
 import {RoomEquipment} from '../../models/RoomEquipment';
 import {GetService} from '../../../servicies/get.service';
 import {PutService} from '../../../servicies/put.service';
 import {SegHomeComponent} from '../seg-home/seg-home.component';
+import {AngularFirestore} from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-bottom-sheet-secretary',
@@ -19,8 +20,11 @@ export class BottomSheetSecretaryComponent implements OnInit {
   selected: RoomEquipment;
   newComment = '';
 
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) private data: any, private getService: GetService,
-              private putService: PutService, private bottomSheetRef: MatBottomSheetRef<SegHomeComponent>) {
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) private data: any,
+              private getService: GetService,
+              private putService: PutService,
+              private bottomSheetRef: MatBottomSheetRef<SegHomeComponent>,
+              private angularFirestore: AngularFirestore) {
   }
 
   ngOnInit() {
@@ -43,10 +47,18 @@ export class BottomSheetSecretaryComponent implements OnInit {
     }
 
     this.putService.updateTicket(this.ticket).subscribe(ticket => {
-      this.data = ticket;
+      let notify = {
+        title: ticket.title,
+        ans: ticket.comment
+      };
+      this.angularFirestore.collection('tickets').doc(''+this.ticket.professor.person.personId)
+        .collection('notifications').add(notify).then(ret=>{
+          this.data = ticket;
+        this.bottomSheetRef.dismiss();
+
+      });
     });
 
-    this.bottomSheetRef.dismiss();
 
   }
 

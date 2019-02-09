@@ -5,6 +5,7 @@ import {PostService} from "../../../../servicies/post.service";
 import {Room} from "../../../models/Room";
 import {RoomEquipment} from "../../../models/RoomEquipment";
 import {RoutingService} from "../../../../servicies/routing.service";
+import {AuthService} from '../../../../servicies/auth.service';
 
 
 @Component({
@@ -32,27 +33,29 @@ export class AddAulaComponent implements OnInit {
 
   constructor(private getService: GetService,
               private router: RoutingService,
-              private postService: PostService) { }
+              private postService: PostService,
+              private authService: AuthService) { }
 
   ngOnInit() {
 
-    if(this.router.getHistory()[this.router.getHistory().length - 1] != 'add-aula') {
-      this.router.loadUrl('add-aula');
+    this.router.currentLocation('add-aula');
+    if(this.authService.isLoggednIn()) {
+      this.getService.getEquipmentData().subscribe(equipments => {
+
+        this.equipments = equipments;
+
+        let division = equipments.length % 4;
+
+        console.log(division);
+
+        if (division != 0) {
+          this.row = 1
+        }
+
+      });
+    }else{
+      this.router.navigate('');
     }
-    this.getService.getEquipmentData().subscribe(equipments => {
-
-      this.equipments = equipments;
-
-      let division = equipments.length % 4;
-
-      console.log(division);
-
-      if( division != 0){
-        this.row = 1
-      }
-
-    });
-
   }
 
   optionsChecked(index: number): void {

@@ -8,16 +8,21 @@ import {RoutingService} from "../../servicies/routing.service";
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private router: RoutingService) { }
+  canGoBack= '';
+
+  constructor(private router: RoutingService) {
+
+  }
 
   ngOnInit() {
+    this.router.getCurrentLocation().subscribe(back=>{
+      this.canGoBack = back;
+      console.log(back);
+    });
   }
 
   goBack(){
-    let url = this.router.getPreviousUrl();
-    this.router.removeLast();
-    this.router.navigate(url);
-
+    this.router.backUrl(this.canGoBack);
   }
 
 }
