@@ -10,6 +10,7 @@ import {Secretary} from "../components/models/Secretary";
 import {RoomEquipment} from "../components/models/RoomEquipment";
 import {LectureCalendar} from "../components/models/LectureCalendar";
 import {Ticket} from "../components/models/Ticket";
+import { TeachingMaterial } from '../components/models/TeachingMaterial';
 
 
 const httpOptions = {
@@ -36,6 +37,8 @@ export class PostService {
   addNewDayLectureUrl: string = "http://localhost:8080/SpringApp/lectureCalendar/add";
 
   sendTicketUrl: string = "http://localhost:8080/SpringApp/ticket/add";
+
+  uploadFileUrl: string = "http://localhost:8080/SpringApp/teachingMaterial/uploadFile/";
 
 
   constructor(private http: HttpClient) { }
@@ -74,6 +77,12 @@ export class PostService {
 
   sendTicket(ticket: Ticket): Observable<Ticket>{
     return this.http.post<Ticket>(this.sendTicketUrl, ticket, httpOptions);
+  }
+
+  uploadFile(file: File, moduleId: number): Observable<TeachingMaterial>{
+    const fd = new FormData();
+    fd.append('file', file, file.name);
+    return this.http.post(this.uploadFileUrl + moduleId, fd);
   }
 
 }

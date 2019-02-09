@@ -57,6 +57,8 @@ import { StorageServiceModule } from 'angular-webstorage-service';
 import { MenageTicketsComponent } from './components/professor/menage-tickets/menage-tickets.component';
 import { TicketDetailsComponent } from './components/professor/ticket-details/ticket-details.component';
 import { DeleteService } from './servicies/delete.service';
+import { UploadFileComponent } from './components/professor/upload-file/upload-file.component';
+import { FilesListComponent } from './components/professor/files-list/files-list.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +81,8 @@ import { DeleteService } from './servicies/delete.service';
     OpenTicketComponent,
     MenageTicketsComponent,
     TicketDetailsComponent,
+    UploadFileComponent,
+    FilesListComponent,
 
   ],
   imports: [

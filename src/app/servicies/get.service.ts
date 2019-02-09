@@ -12,6 +12,7 @@ import {Student} from "../components/models/Student";
 import {Secretary} from "../components/models/Secretary";
 import {LectureCalendar} from "../components/models/LectureCalendar";
 import {Ticket} from "../components/models/Ticket";
+import { TeachingMaterial } from '../components/models/TeachingMaterial';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -47,6 +48,10 @@ export class GetService {
   findAllTicketUrl: string = "http://localhost:8080/SpringApp/ticket/findAll";
 
   findByProfIdUrl: string = "http://localhost:8080/SpringApp/ticket/findByProfId/";
+
+  findFileByModuleUrl: string = "http://localhost:8080/SpringApp/teachingMaterial/findByModule/";
+
+  findModuleByProfUrl: string = "http://localhost:8080/SpringApp/module/findByProf/"
 
 
   constructor(private http: HttpClient) { }
@@ -105,6 +110,14 @@ export class GetService {
 
   findByProfId(id: number): Observable<Array<Ticket>>{
     return this.http.get<Array<Ticket>>(this.findByProfIdUrl + id);
+  }
+
+  findFileByModule(moduleId: number): Observable<Array<TeachingMaterial>>{
+    return this.http.get<Array<TeachingMaterial>>(this.findFileByModuleUrl + moduleId);
+  }
+
+  findModuleByProf(professorId: number): Observable<Array<Module>>{
+    return this.http.get<Array<Module>>(this.findModuleByProfUrl + professorId);
   }
 
 }
