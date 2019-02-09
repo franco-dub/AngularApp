@@ -129,7 +129,10 @@ import { FilesListComponent } from './components/professor/files-list/files-list
   ],
   bootstrap: [AppComponent],
 
-  entryComponents: [BottomSheetComponent]
+  entryComponents: [
+    BottomSheetComponent,
+    BottomSheetSecretaryComponent
+  ]
 })
 
 export class AppModule { }

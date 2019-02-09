@@ -24,6 +24,7 @@
     "@angular/router": "^6.0.3",
     "@auth0/angular-jwt": "^2.1.0",
     "angular-bootstrap-datetimepicker": "^2.2.1",
+    "angular-jwt": "^0.1.10",
     "angular-material": "^1.1.10",
     "angular-webstorage-service": "^1.0.2",
     "bootstrap": "^4.1.3",
