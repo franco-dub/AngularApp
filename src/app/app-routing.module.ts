@@ -14,6 +14,7 @@ import {ModifyTeachingComponent} from './components/secretary/modify/modify-teac
 import {ModifyCourseComponent} from './components/secretary/modify/modify-course/modify-course.component';
 import {OpenTicketComponent} from './components/professor/open-ticket/open-ticket.component';
 import { MenageTicketsComponent } from './components/professor/menage-tickets/menage-tickets.component';
+import {ModifyCalendarComponent} from './components/secretary/modify/modify-calendar/modify-calendar.component';
 import { UploadFileComponent } from './components/professor/upload-file/upload-file.component';
 
 const routes: Routes = [
@@ -30,6 +31,7 @@ const routes: Routes = [
   {path: 'modify-course', component: ModifyCourseComponent},
   {path: 'open-ticket', component: OpenTicketComponent},
   {path: 'menage-tickets', component: MenageTicketsComponent},
+  {path: 'modify-calendar', component: ModifyCalendarComponent}
   {path: 'upload-file', component: UploadFileComponent}
 ];
 

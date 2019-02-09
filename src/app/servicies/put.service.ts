@@ -9,11 +9,11 @@ import {Professor} from '../components/models/Professor';
 import {Ticket} from '../components/models/Ticket';
 import {Module} from '../components/models/Module';
 import {Course} from '../components/models/Course';
+import {LectureCalendar} from '../components/models/LectureCalendar';
 
 
-const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
-};
+const  headers = new HttpHeaders()
+  .append('Content-Type' , 'application/json');
 
 @Injectable()
 export class PutService {
@@ -36,42 +36,49 @@ export class PutService {
 
   updateCourseUrl = 'http://localhost:8080/SpringApp/course/';
 
+  updateDayLectureUrl = 'http://localhost:8080/SpringApp/calendar/';
+
   constructor(private http: HttpClient) { }
 
   updateRoom(room: Room): Observable<Room> {
-    return this.http.post<Room>(this.updateRoomUrl + '/' + room.roomId, room, httpOptions);
+    return this.http.post<Room>(this.updateRoomUrl + '/' + room.roomId, room, {headers: headers});
   }
 
   updateRoomEquipment(roomEquipments: Array<RoomEquipment>): Observable<Array<RoomEquipment>> {
-    return this.http.post<Array<RoomEquipment>>(this.updateRoomEquipmentUrl, roomEquipments, httpOptions);
+    return this.http.post<Array<RoomEquipment>>(this.updateRoomEquipmentUrl, roomEquipments, {headers: headers});
   }
 
   updateRoomEquipment2(roomEquipment: RoomEquipment): Observable<RoomEquipment> {
-    return this.http.put<RoomEquipment>(this.updateRoomEquipmentUrl2 + roomEquipment.roomEquipmentId, roomEquipment, httpOptions);
+    return this.http.put<RoomEquipment>(this.updateRoomEquipmentUrl2 + roomEquipment.roomEquipmentId, roomEquipment, {headers: headers});
   }
 
   updateStudent(student: Student): Observable<Student> {
-    return this.http.post<Student>(this.updateStudentUrl, student, httpOptions);
+    return this.http.post<Student>(this.updateStudentUrl, student, {headers: headers});
   }
 
   updateSecretary(secretary: Secretary): Observable<Secretary> {
-    return this.http.post<Secretary>(this.updateSecretaryUrl, secretary, httpOptions);
+    return this.http.post<Secretary>(this.updateSecretaryUrl, secretary, {headers: headers});
   }
 
   updateProfessor(professor: Professor): Observable<Professor> {
-    return this.http.post<Professor>(this.updateProfessorUrl, professor, httpOptions);
+    return this.http.post<Professor>(this.updateProfessorUrl, professor, {headers: headers});
   }
 
   updateTicket(ticket: Ticket): Observable<Ticket> {
-    return this.http.put<Ticket>(this.updateTicketUrl + ticket.ticketId, ticket, httpOptions);
+    return this.http.put<Ticket>(this.updateTicketUrl + ticket.ticketId, ticket, {headers: headers});
   }
 
   updateModule(module: Module): Observable<Module> {
-    return this.http.put<Module>(this.updateModuleUrl + module.moduleId, module, httpOptions);
+    return this.http.put<Module>(this.updateModuleUrl + module.moduleId, module, {headers: headers});
   }
+  
 
   updateCourse(course: Course): Observable<Course> {
-    return this.http.put<Course>(this.updateCourseUrl + course.courseId, course, httpOptions);
+    return this.http.put<Course>(this.updateCourseUrl + course.courseId, course, {headers: headers});
   }
 
+  updateDayLecture(lesson: LectureCalendar): Observable<LectureCalendar>{
+    console.log(lesson);
+    return this.http.put<LectureCalendar>(this.updateDayLectureUrl + lesson.calendarId, lesson, {headers: headers});
+  }
 }

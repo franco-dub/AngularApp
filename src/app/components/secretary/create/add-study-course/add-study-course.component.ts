@@ -4,6 +4,7 @@ import {PostService} from "../../../../servicies/post.service";
 import {Router} from "@angular/router";
 import {Course} from "../../../models/Course";
 import {RoutingService} from "../../../../servicies/routing.service";
+import {AuthService} from '../../../../servicies/auth.service';
 
 @Component({
   selector: 'app-add-study-course',
@@ -32,34 +33,37 @@ export class AddStudyCourseComponent implements OnInit {
 
   constructor(private getService: GetService,
               private postService: PostService,
-              private router: RoutingService) { }
+              private router: RoutingService,
+              private authService: AuthService) { }
 
   ngOnInit() {
-    if(this.router.getHistory()[this.router.getHistory().length - 1] != 'add-course') {
-      this.router.loadUrl('add-course');
-    }
+    this.router.currentLocation('add-course');
   }
 
   onSubmit(){
-    this.missingArguments = ((this.name || this.description) == '');
+    if(this.authService.isLoggednIn()) {
 
-    if (!this.missingArguments) {
-      this.studyCourse = {
-        name: this.name,
-        description: this.description,
-        courseType: this.studyCourseType.courseType,
-        cfu: this.studyCourseType.cfu,
-        year: this.studyCourseType.year,
-      };
+      this.missingArguments = ((this.name || this.description) == '');
 
-      this.postService.saveCourse(this.studyCourse).subscribe(returned => {
-        if(returned != null) {
-          this.router.navigate('seg-home');
-        }
-      });
+      if (!this.missingArguments) {
+        this.studyCourse = {
+          name: this.name,
+          description: this.description,
+          courseType: this.studyCourseType.courseType,
+          cfu: this.studyCourseType.cfu,
+          year: this.studyCourseType.year,
+        };
 
+        this.postService.saveCourse(this.studyCourse).subscribe(returned => {
+          if (returned != null) {
+            this.router.navigate('seg-home');
+          }
+        });
+
+      }
+    }else{
+      this.router.navigate('');
     }
-
   }
 
 }

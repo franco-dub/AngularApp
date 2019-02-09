@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Login } from "../models/Login";
 import { GetService } from "../../servicies/get.service";
-import { Router } from "@angular/router";
 import {Professor} from "../models/Professor";
 import {Secretary} from "../models/Secretary";
 import {AuthService} from "../../servicies/auth.service";
+import {RoutingService} from '../../servicies/routing.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +13,6 @@ import {AuthService} from "../../servicies/auth.service";
 })
 export class LoginComponent implements OnInit {
 
-  logged: any;
 
   user: Login= {email: "",
                 password: "",
@@ -26,10 +25,13 @@ export class LoginComponent implements OnInit {
   secretary: Secretary;
 
   constructor(private getService: GetService, 
-    private router: Router, 
-    private authService: AuthService) { }
+    private router: RoutingService,
+    private authService: AuthService) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.router.currentLocation('login');
+  }
 
   login(email, password) {
 
@@ -51,7 +53,7 @@ export class LoginComponent implements OnInit {
             this.secretary = loggedUser.secretary;
             this.authService.sendToken('loggedSecretary', 'token');
             this.authService.sendToken(this.secretary, 'user');
-            this.router.navigate(["seg-home"], {queryParams: {user: this.secretary}});
+            this.router.navigate("seg-home");
             break;
 
           case "PROFESSOR":

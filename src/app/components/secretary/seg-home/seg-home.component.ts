@@ -4,12 +4,9 @@ import {GetService} from '../../../servicies/get.service';
 import {Ticket} from '../../models/Ticket';
 import {PostService} from '../../../servicies/post.service';
 import {MatBottomSheet} from '@angular/material';
-import {BottomSheetComponent} from '../../bottom-sheet/bottom-sheet.component';
 import {AuthService} from '../../../servicies/auth.service';
-import {Secretary} from '../../models/Secretary';
 import {BottomSheetSecretaryComponent} from '../bottom-sheet-secretary/bottom-sheet-secretary.component';
-import {Observable} from 'rxjs';
-
+import {PutService} from '../../../servicies/put.service';
 
 @Component({
   selector: 'app-seg-home',
@@ -32,13 +29,15 @@ export class SegHomeComponent implements OnInit {
   constructor(private router: RoutingService,
               private getService: GetService,
               private postService: PostService,
-              private bottomSheet: MatBottomSheet) {}
+              private bottomSheet: MatBottomSheet,
+              private authService: AuthService,
+              private putService: PutService) {}
 
   ngOnInit() {
-    if (this.router.getHistory()[this.router.getHistory().length - 1] !== 'seg-home') {
-      this.router.loadUrl('seg-home');
+    this.router.currentLocation('seg-home');
+    if(this.authService.isLoggednIn()) {
+      this.refresh();
     }
-    this.refresh();
   }
 
   addAula(): void {
@@ -100,7 +99,7 @@ export class SegHomeComponent implements OnInit {
 
   accept(ticket: Ticket) {
     ticket.status = 'ACCEPTED';
-    this.postService.sendTicket(ticket).subscribe(ticket => {
+    this.putService.updateTicket(ticket).subscribe(ticket => {
       if (ticket != null){
         this.refresh();
       }
@@ -123,8 +122,6 @@ export class SegHomeComponent implements OnInit {
         } else {
           this.opened.push(ticket);
         }
-        console.log(this.opened);
-        console.log(this.closed);
       });
     });
 
@@ -132,23 +129,3 @@ export class SegHomeComponent implements OnInit {
 
 }
 
-function refreshTicket(tickets: Array<Ticket>, opened: Array<Ticket>, closed: Array<Ticket>, getService: GetService){
-  tickets = [];
-  opened = [];
-  closed = [];
-  getService.findAllTicket().subscribe(ticket => {
-    tickets = ticket;
-    tickets.sort();
-    tickets.forEach( ticket=>{
-      if (ticket.status == "REJECTED") {
-        closed.push(ticket);
-      }else if (ticket.status == "SOLVED"){
-        closed.push(ticket);
-      }else{
-        opened.push(ticket);
-      }
-      console.log(opened);
-      console.log(closed);
-    });
-  });
-}

@@ -34,7 +34,7 @@ export class PostService {
 
   saveStudentUrl: string = "http://localhost:8080/SpringApp/student/add";
 
-  addNewDayLectureUrl: string = "http://localhost:8080/SpringApp/lectureCalendar/add";
+  addNewDayLectureUrl: string = "http://localhost:8080/SpringApp/calendar/add";
 
   sendTicketUrl: string = "http://localhost:8080/SpringApp/ticket/add";
 

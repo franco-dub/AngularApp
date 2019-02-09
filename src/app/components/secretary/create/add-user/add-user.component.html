@@ -150,8 +150,17 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-  </div>
 
+  </div>
+  <mat-label>
+    <h2> User photo</h2>
+  </mat-label>
+  <input
+    style="display: none"
+    type="file"
+    #fileInput>
+  <button mat-raised-button color="accent" (click)="fileInput.click()">Select File</button>
+  <button mat-raised-button color="primary" (click)="onUpload(fileInput.files)">Upload!</button>
   <div>
     <mat-card-actions align="center" class="example-card">
       <mat-card-content>

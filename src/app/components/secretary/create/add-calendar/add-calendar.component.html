@@ -19,7 +19,7 @@
       <div align="center" class="page">
         <h3 class="unSelectable">Select year</h3>
         <mat-form-field appearance="legacy">
-          <mat-select placeholder="Semester" [(ngModel)]="year">
+          <mat-select placeholder="Year" [(ngModel)]="year">
             <mat-option *ngFor="let ye of years" [value]="ye"
                         (click)="getModules(); populateCalendar()">
             {{ ye }}
@@ -57,7 +57,7 @@
             </mat-option>
           </mat-select>
           <mat-hint >
-            <span style="color: blue" *ngIf="module.creditHour != 0">{{ module.leftHours }} week hours left</span>
+            <span style="color: blue" *ngIf="module.creditHour != 0">{{ module.leftHours }} weekly hours left</span>
           </mat-hint>
         </mat-form-field>
       </div>
@@ -66,8 +66,8 @@
 
   <div align="center">
     <mat-radio-group [(ngModel)]="lectureCalendar.type">
-      <mat-radio-button *ngFor="let kind of calendarKind" [value]="kind"
-                        class="radio-button" (change)="populateCalendar()">
+      <mat-radio-button *ngFor="let kind of calendarKind" [value]="kind" (focus)="populateCalendar()"
+                        class="radio-button" (click)="populateCalendar()"  (change)="populateCalendar()">
         <b>{{ kind }}</b>
       </mat-radio-button>
     </mat-radio-group>

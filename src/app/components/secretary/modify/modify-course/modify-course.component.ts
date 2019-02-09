@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {Course} from '../../../models/Course';
 import {PutService} from '../../../../servicies/put.service';
 import {GetService} from '../../../../servicies/get.service';
-import {Router} from '@angular/router';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {RoutingService} from '../../../../servicies/routing.service';
+import {AuthService} from '../../../../servicies/auth.service';
 
 @Component({
   selector: 'app-modify-course',
@@ -23,51 +24,58 @@ export class ModifyCourseComponent implements OnInit {
     {courseType: 'ALL_IN_ONE_CYCLE_MASTER', cfu: 300, year: 5}
   ];
 
-  constructor(private putService: PutService, private getService: GetService,
-              private router: Router, private formBuilder: FormBuilder) { }
+  constructor(private putService: PutService,
+              private getService: GetService,
+              private router: RoutingService,
+              private formBuilder: FormBuilder,
+              private authService: AuthService) { }
 
   ngOnInit() {
+    this.router.currentLocation('modify-course');
+    if(this.authService.isLoggednIn()) {
 
-    this.getService.findAllCourses().subscribe(courses => {
-      this.courses = courses;
-    });
+      this.getService.findAllCourses().subscribe(courses => {
+        this.courses = courses;
+      });
 
-    this.editCourseForm = this.formBuilder.group({
-      course: null,
-      description: null,
-      type: null
-    });
+      this.editCourseForm = this.formBuilder.group({
+        course: null,
+        description: null,
+        type: null
+      });
 
-    this.editCourseForm.controls['course'].valueChanges.subscribe(
-      value => {
-        this.editCourseForm.controls['description'].setValue(value.description);
-        this.editCourseForm.controls['type'].setValue(value.courseType);
-      }
-    );
+      this.editCourseForm.controls['course'].valueChanges.subscribe(
+        value => {
+          this.editCourseForm.controls['description'].setValue(value.description);
+          this.editCourseForm.controls['type'].setValue(value.courseType);
+        }
+      );
 
-    this.editCourseForm.controls['type'].valueChanges.subscribe(
-      value => {
-        switch (value) {
-          default: {
-            this.selectedType = 0;
-            break;
-          }
-          case 'BACHELOR': {
-            this.selectedType = 0;
-            break;
-          }
-          case 'MASTER': {
-            this.selectedType = 1;
-            break;
-          }
-          case 'ALL_IN_ONE_CYCLE_MASTER': {
-            this.selectedType = 2;
-            break;
+      this.editCourseForm.controls['type'].valueChanges.subscribe(
+        value => {
+          switch (value) {
+            default: {
+              this.selectedType = 0;
+              break;
+            }
+            case 'BACHELOR': {
+              this.selectedType = 0;
+              break;
+            }
+            case 'MASTER': {
+              this.selectedType = 1;
+              break;
+            }
+            case 'ALL_IN_ONE_CYCLE_MASTER': {
+              this.selectedType = 2;
+              break;
+            }
           }
         }
-      }
-    );
-
+      );
+    }else{
+      this.router.navigate('');
+    }
   }
 
 
@@ -81,7 +89,7 @@ export class ModifyCourseComponent implements OnInit {
 
     this.putService.updateCourse(this.selectedCourse).subscribe( course => {
       if (course != null) {
-        this.router.navigate(['seg-home']);
+        this.router.navigate('seg-home');
       }
     });
   }
