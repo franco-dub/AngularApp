@@ -1,0 +1,32 @@
+<h2 align="center">Upload File</h2>
+<div align="center">
+
+  <mat-form-field>
+    <mat-select placeholder="Select Module" [(value)]="selectedModule">
+      <mat-option *ngFor="let module of modules" [value]="module">
+        {{ module.title }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+  <div *ngIf="this.selectedModule">
+    <mat-card>
+      <div class="example-button-row">
+        <button type="button" mat-raised-button color="basic" (click)="imgFileInput.click()">Choose file</button>
+        <input hidden type="file" #imgFileInput (change)="onFileSelected($event)">
+        <button type="button" mat-raised-button color="basic" (click)="onUpload()">Upload</button>
+        <div *ngIf="!this.selectedFile">
+          <br>
+          <font color="gray">Choose a file...</font>
+        </div>
+        <div *ngIf="this.selectedFile">
+          <br> {{this.selectedFile.name}}
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>
+<div *ngIf="this.selectedModule">
+  <app-files-list [module]="selectedModule" [changing]="changingValue"></app-files-list>
+</div>

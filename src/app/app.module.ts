@@ -65,7 +65,8 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
 import {AngularFireFunctionsModule} from '@angular/fire/functions';
-
+import { UploadFileComponent } from './components/professor/upload-file/upload-file.component';
+import { FilesListComponent } from './components/professor/files-list/files-list.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import {AngularFireFunctionsModule} from '@angular/fire/functions';
     MenageTicketsComponent,
     TicketDetailsComponent,
     ModifyCalendarComponent,
-
+    UploadFileComponent,
+    FilesListComponent,
 
   ],
   imports: [

@@ -15,6 +15,7 @@ import {ModifyCourseComponent} from './components/secretary/modify/modify-course
 import {OpenTicketComponent} from './components/professor/open-ticket/open-ticket.component';
 import { MenageTicketsComponent } from './components/professor/menage-tickets/menage-tickets.component';
 import {ModifyCalendarComponent} from './components/secretary/modify/modify-calendar/modify-calendar.component';
+import { UploadFileComponent } from './components/professor/upload-file/upload-file.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -31,6 +32,7 @@ const routes: Routes = [
   {path: 'open-ticket', component: OpenTicketComponent},
   {path: 'menage-tickets', component: MenageTicketsComponent},
   {path: 'modify-calendar', component: ModifyCalendarComponent}
+  {path: 'upload-file', component: UploadFileComponent}
 ];
 
 @NgModule({
