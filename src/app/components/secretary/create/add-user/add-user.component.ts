@@ -66,7 +66,9 @@ export class AddUserComponent implements OnInit {
     }
   }
 
-  submit(selectedUser: string, selectedCourse?: Course){
+  submit(selectedUser: string, selectedCourse?: Course, photo?: any){
+
+    this.photo = photo;
 
     if (this.checkData(selectedUser, selectedCourse)) {
       let person = this.newPerson();
@@ -196,10 +198,6 @@ export class AddUserComponent implements OnInit {
       person: person,
       hireDate: new Date()
     };
-  }
-
-  private onUpload(file: any){
-    this.photo = file;
   }
 
 }

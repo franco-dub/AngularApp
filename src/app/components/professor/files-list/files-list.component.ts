@@ -5,6 +5,7 @@ import { Module } from '../../models/Module';
 import { TeachingMaterial } from '../../models/TeachingMaterial';
 import { DeleteService } from '../../../servicies/delete.service';
 import { Subject } from 'rxjs';
+import {RoutingService} from '../../../servicies/routing.service';
 
 @Component({
   selector: 'app-files-list',
@@ -16,17 +17,19 @@ export class FilesListComponent implements OnInit {
 
   @Input() module: Module;
   @Input() changing: Subject<boolean>;
-  files: Array<TeachingMaterial>
+  files: Array<TeachingMaterial>;
 
   constructor(private getService: GetService,
+              private router: RoutingService,
+              private authService: AuthService,
               private deleteService: DeleteService) {
               }
 
   ngOnInit() {
-    this.changing.subscribe(v => { 
+    this.changing.subscribe(v => {
       console.log('value is changing', v);
       this.loadFileList();
-   });
+    });
     this.loadFileList();
   }
   displayedColumns: string[] = ['delete', 'fileName', 'fileType', 'created', 'size'];

@@ -1,13 +1,13 @@
 <div class="my_class">
 
-  <h2 align="center">Edit Module</h2>
+  <h2 align="center">Materia</h2>
 
   <form novalidate [formGroup]="editModuleForm" (ngSubmit)="onSubmitForm()">
 
 
     <div align="center">
       <mat-form-field>
-        <mat-select placeholder="Select Module" formControlName="module" required>
+        <mat-select placeholder="Seleziona materia" formControlName="module" required>
           <mat-option *ngFor="let module of modules" [value]="module">
             {{ module.title }}
           </mat-option>
@@ -24,7 +24,7 @@
           <mat-grid-tile>
             <div align="center">
               <mat-form-field>
-                <mat-select placeholder="Select Course" formControlName="course">
+                <mat-select placeholder="Seleziona corso di studi" formControlName="course">
                   <mat-option *ngFor="let course of courses" [value]="course.courseId" >
                     {{ course.name }}
                   </mat-option>
@@ -36,7 +36,7 @@
           <mat-grid-tile>
             <div align="center">
               <mat-form-field>
-                <mat-select placeholder="Select Professor" formControlName="professor">
+                <mat-select placeholder="Seleziona il professore" formControlName="professor">
                   <mat-option *ngFor="let professor of professors" [value]="professor.professorId">
                     {{ professor.person.lastName }} {{ professor.person.firstName }}
                   </mat-option>
@@ -52,27 +52,27 @@
         <mat-grid-list [cols]="3"  rowHeight="3:1">
           <mat-grid-tile>
             <div align="center">
-              <h3>Insert credits</h3>
+              <h3>Crediti</h3>
               <mat-form-field >
-                <input matInput type="number" placeholder="Insert credits" formControlName="credits">
+                <input matInput type="number" placeholder="Inserisci crediti" formControlName="credits">
               </mat-form-field>
             </div>
           </mat-grid-tile>
 
           <mat-grid-tile>
             <div align="center">
-              <h3>Insert semester</h3>
+              <h3>Semestre</h3>
               <mat-form-field>
-                <input matInput type="text" placeholder="Insert semester" formControlName="semester">
+                <input matInput type="text" placeholder="Inserisci semestre" formControlName="semester">
               </mat-form-field>
             </div>
           </mat-grid-tile>
 
           <mat-grid-tile>
             <div align="center">
-              <h3>Insert year</h3>
+              <h3>Anno</h3>
               <mat-form-field>
-                <input matInput type="number" placeholder="Insert year" formControlName="year">
+                <input matInput type="number" placeholder="Inserisci anno" formControlName="year">
               </mat-form-field>
             </div>
           </mat-grid-tile>
@@ -84,7 +84,7 @@
         <mat-card-actions align="center" class="example-card">
           <mat-card-content>
             <button mat-raised-button color="warn" type="submit">
-              Update
+              Salva aggiornamenti
             </button>
           </mat-card-content>
         </mat-card-actions>

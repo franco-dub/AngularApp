@@ -3,9 +3,9 @@
 
     <mat-grid-tile>
       <div align="center" class="page">
-        <h3 class="unSelectable">Select Course Calendar</h3>
+        <h3 class="unSelectable">Seleziona il corso di studi</h3>
         <mat-form-field appearance="legacy">
-          <mat-select placeholder="Select course" [(ngModel)]="studyCourse">
+          <mat-select placeholder="Corso" [(ngModel)]="studyCourse">
             <mat-option *ngFor="let course of studyCourses"
                     [value]="course" (click)="populateYear(); populateCalendar()">
               {{ course.name }}
@@ -17,9 +17,9 @@
 
     <mat-grid-tile>
       <div align="center" class="page">
-        <h3 class="unSelectable">Select year</h3>
+        <h3 class="unSelectable">Seleziona l'anno</h3>
         <mat-form-field appearance="legacy">
-          <mat-select placeholder="Year" [(ngModel)]="year">
+          <mat-select placeholder="Anno" [(ngModel)]="year">
             <mat-option *ngFor="let ye of years" [value]="ye"
                         (click)="getModules(); populateCalendar()">
             {{ ye }}
@@ -32,9 +32,9 @@
 
     <mat-grid-tile>
       <div align="center" class="page">
-        <h3 class="unSelectable">Select Semester</h3>
+        <h3 class="unSelectable">Seleziona semestre</h3>
         <mat-form-field appearance="legacy">
-          <mat-select placeholder="Semester" [(ngModel)]="semester">
+          <mat-select placeholder="Semestre" [(ngModel)]="semester">
             <mat-option value="1" (click)="getModules(); populateCalendar()">
               1
             </mat-option>
@@ -48,9 +48,9 @@
 
     <mat-grid-tile>
       <div class="page" align="center">
-        <h3 class="unSelectable">Select Teaching</h3>
+        <h3 class="unSelectable">Seleziona l'insegnamento</h3>
         <mat-form-field appearance="legacy">
-          <mat-select placeholder="Teaching" [(ngModel)]="module">
+          <mat-select placeholder="Insegnamento" [(ngModel)]="module">
             <mat-option *ngFor="let teach of teachings" [value]="teach"
                         (click)="unselectedTeaching = false; populateCalendar()">
               {{ teach.title }}
@@ -78,9 +78,9 @@
       <mat-grid-list [cols]="4" rowHeight="2:1">
         <mat-grid-tile>
           <div align="center">
-            <h3 class="unSelectable">Starting Hour</h3>
+            <h3 class="unSelectable">Ora d'inizio</h3>
             <mat-form-field appearance="legacy">
-              <mat-select placeholder="Select starting hour" [(ngModel)]="startingHour">
+              <mat-select placeholder="Inizio" [(ngModel)]="startingHour">
                 <mat-option *ngFor="let hour of Hours" [value]="hour">
                   {{ hour }}
                 </mat-option>
@@ -92,9 +92,9 @@
 
         <mat-grid-tile>
           <div align="center">
-            <h3 class="unSelectable">Ending Hour</h3>
+            <h3 class="unSelectable">Ora di fine</h3>
             <mat-form-field appearance="legacy">
-              <mat-select placeholder="Select starting hour" [(ngModel)]="endingHour">
+              <mat-select placeholder="Fine" [(ngModel)]="endingHour">
                 <mat-option *ngFor="let hour of Hours" [value]="hour">
                   {{ hour }}
                 </mat-option>
@@ -105,9 +105,9 @@
 
         <mat-grid-tile>
           <div align="center">
-            <h3 class="unSelectable">Select Start Day Lecture</h3>
+            <h3 class="unSelectable">Data di inizio semestre</h3>
             <mat-form-field appearance="legacy">
-              <input matInput [matDatepicker]="pickerStart" placeholder="Insert lecture day"
+              <input matInput [matDatepicker]="pickerStart" placeholder="Inizio semestre"
                      [(ngModel)]="dayLecture" required>
             </mat-form-field>
             <mat-datepicker-toggle [for]="pickerStart" ></mat-datepicker-toggle>
@@ -117,9 +117,9 @@
 
         <mat-grid-tile>
           <div align="center">
-            <h3 class="unSelectable">Select End Day</h3>
+            <h3 class="unSelectable">Data di fine semestre</h3>
             <mat-form-field appearance="legacy" >
-              <input matInput [matDatepicker]="pickerEnd" placeholder="Insert lecture day"
+              <input matInput [matDatepicker]="pickerEnd" placeholder="Fine semestre"
                      [(ngModel)]="endDate" required [disabled]="lectureCalendar.type == 'EXAM'">
             </mat-form-field>
             <mat-datepicker-toggle [for]="pickerEnd" ></mat-datepicker-toggle>
@@ -138,7 +138,7 @@
               <mat-card-content>
                 <button [style.font-size]="'x-large'" color="warn" mat-raised-button
                         (click)="findAula(); populateCalendar()">
-                  Find Aula
+                  Cerca aula libera
                 </button>
               </mat-card-content>
             </mat-card-actions>
@@ -148,9 +148,9 @@
 
         <mat-grid-tile>
           <div align="center">
-            <h3 class="unSelectable">Select Free Aula</h3>
+            <h3 class="unSelectable">Seleziona aula libera</h3>
             <mat-form-field appearance="legacy">
-              <mat-select  placeholder="Select aula"  [(ngModel)]="selectedAula">
+              <mat-select  placeholder="Seleziona aula"  [(ngModel)]="selectedAula">
                 <mat-option *ngFor="let aula of aulasFounded" [value]="aula" (click)="checkAulasSearched()">
                   {{ aula.name }}
                 </mat-option>
@@ -167,7 +167,7 @@
             <mat-card-actions align="center" class="example-card">
               <mat-card-content>
                 <button color="warn" [style.font-size]="'x-large'"
-                        mat-raised-button (click)="addDayLecture(); populateCalendar()">Add Day</button>
+                        mat-raised-button (click)="addDayLecture(); populateCalendar()">Aggiungi calendario</button>
               </mat-card-content>
             </mat-card-actions>
           </div>
@@ -183,27 +183,27 @@
   <div align="center" class="button-container">
     <mat-card-actions align="center" class="example-card">
       <mat-card-content>
-        <button [style.font-size]="'x-large'" [style.background-color]="'blue'" [style.color]="'white'"
-                mat-raised-button (click)="finished()">Finished</button>
+        <button [style.font-size]="'x-large'" color="accent"
+                mat-raised-button (click)="finished()">Fine</button>
       </mat-card-content>
     </mat-card-actions>
   </div>
 
   <div class="table-container">
-    <table mat-table [dataSource]="tableEments">
+    <table mat-table [dataSource]="tableElements">
 
       <ng-container matColumnDef="Hour" sticky >
         <th mat-header-cell *matHeaderCellDef class="first-box-container column-title unSelectable">
-          Hours/Days
+          Ore/Giorni
         </th>
-        <td mat-cell *matCellDef="let element; let i = index" ngClass="first-box-container column-title unSelectable">
+        <td mat-cell *matCellDef="let element" ngClass="first-box-container column-title unSelectable">
           {{ element.Hour }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="Monday" >
         <th mat-header-cell *matHeaderCellDef class="other-box-container column-title unSelectable" >
-          Monday
+          Lunedi
         </th>
         <td mat-cell *matCellDef="let element; let i = index" class="other-box-container column-data unSelectable"
                         (click)="openBottomSheet(i, element.Monday, 'MONDAY')">
@@ -213,7 +213,7 @@
 
       <ng-container matColumnDef="Tuesday">
         <th mat-header-cell *matHeaderCellDef class="other-box-container column-title unSelectable">
-          Tuesday
+          Martedi
         </th>
         <td mat-cell *matCellDef="let element; let i = index" class="other-box-container column-data unSelectable"
             (click)="openBottomSheet(i, element.Tuesday, 'TUESDAY')">
@@ -223,7 +223,7 @@
 
       <ng-container matColumnDef="Wednesday">
         <th mat-header-cell  *matHeaderCellDef class="other-box-container column-title unSelectable">
-          Wednesday
+          Mercoledi
         </th>
         <td mat-cell *matCellDef="let element; let i = index" class="other-box-container column-data unSelectable"
             (click)="openBottomSheet(i, element.Wednesday, 'WEDNESDAY')">
@@ -233,7 +233,7 @@
 
       <ng-container matColumnDef="Thursday">
         <th mat-header-cell *matHeaderCellDef class="other-box-container column-title unSelectable">
-          Thursday
+          Giovedi
         </th>
         <td mat-cell *matCellDef="let element; let i = index" class="other-box-container column-data unSelectable"
             (click)="openBottomSheet(i, element.Thursday, 'THURSDAY')">
@@ -243,7 +243,7 @@
 
       <ng-container matColumnDef="Friday">
         <th mat-header-cell *matHeaderCellDef class="other-box-container column-title unSelectable">
-          Friday
+          Venerdi
         </th>
         <td mat-cell *matCellDef="let element; let i = index" class="other-box-container column-data unSelectable"
             (click)="openBottomSheet(i, element.Friday, 'FRIDAY')">
@@ -253,7 +253,7 @@
 
       <ng-container matColumnDef="Saturday">
         <th mat-header-cell *matHeaderCellDef class="other-box-container column-title unSelectable">
-          Saturday
+          Sabato
         </th>
         <td mat-cell *matCellDef="let element; let i = index" class="other-box-container column-data unSelectable"
             (click)="openBottomSheet(i, element.Saturday, 'SATURDAY')">

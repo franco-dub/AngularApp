@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
             this.professor = loggedUser.professor;
             this.authService.sendToken('loggedProfessor', 'token');
             this.authService.sendToken(this.professor, 'user');
-            this.router.navigate(["upload-file"]);
+            this.router.navigate("manage-tickets");
             break;
 
           case "STUDENT":

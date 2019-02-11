@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from '../../../servicies/post.service';
 import { HttpClient } from '@angular/common/http';
-import { AuthGuardService } from '../../../servicies/auth-guard.service';
 import { AuthService } from '../../../servicies/auth.service';
 import { GetService } from '../../../servicies/get.service';
 import { Module } from '../../models/Module';
 import { Subject } from 'rxjs';
+import {RoutingService} from '../../../servicies/routing.service';
 
 @Component({
   selector: 'app-upload-file',
@@ -23,14 +23,18 @@ export class UploadFileComponent implements OnInit {
   constructor(private postService: PostService,
               private getService: GetService,
               private http: HttpClient,
+              private router: RoutingService,
               private authService: AuthService) {
                 this.profId = this.authService.getLoggedUser('user').professorId;
                }
 
   ngOnInit() {
-    this.getService.findModuleByProf(this.profId).subscribe(modules => {
-      this.modules = modules;
-    });
+    this.router.currentLocation('upload-file');
+    if(this.authService.isLoggednIn()) {
+      this.getService.findModuleByProf(this.profId).subscribe(modules => {
+        this.modules = modules;
+      });
+    }
   }
 
   onFileSelected(event){ 

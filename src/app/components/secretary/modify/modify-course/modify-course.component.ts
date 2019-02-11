@@ -19,9 +19,9 @@ export class ModifyCourseComponent implements OnInit {
   selectedCourse: Course;
 
   studyCourseTypes = [
-    {courseType: 'BACHELOR', cfu: 180, year: 3},
-    {courseType: 'MASTER', cfu: 120, year: 2},
-    {courseType: 'ALL_IN_ONE_CYCLE_MASTER', cfu: 300, year: 5}
+    {courseType: 'Triennale', cfu: 180, year: 3},
+    {courseType: 'Magistrale', cfu: 120, year: 2},
+    {courseType: 'Magistrale a ciclo unico', cfu: 300, year: 5}
   ];
 
   constructor(private putService: PutService,
@@ -58,15 +58,15 @@ export class ModifyCourseComponent implements OnInit {
               this.selectedType = 0;
               break;
             }
-            case 'BACHELOR': {
+            case 'Triennale': {
               this.selectedType = 0;
               break;
             }
-            case 'MASTER': {
+            case 'Magistrale': {
               this.selectedType = 1;
               break;
             }
-            case 'ALL_IN_ONE_CYCLE_MASTER': {
+            case 'Magistrale a ciclo unico': {
               this.selectedType = 2;
               break;
             }

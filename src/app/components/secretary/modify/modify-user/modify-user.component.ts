@@ -18,7 +18,7 @@ export class ModifyUserComponent implements OnInit {
 
   gends = ['M', 'F'];
 
-  type: String[] = ['STUDENT', 'PROFESSOR', 'SECRETARY'];
+  type: String[] = ['STUDENTE', 'PROFESSORE', 'SEGRETARIO'];
 
   selectedType = '';
 
@@ -152,7 +152,10 @@ export class ModifyUserComponent implements OnInit {
       this.email && this.number.toString() && this.address && this.phone && this. dateOfBirth.toDateString()) != '';
   }
 
-  submit() {
+  submit(photo: any) {
+
+    this.photo = photo;
+
     if(this.authService.isLoggednIn()) {
 
       if (this.checkData()) {
@@ -166,7 +169,7 @@ export class ModifyUserComponent implements OnInit {
             this.student.person.phone = this.phone;
             this.student.person.email = this.email;
             this.student.person.dateOfBirth = this.dateOfBirth;
-            this.student.person.address = this.address;
+            this.student.person.address = address;
             this.student.person.password = this.password;
             for (const course of this.courses) {
               if (course.name == this.courseName) {
@@ -237,11 +240,6 @@ export class ModifyUserComponent implements OnInit {
       this.authService.toast('Not logged in');
     }
   }
-
-  private onUpload(file: any){
-    this.photo = file;
-  }
-
 
   newPassword() {
     this.password = 'password';

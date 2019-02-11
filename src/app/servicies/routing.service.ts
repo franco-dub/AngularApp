@@ -7,7 +7,6 @@ import {AuthService} from './auth.service';
   providedIn: 'root'
 })
 export class RoutingService {
-  private history = [];
   private currentUrlObs =  new Subject<string>();
   private currentUrl: string;
 
@@ -63,6 +62,14 @@ export class RoutingService {
 
         case 'modify-calendar':
           this.navigate('seg-home');
+          break;
+
+        case'upload-file':
+          this.navigate('manage-tickets');
+          break;
+
+        case 'open-ticket':
+          this.navigate('manage-tickets');
           break;
 
         default:

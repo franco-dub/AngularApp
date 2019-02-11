@@ -3,6 +3,7 @@
 .table-container {
   height: 600px;
   overflow: auto;
+  margin: 30px;
 }
 
 .radio-button{
@@ -13,7 +14,7 @@
 .page{
   width: 100%;
   overflow: auto;
-  margin-bottom: 30px;
+  margin: 30px;
 }
 
 .button-container{

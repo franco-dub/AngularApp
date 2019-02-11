@@ -9,7 +9,6 @@ import {DatePipe} from "@angular/common";
 import {MatBottomSheet} from "@angular/material";
 import {BottomSheetComponent} from "../../../bottom-sheet/bottom-sheet.component";
 import {RoutingService} from "../../../../servicies/routing.service";
-import {of} from 'rxjs';
 import {and} from '@angular/router/src/utils/collection';
 import {AuthService} from '../../../../servicies/auth.service';
 
@@ -45,7 +44,7 @@ export class AddCalendarComponent implements OnInit {
     '18:30:00',
   ];
 
-  tableEments = [
+  tableElements = [
     {Hour: '08:00:00', Monday: '', Tuesday: '', Wednesday: '', Thursday: '', Friday: '', Saturday: ''},
     {Hour: '08:30:00', Monday: '', Tuesday: '', Wednesday: '', Thursday: '', Friday: '', Saturday: ''},
     {Hour: '09:00:00', Monday: '', Tuesday: '', Wednesday: '', Thursday: '', Friday: '', Saturday: ''},
@@ -129,7 +128,7 @@ export class AddCalendarComponent implements OnInit {
 
   errorLogRoom = '';
 
-  calendarKind = ['LECTURE', 'EXAM'];
+  calendarKind = ['Lezione', 'Esami'];
 
   constructor(private postService: PostService,
               private getService: GetService,
@@ -191,9 +190,9 @@ export class AddCalendarComponent implements OnInit {
         let count = 0;
         let hourPicker = false;
         for(let k = 0; k < this.Hours.length; k++){
-            if (module.title == this.tableEments[k].Monday) {
+            if (module.title == this.tableElements[k].Monday) {
               hourPicker = true;
-            } else if (module.title != this.tableEments[k].Monday) {
+            } else if (module.title != this.tableElements[k].Monday) {
               hourPicker = false;
             }
             if (hourPicker) {
@@ -202,9 +201,9 @@ export class AddCalendarComponent implements OnInit {
 
         }
         for(let k = 0; k < this.Hours.length; k++){
-          if (module.title == this.tableEments[k].Tuesday) {
+          if (module.title == this.tableElements[k].Tuesday) {
             hourPicker = true;
-          } else if (module.title != this.tableEments[k].Tuesday) {
+          } else if (module.title != this.tableElements[k].Tuesday) {
             hourPicker = false;
           }
           if (hourPicker) {
@@ -213,9 +212,9 @@ export class AddCalendarComponent implements OnInit {
 
         }
         for(let k = 0; k < this.Hours.length; k++){
-          if (module.title == this.tableEments[k].Wednesday) {
+          if (module.title == this.tableElements[k].Wednesday) {
             hourPicker = true;
-          } else if (module.title != this.tableEments[k].Wednesday) {
+          } else if (module.title != this.tableElements[k].Wednesday) {
             hourPicker = false;
           }
           if (hourPicker) {
@@ -224,9 +223,9 @@ export class AddCalendarComponent implements OnInit {
 
         }
         for(let k = 0; k < this.Hours.length; k++){
-          if (module.title == this.tableEments[k].Thursday) {
+          if (module.title == this.tableElements[k].Thursday) {
             hourPicker = true;
-          } else if (module.title != this.tableEments[k].Thursday) {
+          } else if (module.title != this.tableElements[k].Thursday) {
             hourPicker = false;
           }
           if (hourPicker) {
@@ -235,9 +234,9 @@ export class AddCalendarComponent implements OnInit {
 
         }
         for(let k = 0; k < this.Hours.length; k++){
-          if (module.title == this.tableEments[k].Friday) {
+          if (module.title == this.tableElements[k].Friday) {
             hourPicker = true;
-          } else if (module.title != this.tableEments[k].Friday) {
+          } else if (module.title != this.tableElements[k].Friday) {
             hourPicker = false;
           }
           if (hourPicker) {
@@ -251,13 +250,13 @@ export class AddCalendarComponent implements OnInit {
   }
 
   resetTable(){
-    for(let i = 0; i < this.tableEments.length; i++){
-      this.tableEments[i].Monday = '';
-      this.tableEments[i].Tuesday = '';
-      this.tableEments[i].Wednesday = '';
-      this.tableEments[i].Thursday = '';
-      this.tableEments[i].Friday = '';
-      this.tableEments[i].Saturday = '';
+    for(let i = 0; i < this.tableElements.length; i++){
+      this.tableElements[i].Monday = '';
+      this.tableElements[i].Tuesday = '';
+      this.tableElements[i].Wednesday = '';
+      this.tableElements[i].Thursday = '';
+      this.tableElements[i].Friday = '';
+      this.tableElements[i].Saturday = '';
     }
   }
 
@@ -265,79 +264,79 @@ export class AddCalendarComponent implements OnInit {
     let hourPicker = false;
     switch (date.getDay()) {
       case 1:
-        for(let i = 0; i < this.tableEments.length; i++) {
-          if(startTime == this.tableEments[i].Hour){
+        for(let i = 0; i < this.tableElements.length; i++) {
+          if(startTime == this.tableElements[i].Hour){
             hourPicker = true
-          }else if(endTime == this.tableEments[i].Hour){
+          }else if(endTime == this.tableElements[i].Hour){
             hourPicker = false
           }
           if (hourPicker) {
-            this.tableEments[i].Monday = title;
+            this.tableElements[i].Monday = title;
           }
         }
         break;
 
       case 2:
-        for(let i = 0; i < this.tableEments.length; i++) {
-          if(startTime == this.tableEments[i].Hour){
+        for(let i = 0; i < this.tableElements.length; i++) {
+          if(startTime == this.tableElements[i].Hour){
             hourPicker = true
-          }else if(endTime == this.tableEments[i].Hour){
+          }else if(endTime == this.tableElements[i].Hour){
             hourPicker = false
           }
           if (hourPicker) {
-            this.tableEments[i].Tuesday = title;
+            this.tableElements[i].Tuesday = title;
           }
         }
         break;
 
       case 3:
-        for(let i = 0; i < this.tableEments.length; i++) {
-          if(startTime == this.tableEments[i].Hour){
+        for(let i = 0; i < this.tableElements.length; i++) {
+          if(startTime == this.tableElements[i].Hour){
             hourPicker = true
-          }else if(endTime == this.tableEments[i].Hour){
+          }else if(endTime == this.tableElements[i].Hour){
             hourPicker = false
           }
           if (hourPicker) {
-            this.tableEments[i].Wednesday = title;
+            this.tableElements[i].Wednesday = title;
           }
         }
         break;
 
       case 4:
-        for(let i = 0; i < this.tableEments.length; i++) {
-          if(startTime == this.tableEments[i].Hour){
+        for(let i = 0; i < this.tableElements.length; i++) {
+          if(startTime == this.tableElements[i].Hour){
             hourPicker = true
-          }else if(endTime == this.tableEments[i].Hour){
+          }else if(endTime == this.tableElements[i].Hour){
             hourPicker = false
           }
           if (hourPicker) {
-            this.tableEments[i].Thursday = title;
+            this.tableElements[i].Thursday = title;
           }
         }
         break;
 
       case 5:
-        for(let i = 0; i < this.tableEments.length; i++) {
-          if(startTime == this.tableEments[i].Hour){
+        for(let i = 0; i < this.tableElements.length; i++) {
+          if(startTime == this.tableElements[i].Hour){
             hourPicker = true
-          }else if(endTime == this.tableEments[i].Hour){
+          }else if(endTime == this.tableElements[i].Hour){
             hourPicker = false
           }
           if (hourPicker) {
-            this.tableEments[i].Friday = title;
+            this.tableElements[i].Friday = title;
           }
         }
         break;
 
       case 6:
-        for(let i = 0; i < this.tableEments.length; i++) {
-          if(startTime == this.tableEments[i].Hour){
+        for(let i = 0; i < this.tableElements.length; i++) {
+          if(startTime == this.tableElements[i].Hour){
             hourPicker = true
-          }else if(endTime == this.tableEments[i].Hour){
+          }else if(endTime == this.tableElements[i].Hour){
             hourPicker = false
           }
           if (hourPicker) {
-            this.tableEments[i].Saturday = title;
+            this.tableElements[i].Saturday = title;
           }
         }
         break;
@@ -470,7 +469,7 @@ export class AddCalendarComponent implements OnInit {
       case 'MONDAY':
         for(let i = 0; i < this.lectureCalendars.length; i++){
           if('MONDAY' == this.lectureCalendars[i].day &&
-            this.tableEments[index].Monday == this.lectureCalendars[i].module.title){
+            this.tableElements[index].Monday == this.lectureCalendars[i].module.title){
             this.getService.findEquipmentByRoom(this.lectureCalendars[i].room).subscribe(roomEquipments=>{
               this.lectureCalendars[i].roomEquipment = roomEquipments;
             });
@@ -482,7 +481,7 @@ export class AddCalendarComponent implements OnInit {
       case 'TUESDAY':
         for(let i = 0; i < this.lectureCalendars.length; i++){
           if('TUESDAY' == this.lectureCalendars[i].day &&
-            this.tableEments[index].Tuesday == this.lectureCalendars[i].module.title){
+            this.tableElements[index].Tuesday == this.lectureCalendars[i].module.title){
             this.getService.findEquipmentByRoom(this.lectureCalendars[i].room).subscribe(roomEquipments=>{
               this.lectureCalendars[i].roomEquipment = roomEquipments;
             });
@@ -494,7 +493,7 @@ export class AddCalendarComponent implements OnInit {
       case 'WEDNESDAY':
         for(let i = 0; i < this.lectureCalendars.length; i++){
           if('WEDNESDAY' == this.lectureCalendars[i].day &&
-            this.tableEments[index].Wednesday == this.lectureCalendars[i].module.title){
+            this.tableElements[index].Wednesday == this.lectureCalendars[i].module.title){
             this.getService.findEquipmentByRoom(this.lectureCalendars[i].room).subscribe(roomEquipments=>{
               this.lectureCalendars[i].roomEquipment = roomEquipments;
             });
@@ -506,7 +505,7 @@ export class AddCalendarComponent implements OnInit {
       case 'THURSDAY':
         for(let i = 0; i < this.lectureCalendars.length; i++){
           if('THURSDAY' == this.lectureCalendars[i].day &&
-            this.tableEments[index].Thursday == this.lectureCalendars[i].module.title){
+            this.tableElements[index].Thursday == this.lectureCalendars[i].module.title){
             this.getService.findEquipmentByRoom(this.lectureCalendars[i].room).subscribe(roomEquipments=>{
               this.lectureCalendars[i].roomEquipment = roomEquipments;
             });
@@ -518,7 +517,7 @@ export class AddCalendarComponent implements OnInit {
       case 'FRIDAY':
         for(let i = 0; i < this.lectureCalendars.length; i++){
           if('FRIDAY' == this.lectureCalendars[i].day &&
-            this.tableEments[index].Friday == this.lectureCalendars[i].module.title){
+            this.tableElements[index].Friday == this.lectureCalendars[i].module.title){
             this.getService.findEquipmentByRoom(this.lectureCalendars[i].room).subscribe(roomEquipments=>{
               this.lectureCalendars[i].roomEquipment = roomEquipments;
             });
@@ -530,7 +529,7 @@ export class AddCalendarComponent implements OnInit {
       case 'SATURDAY':
         for(let i = 0; i < this.lectureCalendars.length; i++){
           if('SATURDAY' == this.lectureCalendars[i].day &&
-            this.tableEments[index].Saturday == this.lectureCalendars[i].module.title){
+            this.tableElements[index].Saturday == this.lectureCalendars[i].module.title){
             this.getService.findEquipmentByRoom(this.lectureCalendars[i].room).subscribe(roomEquipments=>{
               this.lectureCalendars[i].roomEquipment = roomEquipments;
             });

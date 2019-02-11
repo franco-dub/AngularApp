@@ -1,11 +1,11 @@
 <div class="my_class">
 
-  <h2 align="center">Edit Course</h2>
+  <h2 align="center">Corso di studi</h2>
   <form novalidate [formGroup]="editCourseForm" (ngSubmit)="onSubmitForm()">
 
     <div align="center">
       <mat-form-field>
-        <mat-select placeholder="Select Course" formControlName="course" required>
+        <mat-select placeholder="Seleziona corso di studi" formControlName="course" required>
           <mat-option *ngFor="let course of courses" [value]="course">
             {{ course.name }}
           </mat-option>
@@ -18,13 +18,13 @@
       <mat-card>
         <mat-card-content>
           <mat-card-title>
-            <h4>Course Description</h4>
+            <h4>Descrizione del corso</h4>
           </mat-card-title>
           <mat-form-field appearance="legacy" style="width: 400px;">
         <textarea class="example-full-width" rows="5" cols="40" style="font-size: medium" matInput formControlName="description" #descri
-                  placeholder="Insert course description" maxlength="200">
+                  placeholder="Inserisci la descrizione del corso" maxlength="200">
         </textarea>
-            <mat-hint> Max {{ 200 - descri.value?.length }} character</mat-hint>
+            <mat-hint> Max {{ 200 - descri.value?.length }} caratteri</mat-hint>
           </mat-form-field>
         </mat-card-content>
       </mat-card>
@@ -34,7 +34,7 @@
 
       <mat-card>
         <mat-card-content>
-          <mat-card-title><h4>Course type</h4></mat-card-title>
+          <mat-card-title><h4>Tipo di corso</h4></mat-card-title>
           <mat-radio-group formControlName="type">
             <mat-radio-button class="example-radio-button" *ngFor="let course of studyCourseTypes" [value]="course.courseType">
               {{course.courseType}}
@@ -48,9 +48,8 @@
       <div class="my_class">
         <mat-card-actions align="center" class="example-card">
           <mat-card-content>
-            <button mat-raised-button color="warn"
-                    type="submit">
-              Update
+            <button mat-raised-button color="warn" type="submit">
+              Salva aggiornamenti
             </button>
           </mat-card-content>
         </mat-card-actions>
