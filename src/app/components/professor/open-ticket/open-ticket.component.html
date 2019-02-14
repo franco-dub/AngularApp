@@ -1,9 +1,9 @@
-<h2 align="center">Open Ticket</h2>
+<h2 align="center">Nuovo Ticket</h2>
 <form novalidate [formGroup]="openTicketForm" (ngSubmit)="onSubmitForm()">
 
   <div align="center">
     <mat-form-field>
-      <mat-select placeholder="Select Room" formControlName="room" required>
+      <mat-select placeholder="Aule" formControlName="room">
         <mat-option *ngFor="let room of rooms" [value]="room" (click)="findRoomEquipment()">
           {{ room.name }}
         </mat-option>
@@ -13,27 +13,27 @@
 
   <div *ngIf="openTicketForm.get('room').value" align="center">
 
-    <mat-form-field>
-      <mat-select placeholder="Select Equipment" formControlName="equipment">
+<!--     <mat-form-field>
+      <mat-select placeholder="Equipment" formControlName="equipment">
         <mat-option *ngFor="let roomEquipment of roomEquipments" [value]="roomEquipment">
           {{roomEquipment.equipment.name}}
         </mat-option>
       </mat-select>
-    </mat-form-field>
+    </mat-form-field> -->
 
     <mat-form-field class="example-full-width">
-      <textarea matInput placeholder="Title" formControlName="title"></textarea>
+      <textarea matInput placeholder="Titolo" formControlName="title"></textarea>
     </mat-form-field>
 
       <mat-form-field class="example-full-width">
-        <textarea matInput placeholder="Description" formControlName="description"></textarea>
+        <textarea matInput placeholder="Descrizione" formControlName="description"></textarea>
       </mat-form-field>
 
     <div class="my_class">
       <mat-card-actions align="center" class="example-card">
         <mat-card-content>
           <button mat-raised-button color="warn" type="submit">
-            Submit
+            Invia
           </button>
         </mat-card-content>
       </mat-card-actions>

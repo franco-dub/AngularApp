@@ -1,24 +1,33 @@
 <div *ngIf="ticket" align="center">
+    <mat-card class="example-card">
+
+    
   <form novalidate [formGroup]="ticketDetails" (ngSubmit)="onSubmitForm()">
-      <h2 align="center">{{this.ticketDetails.controls['room'].value.name}} - Status: {{this.ticketDetails.controls['status'].value}}</h2>
-      <h5 align="center">Created: {{this.ticketDetails.controls['date'].value || "-"}} - Modified: {{this.ticketDetails.controls['lastModified'].value || "none"}}</h5>
-    <mat-form-field class="example-full-width">
-      <textarea matInput placeholder="Title" formControlName="title"></textarea>
+      <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title><h2>Aula: {{this.ticketDetails.controls['room'].value.name}} - Stato: {{this.ticketDetails.controls['status'].value}}</h2></mat-card-title>
+          <mat-card-subtitle><h5 align="center">Creato: {{this.ticketDetails.controls['date'].value | date: 'medium' || "-"}} - Modificato: {{this.ticketDetails.controls['lastModified'].value | date: 'medium' || "none"}}</h5></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field class="example-full-width">
+      <textarea matInput placeholder="Titolo" formControlName="title"></textarea>
     </mat-form-field>
     <mat-form-field class="example-full-width">
-      <textarea matInput placeholder="Description" formControlName="description"></textarea>
+      <textarea matInput placeholder="Descrizione" formControlName="description"></textarea>
     </mat-form-field>
+  </mat-card-content>
 
     <div class="my_class">
         <mat-card-actions align="center" class="example-card">
-          <mat-card-content>
-            <button mat-raised-button type="submit">
-              Submit
+
+            <button mat-raised-button color="primary" type="submit">
+              Invia
             </button>
+            <span style="display:inline-block; width: 10pt;"></span>
             <button mat-raised-button (click)="onDelete()" color="warn" type="button">
-                DELETE
+                Elimina
               </button>
-          </mat-card-content>
         </mat-card-actions>
       </div>
   </form>
+</mat-card>

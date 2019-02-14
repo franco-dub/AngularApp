@@ -1,11 +1,5 @@
-<h2 align="center">Module's File</h2>
+<h2 align="center">File del corso</h2>
 
-<!-- <mat-list>
-  <mat-list-item *ngFor="let file of files" (click)="onDelete(file)">
-    <mat-icon mat-list-icon>delete</mat-icon>
-    <h4 mat-line>{{file.fileName}}</h4>
-  </mat-list-item>
-</mat-list> -->
 
 <table mat-table [dataSource]="this.files" class="mat-elevation-z8">
 
@@ -14,33 +8,41 @@
 
   <!-- Delete Column -->
   <ng-container matColumnDef="delete">
-    <th mat-header-cell *matHeaderCellDef> Delete</th>
-    <td mat-cell *matCellDef="let element" (click)="onDelete(element)">
-      <i class="material-icons">delete</i></td>
+    <th mat-header-cell *matHeaderCellDef> </th>
+    <td mat-cell *matCellDef="let element" class="download" (click)="onDelete(element)">
+      <i class="material-icons">delete</i>
+    </td>
   </ng-container>
 
   <!-- Name Column -->
+<!--   <ng-container matColumnDef="meanRate">
+    <th mat-header-cell *matHeaderCellDef> Voto </th>
+    <td mat-cell *matCellDef="let element"> {{element.meanRate}} </td>
+  </ng-container> -->
+
+  <!-- Name Column -->
   <ng-container matColumnDef="fileName">
-    <th mat-header-cell *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.fileName}} </td>
+    <th mat-header-cell *matHeaderCellDef> Nome </th>
+    <td mat-cell *matCellDef="let element" class="download" (click)="download(element)"><button mat-button>{{element.fileName}}</button> </td>
   </ng-container>
 
-  <!-- Type Column -->
-  <ng-container matColumnDef="fileType">
-    <th mat-header-cell *matHeaderCellDef> Type </th>
-    <td mat-cell *matCellDef="let element"> {{element.fileType}} </td>
-  </ng-container>
 
   <!-- Date Column -->
   <ng-container matColumnDef="created">
-    <th mat-header-cell *matHeaderCellDef> Date </th>
+    <th mat-header-cell *matHeaderCellDef> Data </th>
     <td mat-cell *matCellDef="let element"> {{element.created}} </td>
   </ng-container>
 
   <!-- Size Column -->
   <ng-container matColumnDef="size">
-    <th mat-header-cell *matHeaderCellDef> Size </th>
-    <td mat-cell *matCellDef="let element"> {{element.size}} </td>
+    <th mat-header-cell *matHeaderCellDef> Dim </th>
+    <td mat-cell *matCellDef="let element"> {{this.humanFileSize(element.size,1)}} </td>
+  </ng-container>
+
+  <!-- Type Column -->
+  <ng-container matColumnDef="fileType">
+    <th mat-header-cell *matHeaderCellDef> Tipo </th>
+    <td mat-cell *matCellDef="let element"> {{element.fileType}} </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
