@@ -7,3 +7,11 @@
   .example-full-width {
     width: 90%;
   }
+
+  .example-card {
+    max-width: 100%;
+  }
+
+  .download {
+    cursor: pointer;
+}

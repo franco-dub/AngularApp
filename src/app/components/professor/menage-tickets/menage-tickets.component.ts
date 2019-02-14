@@ -18,6 +18,7 @@ export class MenageTicketsComponent implements OnInit {
   selectedTicket: Ticket;
   rooms: Array<Room> = [];
   selectedRoom: Room;
+  ticketDetails = false;
 
   constructor(private getService: GetService,
     private authService: AuthService) {
@@ -27,14 +28,15 @@ export class MenageTicketsComponent implements OnInit {
   ngOnInit() {
     this.getService.findByProfId(this.profId).subscribe(tickets => {
       this.tickets = tickets;
-      this.tickets.sort();
+      if (tickets != null) {
+        this.tickets.sort((val1, val2) => new Date(val2.date).valueOf() - new Date(val1.date).valueOf());
+      }
     });
     this.getService.findAllRoom().subscribe(rooms => {
       this.rooms = rooms;
     });
   }
 
-  private ticketDetails = false;
   loadDetails(ticket: Ticket) {
     this.selectedTicket = ticket;
     this.ticketDetails = true;
@@ -43,9 +45,12 @@ export class MenageTicketsComponent implements OnInit {
   roomTickets(room: Room) {
     this.getService.findAllTicket().subscribe(tickets => {
       this.roomTicketsList = tickets;
-      this.roomTicketsList.sort();
-      this.roomTicketsList = this.roomTicketsList.filter(
-        ticket => ticket.room.roomId === room.roomId);
+      if (tickets != null) {
+        this.roomTicketsList.sort((val1, val2) => new Date(val2.date).valueOf() - new Date(val1.date).valueOf());
+        this.roomTicketsList = this.roomTicketsList.filter(
+          ticket => ticket.room.roomId === room.roomId);
+      }
     });
   }
+
 }

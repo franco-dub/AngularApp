@@ -31,7 +31,7 @@ const routes: Routes = [
   {path: 'modify-course', component: ModifyCourseComponent},
   {path: 'open-ticket', component: OpenTicketComponent},
   {path: 'menage-tickets', component: MenageTicketsComponent},
-  {path: 'modify-calendar', component: ModifyCalendarComponent}
+  {path: 'modify-calendar', component: ModifyCalendarComponent},
   {path: 'upload-file', component: UploadFileComponent}
 ];
 

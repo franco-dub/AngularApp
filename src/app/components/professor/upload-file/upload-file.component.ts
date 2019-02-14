@@ -6,6 +6,7 @@ import { AuthService } from '../../../servicies/auth.service';
 import { GetService } from '../../../servicies/get.service';
 import { Module } from '../../models/Module';
 import { Subject } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-upload-file',
@@ -23,7 +24,8 @@ export class UploadFileComponent implements OnInit {
   constructor(private postService: PostService,
               private getService: GetService,
               private http: HttpClient,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private firestore: AngularFirestore) {
                 this.profId = this.authService.getLoggedUser('user').professorId;
                }
 
@@ -33,18 +35,25 @@ export class UploadFileComponent implements OnInit {
     });
   }
 
-  onFileSelected(event){ 
+  onFileSelected(event) {
     this.selectedFile = <File>event.target.files[0];
   }
 
-  modulesFile(selectedModule){
+  modulesFile(selectedModule) {
     console.log(this.selectedModule);
     console.log(selectedModule);
   }
-  onUpload(){
+  onUpload() {
     this.postService.uploadFile(this.selectedFile, this.selectedModule.moduleId).subscribe(res =>{
       console.log(res);
       this.changingValue.next(true);
+      this.firestore.collection('modules').doc(String(this.selectedModule.moduleId))
+        .collection('notifications').add(
+          {
+            module: this.selectedModule.title,
+            text: 'Nuovo file caricato: ' + this.selectedFile.name
+          }
+        );
     });
   }
 }

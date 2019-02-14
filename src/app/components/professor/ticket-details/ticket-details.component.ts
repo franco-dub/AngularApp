@@ -21,8 +21,8 @@ export class TicketDetailsComponent implements OnChanges {
               private deleteService: DeleteService) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if(changes.ticket){
-      console.log(changes.ticket)
+    if (changes.ticket) {
+      console.log(changes.ticket);
       this.ticketDetails = this.formBuilder.group({
         title: changes.ticket.currentValue.title,
         room: changes.ticket.currentValue.room,
@@ -33,26 +33,28 @@ export class TicketDetailsComponent implements OnChanges {
       });
       this.ticketDetails.valueChanges.subscribe( form => {
         this.ticket.title = form.title,
-        this.ticket.description = form.description
-      })
+        this.ticket.description = form.description;
+      });
     }
   }
 
-  onSubmitForm(){
-    console.log(this.ticket)
+  onSubmitForm() {
+    console.log(this.ticket);
     this.putService.updateTicket(this.ticket).subscribe(ticket => {
-      if (ticket != null)
+      if (ticket != null) {
         this.router.navigate('menage-tickets');
+      }
     });
     window.location.reload();
   }
-  onDelete(){
-    if(confirm("Are you sure to delete the ticket?")) {
+  onDelete() {
+    if (confirm('Are you sure to delete the ticket?')) {
       this.deleteService.deleteTicket(this.ticket).subscribe(ticket => {
-        if (ticket != null)
+        if (ticket != null) {
           this.router.navigate('menage-tickets');
+        }
       });
-      console.log("DELETED");
+      console.log('DELETED');
       window.location.reload();
     }
   }
