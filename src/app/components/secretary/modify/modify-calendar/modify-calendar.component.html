@@ -85,6 +85,7 @@
         <mat-select placeholder="Seleziona una nuova aula"  [(ngModel)]="selectedLesson.room">
           <mat-option *ngFor="let aula of aulasFounded" [value]="aula">
             {{ aula.name }}
+            <mat-hint>Capacity: {{ aula.capacity }}</mat-hint>
           </mat-option>
         </mat-select>
       </mat-form-field>

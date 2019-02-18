@@ -1,5 +1,5 @@
 <mat-sidenav-container fullscreen [style.margin-top]="'95px'" autosize>
-  <mat-sidenav  mode="side" opened [style.background-color]="'#f4ce42'">
+  <mat-sidenav  mode="side" opened [style.background-color]="'#f4ce42'" class="mat-elevation-z8" >
     <mat-list>
       <mat-list-item>
         <button  color="primary" mat-flat-button [style.font-size]="'large'"
@@ -160,7 +160,7 @@
     </mat-list>
   </mat-sidenav>
 
-  <mat-sidenav-content>
+  <mat-sidenav-content style="z-index: -1!important;">
 
     <div [style.margin]="'15px'">
       <div align="center" class="list-container">
@@ -169,32 +169,43 @@
         </h1>
         <mat-list align="center" *ngIf="tickets.length != 0">
           <mat-list-item align="center" *ngFor="let ticket of opened; last as last"
-                         [style.font-size]="'tiny'" [style.width]="'100%'" [style.height]="'150px'">
-            <mat-card [style.width]="'100%'" [style.height]="'100px'" >
+                         [style.font-size]="'tiny'" [style.width]="'100%'" [style.height]="'auto'">
+            <mat-card [style.width]="'100%'" [style.height]="'auto'" [style.margin]="'5px'">
 
-              <div class="title">
-                <b>{{ ticket.title }} room: {{ ticket.room.name }}
-                  professor: {{ ticket.professor.person.firstName}} {{ ticket.professor.person.lastName}}</b>
-              </div>
+              <mat-card-title>
+                <b>Oggetto: {{ ticket.title }}</b>
+              </mat-card-title>
+              <mat-card-subtitle class="title">
+                <div>
+                  <b>Aula: {{ ticket.room.name }}</b>
+                </div>
+                <div>
+                  <b>Professore: {{ ticket.professor.person.firstName}} {{ ticket.professor.person.lastName}}</b>
+                </div>
+              </mat-card-subtitle>
 
               <div class="description">
-                <b> {{ ticket.comment }} </b>
-                <b [style.color]="'blue'">status: {{ ticket.status }}</b>
+                <div>
+                  <b> {{ ticket.comment }} </b>
+                </div>
+                <div>
+                  <b [style.color]="'blue'">stato: {{ ticket.status }}</b>
+                </div>
               </div>
 
               <mat-card-actions>
                 <button mat-flat-button color="primary" [style.margin]="'5px'" (click)="resume(ticket)">
-                  Resolve</button>
-                <button mat-flat-button color="warn" [style.margin]="'5px'"  (click)="delete(ticket)">Delete</button>
+                  Aggiorna/Risolvi</button>
+                <button mat-flat-button color="warn" [style.margin]="'5px'"  (click)="delete(ticket)">Elimina</button>
                 <button mat-flat-button color="accent" [style.margin]="'5px'"
-                        *ngIf="ticket.status == 'PENDING'" (click)="accept(ticket)">Accept</button>
+                        *ngIf="ticket.status == 'PENDING'" (click)="accept(ticket)">Accetta</button>
               </mat-card-actions>
             </mat-card>
           </mat-list-item>
         </mat-list>
         <div *ngIf="opened.length == 0" [style.color]="'red'">
           <h1>
-            No tickets found!
+            Nessun ticket trovato!
           </h1>
         </div>
         <span style="display:inline-block; height: 100px; width: 90%;"></span>
@@ -208,13 +219,13 @@
               <mat-card-content></mat-card-content>
               <mat-card-content>
                 <div class="title">
-                  <b>{{ ticket.title }} room: {{ ticket.room.name }}
-                    professor: {{ ticket.professor.person.firstName}} {{ ticket.professor.person.lastName}}</b>
+                  <b>{{ ticket.title }} aula: {{ ticket.room.name }}
+                    professore: {{ ticket.professor.person.firstName}} {{ ticket.professor.person.lastName}}</b>
                 </div>
 
                 <div class="description">
                   <b> {{ ticket.comment }} </b>
-                  <b [style.color]="'blue'">status: {{ ticket.status }}</b>
+                  <b [style.color]="'blue'">stato: {{ ticket.status }}</b>
                 </div>
               </mat-card-content>
             </mat-card>
@@ -222,7 +233,7 @@
         </mat-list>
         <div *ngIf="closed.length==0" [style.color]="'red'">
           <h1>
-            No tickets found!
+            Nessun ticket trovato!
           </h1>
         </div>
       </div>

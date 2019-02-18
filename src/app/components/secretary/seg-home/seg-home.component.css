@@ -3,6 +3,10 @@
   overflow: auto;
 }
 
+.my-shadow{
+  z-index: -1!important;
+}
+
 .my-class{
   overflow: auto;
   height: 100%;

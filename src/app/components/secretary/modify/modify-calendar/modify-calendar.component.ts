@@ -9,7 +9,6 @@ import {FormControl} from '@angular/forms';
 import {Room} from '../../../models/Room';
 import {DatePipe} from '@angular/common';
 import {PutService} from '../../../../servicies/put.service';
-import {calcPossibleSecurityContexts} from '@angular/compiler/src/template_parser/binding_parser';
 import {AngularFirestore} from '@angular/fire/firestore';
 
 @Component({
@@ -150,8 +149,8 @@ export class ModifyCalendarComponent implements OnInit {
       }
       let moduleId = this.selectedTeaching.moduleId;
       let notify = {
-        mod: moduleId,
-        text: 'Updated calendar'
+        module: moduleId,
+        text: 'Calendario Aggiornato'
       };
       console.log(notify);
       this.angularFirestore.collection('modules').doc(''+moduleId)
@@ -164,7 +163,7 @@ export class ModifyCalendarComponent implements OnInit {
       this.putService.updateDayLecture(this.selectedLesson).subscribe(ret=>{
         let notify = {
           mod: moduleId,
-          text: 'Updated calendar'
+          text: 'Calendario aggiornato'
         };
         console.log(notify);
         this.angularFirestore.collection('modules').doc(''+moduleId)
