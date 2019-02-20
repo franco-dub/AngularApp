@@ -34,26 +34,30 @@ export class TicketDetailsComponent implements OnChanges {
       });
       this.ticketDetails.valueChanges.subscribe(form => {
         this.ticket.title = form.title,
-          this.ticket.description = form.description
-      })
+
+        this.ticket.description = form.description;
+      });
     }
   }
 
-  onSubmitForm(){
+  onSubmitForm() {
+
     console.log(this.ticket);
     this.putService.updateTicket(this.ticket).subscribe(ticket => {
-      if (ticket != null)
+      if (ticket != null) {
         this.router.navigate('menage-tickets');
+      }
     });
     window.location.reload();
   }
-  onDelete(){
-    if(confirm("Are you sure to delete the ticket?")) {
+  onDelete() {
+    if (confirm('Are you sure to delete the ticket?')) {
       this.deleteService.deleteTicket(this.ticket).subscribe(ticket => {
-        if (ticket != null)
+        if (ticket != null) {
           this.router.navigate('menage-tickets');
+        }
       });
-      console.log("DELETED");
+      console.log('DELETED');
       window.location.reload();
     }
   }

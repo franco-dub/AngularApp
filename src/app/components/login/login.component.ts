@@ -62,6 +62,7 @@ export class LoginComponent implements OnInit {
             this.authService.sendToken('loggedProfessor', 'token');
             this.authService.sendToken(this.professor, 'user');
             this.router.navigate("manage-tickets");
+
             break;
 
           case "STUDENT":

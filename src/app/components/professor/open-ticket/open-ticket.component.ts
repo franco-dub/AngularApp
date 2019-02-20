@@ -62,20 +62,21 @@ export class OpenTicketComponent implements OnInit {
     this.ticket.description = this.openTicketForm.controls['description'].value;
     this.ticket.title = this.openTicketForm.controls['title'].value;
     this.ticket.professor = this.authent.getLoggedUser('user');
+    console.log(this.ticket);
     // update roomequipment
-    this.selectedRoomEquipment = this.openTicketForm.controls['room'].value;
+/*     this.selectedRoomEquipment = this.openTicketForm.controls['room'].value;
     this.selectedRoomEquipment = this.openTicketForm.controls['equipment'].value;
     this.selectedRoomEquipment.issue = this.openTicketForm.controls['description'].value;
-    this.selectedRoomEquipment.work = -1;
+    this.selectedRoomEquipment.work = -1; */
      this.postService.sendTicket(this.ticket).subscribe(ticket => {
-      if (ticket != null){
-        console.log(this.selectedRoomEquipment);
+      if (ticket != null) {
+/*         console.log(this.selectedRoomEquipment);
         this.putService.updateRoomEquipment2(this.selectedRoomEquipment)
         .subscribe( roomEquipment =>{
-          if (roomEquipment != null)
-            this.router.navigate('seg-home');
-        });
+          if (roomEquipment != null) */
+            this.router.navigate('menage-tickets');
+    /*     }); */
       }
-    }); 
+    });
   }
 }
