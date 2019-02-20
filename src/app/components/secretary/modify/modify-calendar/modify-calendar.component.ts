@@ -61,6 +61,8 @@ export class ModifyCalendarComponent implements OnInit {
 
   errorLogRoom: string = '';
 
+  radioEna = false;
+
   constructor(private router: RoutingService,
               private authService: AuthService,
               private datepipe: DatePipe,
@@ -92,8 +94,8 @@ export class ModifyCalendarComponent implements OnInit {
     this.getService.findLessonByTeaching(teaching).subscribe(lessons=>{
       let today = new Date();
       lessons.forEach(lesson=>{
-        lesson.dDate = new Date(lesson.date);
-        if (today.getMonth() <= lesson.dDate.getMonth() && today.getDate() <= lesson.dDate.getDate()){
+        lesson.calendarDate.dDate = new Date(lesson.calendarDate.date);
+        if (today.getMonth() <= lesson.calendarDate.dDate.getMonth() && today.getDate() <= lesson.calendarDate.dDate.getDate()){
           this.lessons.push(lesson);
         }
       });
@@ -102,16 +104,17 @@ export class ModifyCalendarComponent implements OnInit {
 
   validateDate(){
     console.log(this.selectedLesson);
-    this.previousDate = new FormControl(this.selectedLesson.dDate);
-    this.selectedLesson.startDate = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
-    this.selectedLesson.endDate = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
+    this.radioEna = !!this.selectedLesson.calendarDate.type.match("EXAM");
+    this.previousDate = new FormControl(this.selectedLesson.calendarDate.dDate);
+    this.selectedLesson.calendarDate.startDate = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
+    this.selectedLesson.calendarDate.endDate = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
     this.findAula();
     console.log(this.all);
   }
 
 
   findAula(){
-    if(this.selectedLesson.startTime < this.selectedLesson.endTime) {
+    if(this.selectedLesson.calendarDate.startTime < this.selectedLesson.calendarDate.endTime) {
       this.errorColor = 'accent';
       this.getService.findAllFreeAulas(this.selectedLesson).subscribe(aulasFounded => {
         if (aulasFounded.length != 0) {
@@ -131,21 +134,21 @@ export class ModifyCalendarComponent implements OnInit {
     if (this.all == 'true') {
       let lessBuff: Array<LectureCalendar> = [];
       this.lessons.forEach(lesson => {
-        if (lesson.day == this.selectedLesson.day && lesson.date >= this.selectedLesson.date) {
+        if (lesson.day == this.selectedLesson.day && lesson.calendarDate.date >= this.selectedLesson.calendarDate.date) {
           lessBuff.push(lesson);
         }
       });
       for (let k = 0; k < lessBuff.length; k++) {
-        lessBuff[k].dDate = this.selectedLesson.dDate;
-        lessBuff[k].date = this.datepipe.transform(this.selectedLesson.dDate, "yyyy-MM-dd");
-        lessBuff[k].startTime = this.selectedLesson.startTime;
-        lessBuff[k].endTime = this.selectedLesson.endTime;
+        lessBuff[k].calendarDate.dDate = this.selectedLesson.calendarDate.dDate;
+        lessBuff[k].calendarDate.date = this.datepipe.transform(this.selectedLesson.calendarDate.dDate, "yyyy-MM-dd");
+        lessBuff[k].calendarDate.startTime = this.selectedLesson.calendarDate.startTime;
+        lessBuff[k].calendarDate.endTime = this.selectedLesson.calendarDate.endTime;
         lessBuff[k].room = this.selectedLesson.room;
-        lessBuff[k].day = ModifyCalendarComponent.getDaty(this.selectedLesson.dDate.getDay());
-        lessBuff[k].startDate = this.datepipe.transform(this.selectedLesson.dDate, "yyyy-MM-dd");
-        lessBuff[k].endDate = this.datepipe.transform(this.selectedLesson.dDate, "yyyy-MM-dd");
+        lessBuff[k].day = ModifyCalendarComponent.getDaty(this.selectedLesson.calendarDate.dDate.getDay());
+        lessBuff[k].calendarDate.startDate = this.datepipe.transform(this.selectedLesson.calendarDate.dDate, "yyyy-MM-dd");
+        lessBuff[k].calendarDate.endDate = this.datepipe.transform(this.selectedLesson.calendarDate.dDate, "yyyy-MM-dd");
         this.putService.updateDayLecture(lessBuff[k]).subscribe();
-        this.selectedLesson.dDate.setDate(this.selectedLesson.dDate.getDate() + 7);
+        this.selectedLesson.calendarDate.dDate.setDate(this.selectedLesson.calendarDate.dDate.getDate() + 7);
       }
       let moduleId = this.selectedTeaching.moduleId;
       let notify = {
@@ -159,7 +162,7 @@ export class ModifyCalendarComponent implements OnInit {
       });
     } else {
       let moduleId = this.selectedTeaching.moduleId;
-      this.selectedLesson.date = this.datepipe.transform(this.selectedLesson.dDate, "yyyy-MM-dd");
+      this.selectedLesson.calendarDate.date = this.datepipe.transform(this.selectedLesson.calendarDate.dDate, "yyyy-MM-dd");
       this.putService.updateDayLecture(this.selectedLesson).subscribe(ret=>{
         let notify = {
           mod: moduleId,

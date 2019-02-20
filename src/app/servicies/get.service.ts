@@ -49,7 +49,7 @@ export class GetService {
 
   private findByProfIdUrl: string = "http://localhost:8080/SpringApp/ticket/findByProfId/";
 
-  private findLessonByTeachingUrl: string = "http://localhost:8080/SpringApp/calendar/getModuleCalendar";
+  private findLessonByTeachingUrl: string = "http://localhost:8080/SpringApp/calendar/findByModuleId/";
 
   findFileByModuleUrl: string = "http://localhost:8080/SpringApp/teachingMaterial/findByModule/";
 
@@ -115,7 +115,7 @@ export class GetService {
   }
 
   findLessonByTeaching(teaching: Module): Observable<Array<LectureCalendar>>{
-    return this.http.post<Array<LectureCalendar>>(this.findLessonByTeachingUrl, teaching, httpOptions);
+    return this.http.get<Array<LectureCalendar>>(this.findLessonByTeachingUrl + teaching.moduleId);
   }
   
   findFileByModule(moduleId: number): Observable<Array<TeachingMaterial>>{

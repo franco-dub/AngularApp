@@ -34,7 +34,7 @@
         <mat-form-field appearance="legacy" color="accent" >
           <mat-select placeholder="Seleziona lezione" [(ngModel)]="selectedLesson" [disabled]="teachings == null">
             <mat-option size="medium" *ngFor="let lesson of lessons" [value]="lesson" (click)="validateDate()">
-              {{ lesson.date }} - {{ lesson.day }}
+              {{ lesson.calendarDate.date }} - {{ lesson.day }}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -49,7 +49,7 @@
       <mat-form-field appearance="legacy" >
         <input matInput [matDatepicker]="picker"
                placeholder="Inserisci la data"
-               [(ngModel)]="selectedLesson.dDate" required>
+               [(ngModel)]="selectedLesson.calendarDate.dDate" required>
       </mat-form-field>
       <mat-datepicker-toggle [for]="picker" ></mat-datepicker-toggle>
       <mat-datepicker #picker ></mat-datepicker>
@@ -59,7 +59,7 @@
       <div layout-align="vertical" align="center">
         <h2>Ora inizio</h2>
         <mat-form-field appearance="legacy" [color]="errorColor">
-          <mat-select placeholder="Seleziona l'ora d'inizio" (selectionChange)="findAula()" [(ngModel)]="selectedLesson.startTime" >
+          <mat-select placeholder="Seleziona l'ora d'inizio" (selectionChange)="findAula()" [(ngModel)]="selectedLesson.calendarDate.startTime" >
             <mat-option *ngFor="let hour of Hours" [value]="hour" (select)="findAula()">
               {{ hour }}
             </mat-option>
@@ -68,7 +68,7 @@
 
         <h2>Ora fine</h2>
         <mat-form-field appearance="legacy" color="accent">
-          <mat-select placeholder="Seleziona l'ora di fine" (selectionChange)="findAula()" [(ngModel)]="selectedLesson.endTime">
+          <mat-select placeholder="Seleziona l'ora di fine" (selectionChange)="findAula()" [(ngModel)]="selectedLesson.calendarDate.endTime">
             <mat-option *ngFor="let hour of Hours" [value]="hour" (select)="findAula()">
               {{ hour }}
             </mat-option>
@@ -78,31 +78,33 @@
     </mat-grid-tile>
 
     <mat-grid-tile>
-      <mat-grid-tile-header class="my-tile-header">
-        <div class="my-bold">Aula</div>
-      </mat-grid-tile-header>
-      <mat-form-field appearance="legacy" color="accent">
-        <mat-select placeholder="Seleziona una nuova aula"  [(ngModel)]="selectedLesson.room">
-          <mat-option *ngFor="let aula of aulasFounded" [value]="aula">
-            {{ aula.name }}
-            <mat-hint>Capacity: {{ aula.capacity }}</mat-hint>
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <div>
+        <mat-grid-tile-header class="my-tile-header">
+          <div class="my-bold">Aula</div>
+        </mat-grid-tile-header>
+        <mat-form-field appearance="legacy" color="accent">
+          <mat-select placeholder="Seleziona una nuova aula"  [(ngModel)]="selectedLesson.room">
+            <mat-option *ngFor="let aula of aulasFounded" [value]="aula">
+              {{ aula.name }}
+              <mat-hint>Capacity: {{ aula.capacity }}</mat-hint>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </mat-grid-tile>
 
     <mat-grid-tile>
       <mat-grid-tile-header class="my-tile-header">
 
       </mat-grid-tile-header>
-      <mat-radio-group [(ngModel)]="all">
-        <mat-radio-button  class="radio-button" value=false [style.margin]="'3px'">
-          <h2>Solo questa lezione</h2>
-        </mat-radio-button>
-        <mat-radio-button  class="radio-button" value="true" [style.margin]="'3px'">
-          <h2>Tutte le prossime lezioni</h2>
-        </mat-radio-button>
-      </mat-radio-group>
+        <mat-radio-group [(ngModel)]="all" [disabled]="radioEna">
+          <mat-radio-button  class="radio-button" value=false [style.margin]="'3px'">
+            <h2>Solo questa lezione</h2>
+          </mat-radio-button>
+          <mat-radio-button  class="radio-button" value="true" [style.margin]="'3px'">
+            <h2>Tutte le prossime lezioni</h2>
+          </mat-radio-button>
+        </mat-radio-group>
     </mat-grid-tile>
   </mat-grid-list>
   <div align="center">

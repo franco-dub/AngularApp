@@ -65,7 +65,7 @@
   </mat-grid-list>
 
   <div align="center">
-    <mat-radio-group [(ngModel)]="lectureCalendar.type">
+    <mat-radio-group [(ngModel)]="lectureCalendar.calendarDate.type">
       <mat-radio-button *ngFor="let kind of calendarKind" [value]="kind" (focus)="populateCalendar()"
                         class="radio-button" (click)="populateCalendar()"  (change)="populateCalendar()">
         <b>{{ kind }}</b>
@@ -105,7 +105,8 @@
 
         <mat-grid-tile>
           <div align="center">
-            <h3 class="unSelectable">Data di inizio semestre</h3>
+            <h3 class="unSelectable" *ngIf="lectureCalendar.calendarDate.type.match(calendarKind[0])">Data di inizio semestre</h3>
+            <h3 class="unSelectable" *ngIf="lectureCalendar.calendarDate.type.match(calendarKind[1])">Data esame</h3>
             <mat-form-field appearance="legacy">
               <input matInput [matDatepicker]="pickerStart" placeholder="Inizio semestre"
                      [(ngModel)]="dayLecture" required>
@@ -115,12 +116,12 @@
           </div>
         </mat-grid-tile>
 
-        <mat-grid-tile>
+        <mat-grid-tile *ngIf="lectureCalendar.calendarDate.type.match(calendarKind[0])">
           <div align="center">
             <h3 class="unSelectable">Data di fine semestre</h3>
             <mat-form-field appearance="legacy" >
               <input matInput [matDatepicker]="pickerEnd" placeholder="Fine semestre"
-                     [(ngModel)]="endDate" required [disabled]="lectureCalendar.type == 'EXAM'">
+                     [(ngModel)]="endDate" required >
             </mat-form-field>
             <mat-datepicker-toggle [for]="pickerEnd" ></mat-datepicker-toggle>
             <mat-datepicker #pickerEnd ></mat-datepicker>
