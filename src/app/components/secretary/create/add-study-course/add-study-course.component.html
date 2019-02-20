@@ -2,10 +2,10 @@
   <mat-card align="center">
     <mat-card-content>
       <mat-card-title>
-        <h4>Course Name</h4>
+        <h4>Nome del corso</h4>
       </mat-card-title>
       <mat-form-field appearance="legacy">
-        <input style="font-size: medium" matInput [(ngModel)]="name" placeholder="Insert course name">
+        <input style="font-size: medium" matInput [(ngModel)]="name" placeholder="Inserisci il nome">
       </mat-form-field>
     </mat-card-content>
   </mat-card>
@@ -14,14 +14,14 @@
   <mat-card align="center">
     <mat-card-content>
       <mat-card-title>
-        <h4>Course Description</h4>
+        <h4>Descrizione del corso</h4>
       </mat-card-title>
       <mat-form-field appearance="legacy">
         <textarea style="font-size: medium" matInput [(ngModel)]="description" #descri
-                  placeholder="Insert course name" maxlength="200">
+                  placeholder="Inserisci la descrizione" maxlength="200">
 
         </textarea>
-        <mat-hint> Max {{ 200 - descri.value?.length }} character</mat-hint>
+        <mat-hint> Max {{ 200 - descri.value?.length }} caratteri</mat-hint>
       </mat-form-field>
     </mat-card-content>
   </mat-card>
@@ -30,10 +30,10 @@
   <mat-card align="center">
     <mat-card-content>
       <mat-card-title>
-        <h4>Course Type</h4>
+        <h4>Tipo del corso</h4>
       </mat-card-title>
       <mat-form-field appearance="legacy">
-        <mat-select placeholder="select teaching"  [(ngModel)]="studyCourseType"
+        <mat-select placeholder="Seleziona gli insegnamenti"  [(ngModel)]="studyCourseType"
                     [required] >
           <mat-option style="font-size: medium" *ngFor="let course of studyCourseTypes"
                       [value]="course">
@@ -47,10 +47,10 @@
   <mat-card>
     <mat-card-actions align="center" class="example-card">
       <mat-card-content>
-        <button style="font-size: large" color="warn" mat-raised-button (click)="onSubmit()">Submit</button>
+        <button style="font-size: large" color="warn" mat-raised-button (click)="onSubmit()">Salva</button>
       </mat-card-content>
       <mat-error *ngIf="missingArguments" style="color: red">
-        Missing arguments
+        Elementi mancanti
       </mat-error>
     </mat-card-actions>
   </mat-card>

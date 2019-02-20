@@ -1,47 +1,67 @@
-<h2 align="center">Gestione Ticket</h2>
-<div align="center">
-  <mat-form-field>
-    <mat-select placeholder="Aule" [(value)]="selectedRoom">
-      <mat-option>I tuoi ticket</mat-option>
-      <mat-option *ngFor="let room of rooms" [value]="room" (click)="roomTickets(selectedRoom);">
-        {{ room.name }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
-<div *ngIf='!selectedRoom'>
-  <mat-list>
-    <h3 mat-subheader>Ticket:</h3>
-    <mat-divider></mat-divider>
-    <mat-list-item *ngFor="let ticket of tickets" [class.selected]="ticket === selectedTicket" (click)="loadDetails(ticket)">
-      <mat-icon mat-list-icon class="download">create</mat-icon>
 
-
-      <h4 mat-line>{{ticket.room.name}} - {{ticket.title}} - {{ticket.status}}</h4>
-      <p mat-line>Creato: {{ticket.date | date: 'medium' || "-"}} - Modificato: {{ticket.lastModified | date: 'medium' || "none"}}</p>
-      <p mat-line>Descrizione: {{ticket.description}} </p>
-      <p mat-line>Commento della segreteria: {{ticket.comment}} </p>
-
+<mat-sidenav-container fullscreen [style.margin-top]="'95px'">
+  <mat-sidenav  mode="side" opened [style.background-color]="'#f4ce42'">
+    <mat-list>
+      <mat-list-item>
+        <button  color="primary" mat-flat-button [style.font-size]="'large'"
+                 (click)="navigate('upload-file')">
+          <mat-icon>file_copy</mat-icon>
+          File
+        </button>
+      </mat-list-item>
       <mat-divider></mat-divider>
-    </mat-list-item>
+      <mat-divider></mat-divider>
 
-    <div *ngIf='ticketDetails'>
-      <app-ticket-details [ticket]="selectedTicket"></app-ticket-details>
+
+      <mat-list-item>
+        <button  color="primary" mat-flat-button [style.font-size]="'large'"
+                 (click)="navigate('open-ticket')">
+          <mat-icon>add_allert</mat-icon>
+          Apri un ticket
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div align="center">
+      <mat-form-field>
+        <mat-select placeholder="Select Room" [(value)]="selectedRoom">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let room of rooms" [value]="room" (click)="roomTickets(selectedRoom);">
+            {{ room.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
-  </mat-list>
-</div>
-<div *ngIf='selectedRoom'>
-  <mat-list>
-    <h3 mat-subheader>Ticket {{selectedRoom.name}}:</h3>
-    <mat-divider></mat-divider>
-    <mat-list-item *ngFor="let ticket of roomTicketsList">
-      <mat-icon mat-list-icon>arrow_right</mat-icon>
-      <h4 mat-line>{{ticket.room.name}} - {{ticket.title}} - {{ticket.status}}</h4>
-      <p mat-line>Creato: {{ticket.date | date: 'medium' || "-"}} - Modificato: {{ticket.lastModified | date: 'medium' || "none"}}</p>
-      <p mat-line>Descrizione: {{ticket.description}} </p>
-      <p mat-line>Commento della segreteria: {{ticket.comment}} </p>
-      <mat-divider></mat-divider>
-    </mat-list-item>
-    <mat-divider></mat-divider>
-  </mat-list>
-</div>
+    <div *ngIf='!selectedRoom'>
+      <mat-list>
+        <h2 mat-subheader>Tickets</h2>
+        <mat-list-item *ngFor="let ticket of tickets" [class.selected]="ticket === selectedTicket" (click)="loadDetails(ticket)">
+          <mat-icon mat-list-icon>create</mat-icon>
+          <h4 mat-line>{{ticket.room.name}} - {{ticket.title}} - {{ticket.status}}</h4>
+          <p mat-line>Created: {{ticket.date || "-"}} - Modified: {{ticket.lastModified || "none"}}</p>
+          <p mat-line>Description: {{ticket.description}} </p>
+          <p mat-line>Comment: {{ticket.comment}} </p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <div *ngIf='ticketDetails'>
+          <app-ticket-details [ticket]="selectedTicket"></app-ticket-details>
+        </div>
+      </mat-list>
+    </div>
+    <div *ngIf='selectedRoom'>
+      <mat-list>
+        <h3 mat-subheader>{{selectedRoom.name}} Tickets</h3>
+        <mat-list-item *ngFor="let ticket of roomTicketsList">
+          <mat-icon mat-list-icon>arrow_right</mat-icon>
+          <h4 mat-line>{{ticket.room.name}} - {{ticket.title}} - {{ticket.status}}</h4>
+          <p mat-line>Created: {{ticket.date || "-"}} - Modified: {{ticket.lastModified || "none"}}</p>
+          <p mat-line>Description: {{ticket.description}} </p>
+          <p mat-line>Comment: {{ticket.comment}} </p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,22 +1,36 @@
 <div class="mat-container-fluid">
 
   <div>
-    <mat-grid-list [cols]="2" rowHeight="3:1">
+    <mat-grid-list [cols]="3" rowHeight="3:1">
       <mat-grid-tile>
         <div align="center">
-          <h3>First Name</h3>
+          <h3>Nome</h3>
           <mat-form-field appearance="legacy">
-            <input matInput placeholder="Insert first name" [(ngModel)]="firstName" required>
+            <input matInput placeholder="Inserisci il nome" [(ngModel)]="firstName" required>
           </mat-form-field>
         </div>
       </mat-grid-tile>
 
+      <mat-grid-tile>
+        <div align="center">
+          <mat-label>
+            <h2>Foto utente</h2>
+          </mat-label>
+          <input
+            style="display: none"
+            type="file"
+            #fileInput>
+          <button mat-button (click)="fileInput.click()" aria-label="Inserisci foto utente">
+            <mat-icon>insert_photo</mat-icon>
+          </button>
+        </div>
+      </mat-grid-tile>
 
       <mat-grid-tile>
         <div align="center">
-          <h3>Last Name</h3>
+          <h3>Cognome</h3>
           <mat-form-field appearance="legacy">
-            <input matInput placeholder="Insert last name" [(ngModel)]="lastName" required>
+            <input matInput placeholder="Inserisci il cognome" [(ngModel)]="lastName" required>
           </mat-form-field>
         </div>
       </mat-grid-tile>
@@ -31,8 +45,9 @@
               <h4>Email</h4>
             </mat-card-title>
             <mat-form-field appearance="legacy">
-              <input matInput="e-mail" type="email" placeholder="Insert e-mail" [(ngModel)]="email" required>
+              <input matInput="e-mail" type="email" placeholder="Inserisci l'e-mail" [(ngModel)]="email" required>
             </mat-form-field>
+            <mat-icon>email</mat-icon>
           </mat-card-content>
         </mat-card>
       </mat-grid-tile>
@@ -41,11 +56,12 @@
         <mat-card class="grid-tile" align="center">
           <mat-card-content>
             <mat-card-title>
-              <h4>Phone number</h4>
+              <h4>Telefono</h4>
             </mat-card-title>
             <mat-form-field appearance="legacy">
-              <input matInput placeholder="Insert phone number" type="tel" [(ngModel)]="phone" required>
+              <input matInput placeholder="Inserisci il numero di telefono" type="tel" [(ngModel)]="phone" required>
             </mat-form-field>
+            <mat-icon>phone</mat-icon>
           </mat-card-content>
         </mat-card>
       </mat-grid-tile>
@@ -54,10 +70,10 @@
         <mat-card class="grid-tile" align="center">
           <mat-card-content>
             <mat-card-title>
-              <h4>Birth date</h4>
+              <h4>Data di nascita</h4>
             </mat-card-title>
             <mat-form-field appearance="legacy">
-              <input matInput [matDatepicker]="picker" placeholder="Insert Date of birth"
+              <input matInput [matDatepicker]="picker" placeholder="Inserisci Data di nascita"
                      [(ngModel)]="dateOfBirth" required>
             </mat-form-field>
             <mat-datepicker-toggle [for]="picker" ></mat-datepicker-toggle>
@@ -74,7 +90,7 @@
         <mat-card class="grid-tile" align="center">
           <mat-card-content>
             <mat-card-title>
-              <h4>Gender</h4>
+              <h4>Sesso</h4>
             </mat-card-title>
             <mat-radio-group [(ngModel)]="gender" >
               <mat-radio-button *ngFor="let ge of gends"
@@ -90,10 +106,10 @@
         <mat-card class="grid-tile" align="center">
           <mat-card-content>
             <mat-card-title>
-              <h4>Address</h4>
+              <h4>Indirizzo</h4>
             </mat-card-title>
             <mat-form-field appearance="legacy">
-              <input matInput [(ngModel)]="address" placeholder="Insert address" required>
+              <input matInput [(ngModel)]="address" placeholder="Inserisci l'indirizzo" required>
             </mat-form-field>
           </mat-card-content>
         </mat-card>
@@ -105,7 +121,7 @@
               <h4>N°</h4>
             </mat-card-title>
             <mat-form-field appearance="legacy">
-              <input matInput placeholder="number" type="number" [(ngModel)]="number" required>
+              <input matInput placeholder="numero" type="number" [(ngModel)]="number" required>
             </mat-form-field>
           </mat-card-content>
         </mat-card>
@@ -116,10 +132,10 @@
   <div  class="example-card" align="center">
     <mat-card-content>
       <mat-card-title>
-        <h3>User Type</h3>
+        <h3>Tipologia</h3>
       </mat-card-title>
       <mat-form-field appearance="legacy">
-        <mat-select placeholder="select user type" [(ngModel)]="selectedUser" required>
+        <mat-select placeholder="Seleziona la tipologia di utente" [(ngModel)]="selectedUser" required>
           <mat-option *ngFor="let ty of type" [value]="ty">
             {{ty}}
           </mat-option>
@@ -129,9 +145,9 @@
   </div>
 
   <div align="center" *ngIf="selectedUser == type[0]" >
-    <h3>Study Course</h3>
+    <h3>Corso di studi</h3>
     <mat-form-field appearance="legacy">
-      <mat-select placeholder="select study course" [(ngModel)]="selectedCourse" required>
+      <mat-select placeholder="Seleziona il corso di studi" [(ngModel)]="selectedCourse" required>
         <mat-option *ngFor="let course of courses"
                     [value]="course">
           {{course.name}}
@@ -141,9 +157,9 @@
   </div>
 
   <div align="center" *ngIf="selectedUser == type[1]" >
-    <h3>Level</h3>
+    <h3>Livello</h3>
     <mat-form-field appearance="legacy">
-      <mat-select placeholder="select study course" [(ngModel)]="level" required>
+      <mat-select placeholder="Seleziona il livello" [(ngModel)]="level" required>
         <mat-option *ngFor="let lev of levels"
                     [value]="lev">
           {{ lev }}
@@ -152,21 +168,13 @@
     </mat-form-field>
 
   </div>
-  <mat-label>
-    <h2> User photo</h2>
-  </mat-label>
-  <input
-    style="display: none"
-    type="file"
-    #fileInput>
-  <button mat-raised-button color="accent" (click)="fileInput.click()">Select File</button>
-  <button mat-raised-button color="primary" (click)="onUpload(fileInput.files)">Upload!</button>
+
   <div>
     <mat-card-actions align="center" class="example-card">
       <mat-card-content>
         <button mat-raised-button color="warn"
-                (click)="submit(selectedUser, selectedCourse)" >
-          Add new User
+                (click)="submit(selectedUser, selectedCourse, fileInput.files)" >
+          Salva
         </button>
       </mat-card-content>
     </mat-card-actions>

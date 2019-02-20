@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { PutService } from '../../../servicies/put.service';
 import { RoutingService } from '../../../servicies/routing.service';
 import { DeleteService } from '../../../servicies/delete.service';
-import { EventEmitter } from 'events';
+import {AuthService} from '../../../servicies/auth.service';
 
 @Component({
   selector: 'app-ticket-details',
@@ -18,6 +18,7 @@ export class TicketDetailsComponent implements OnChanges {
   constructor(private formBuilder: FormBuilder,
               private putService: PutService,
               private router: RoutingService,
+              private authService: AuthService,
               private deleteService: DeleteService) {}
 
   ngOnChanges(changes: SimpleChanges) {
@@ -31,14 +32,16 @@ export class TicketDetailsComponent implements OnChanges {
         date: changes.ticket.currentValue.date,
         lastModified: changes.ticket.currentValue.lastModified
       });
-      this.ticketDetails.valueChanges.subscribe( form => {
+      this.ticketDetails.valueChanges.subscribe(form => {
         this.ticket.title = form.title,
+
         this.ticket.description = form.description;
       });
     }
   }
 
   onSubmitForm() {
+
     console.log(this.ticket);
     this.putService.updateTicket(this.ticket).subscribe(ticket => {
       if (ticket != null) {

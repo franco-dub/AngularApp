@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { GetService } from '../../../servicies/get.service';
 import { Ticket } from '../../models/Ticket';
 import { AuthService } from '../../../servicies/auth.service';
-import { TicketDetailsComponent } from '../ticket-details/ticket-details.component';
 import { Room } from '../../models/Room';
+import {RoutingService} from '../../../servicies/routing.service';
 
 @Component({
   selector: 'app-menage-tickets',
@@ -21,11 +21,13 @@ export class MenageTicketsComponent implements OnInit {
   ticketDetails = false;
 
   constructor(private getService: GetService,
-    private authService: AuthService) {
+              private router: RoutingService,
+              private authService: AuthService) {
     this.profId = this.authService.getLoggedUser('user').professorId;
   }
 
   ngOnInit() {
+
     this.getService.findByProfId(this.profId).subscribe(tickets => {
       this.tickets = tickets;
       if (tickets != null) {
@@ -51,6 +53,10 @@ export class MenageTicketsComponent implements OnInit {
           ticket => ticket.room.roomId === room.roomId);
       }
     });
+  }
+
+  navigate(url: string){
+    this.router.navigate(url);
   }
 
 }

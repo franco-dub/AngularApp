@@ -2,29 +2,29 @@
   <mat-grid-list [cols]="3" rowHeight="2:1">
     <mat-grid-tile>
       <div align="center">
-        <h3>Insert teaching name</h3>
+        <h3>Nome materia</h3>
         <mat-form-field appearance="legacy">
-          <input matInput placeholder="Insert teaching name"
+          <input matInput placeholder="Inserisci il nome dell'insegnamento"
                  [(ngModel)]="name" required>
         </mat-form-field>
       </div>
     </mat-grid-tile>
     <mat-grid-tile>
       <div align="center">
-        <h3>Insert teaching credits</h3>
+        <h3>Crediti della materia</h3>
         <mat-form-field appearance="legacy">
-          <input matInput type="number" placeholder="Insert teaching credits"
+          <input matInput type="number" placeholder="Inserisci i crediti della materia"
                  [(ngModel)]="credits" required min="3" max="18">
         </mat-form-field>
-        <mat-error *ngIf="wrongCharacter"> Insert number from 3 to 18 </mat-error>
+        <mat-error *ngIf="wrongCharacter"> Inserici un valore tra 3 e 18 </mat-error>
       </div>
     </mat-grid-tile>
 
     <mat-grid-tile>
       <div>
-        <h3>Select Semester</h3>
+        <h3>Semestre</h3>
         <mat-form-field appearance="legacy">
-          <mat-select placeholder="Select Semester" [(ngModel)]="semester">
+          <mat-select placeholder="Seleziona Semestre" [(ngModel)]="semester">
             <mat-option style="font-size: medium" [value]="1">1</mat-option>
             <mat-option style="font-size: medium" [value]="2">2</mat-option>
           </mat-select>
@@ -36,9 +36,9 @@
   <mat-grid-list [cols]="3" rowHeight="2:1">
     <mat-grid-tile>
       <div>
-        <h3>Select Course</h3>
-        <mat-form-field placeholder="legacy">
-          <mat-select placeholder="Select Course" [(ngModel)]="selectedCourse"
+        <h3>Corso</h3>
+        <mat-form-field appearance="legacy">
+          <mat-select placeholder="Seleziona il corso" [(ngModel)]="selectedCourse"
                       >
             <mat-option *ngFor="let course of courses" [value]="course" (click)="fillVector()">
               {{ course.name }}
@@ -50,24 +50,22 @@
 
     <mat-grid-tile>
       <div>
-        <h3>Insert teaching Year</h3>
-        <mat-form-field appearance="legacy" *ngIf="selectedCourse != null">
-          <mat-select  placeholder="Select module year" [(ngModel)]="year">
+        <h3>Anno</h3>
+        <mat-form-field appearance="legacy">
+          <mat-select disabled="selectedCourse != null"  placeholder="Seleziona l'anno della materia" [(ngModel)]="year">
             <mat-option *ngFor="let ye of numbers; let i = index" [value]="ye">
               {{ ye }}
             </mat-option>
           </mat-select>
-
-          <!--   <mat-hint align="end">Max {{ 200 - input.value?.length }} character</mat-hint> -->
         </mat-form-field>
       </div>
     </mat-grid-tile>
 
     <mat-grid-tile>
       <div>
-        <h3>Select Professor</h3>
-        <mat-form-field placeholder="legacy">
-          <mat-select placeholder="Select Professor" [(ngModel)]="selectedProfessor">
+        <h3>Professore</h3>
+        <mat-form-field appearance="legacy">
+          <mat-select placeholder="Seleziona il professore" [(ngModel)]="selectedProfessor">
             <mat-option *ngFor="let professor of professors" [value]="professor">
               {{ professor.person.firstName }} {{ professor.person.lastName }}
             </mat-option>
@@ -80,10 +78,10 @@
   <div>
     <mat-card-actions align="center" class="example-card">
       <mat-card-content>
-        <button color="warn" mat-raised-button (click)="onSubmit()">Submit</button>
+        <button color="warn" mat-raised-button (click)="onSubmit()">Salva</button>
       </mat-card-content>
       <mat-error *ngIf="missingArguments">
-        Missing arguments
+        Argomenti mancanti
       </mat-error>
     </mat-card-actions>
   </div>

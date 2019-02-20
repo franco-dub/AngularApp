@@ -5,6 +5,7 @@ import { Module } from '../../models/Module';
 import { TeachingMaterial } from '../../models/TeachingMaterial';
 import { DeleteService } from '../../../servicies/delete.service';
 import { Subject } from 'rxjs';
+import {RoutingService} from '../../../servicies/routing.service';
 
 @Component({
   selector: 'app-files-list',
@@ -17,6 +18,7 @@ export class FilesListComponent implements OnChanges {
   @Input() module: Module;
   @Input() changing: Subject<boolean>;
   files: Array<TeachingMaterial>;
+
   displayedColumns: string[] = ['delete', 'fileName', 'created', 'size', 'fileType'];
 
   constructor(private getService: GetService,

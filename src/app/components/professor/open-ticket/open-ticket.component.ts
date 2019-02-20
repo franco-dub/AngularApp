@@ -3,12 +3,10 @@ import {PostService} from '../../../servicies/post.service';
 import {GetService} from '../../../servicies/get.service';
 import {RoutingService} from '../../../servicies/routing.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {Router} from '@angular/router';
 import {Room} from '../../models/Room';
 import {RoomEquipment} from '../../models/RoomEquipment';
 import {Ticket} from '../../models/Ticket';
 import {AuthService} from '../../../servicies/auth.service';
-import {Professor} from '../../models/Professor';
 import { PutService } from '../../../servicies/put.service';
 
 @Component({
@@ -24,25 +22,28 @@ export class OpenTicketComponent implements OnInit {
   selectedRoomEquipment: RoomEquipment;
   // @ts-ignore
   ticket: Ticket = {};
-  prof: Professor;
 
   constructor(private putService: PutService,
               private postService: PostService,
               private getService: GetService,
               private router: RoutingService,
+              private authService: AuthService,
               private formBuilder: FormBuilder,
               private authent: AuthService) { }
 
   ngOnInit() {
-    this.getService.findAllRoom().subscribe(rooms => {
-      this.rooms = rooms;
-    });
-    this.openTicketForm = this.formBuilder.group({
-      title: null,
-      room: null,
-      equipment: null,
-      description: null
-    });
+    this.router.currentLocation('open-ticket');
+    if(this.authService.isLoggednIn()) {
+      this.getService.findAllRoom().subscribe(rooms => {
+        this.rooms = rooms;
+      });
+      this.openTicketForm = this.formBuilder.group({
+        title: null,
+        room: null,
+        equipment: null,
+        description: null
+      });
+    }
   }
 
   findRoomEquipment() {

@@ -13,12 +13,12 @@
     </mat-card-title>
     <div layout="column" layout-align="center center">
       <div>
-        <h4>{{ lectureCalendar.room.location }}; Capacity: {{ lectureCalendar.room.capacity }}</h4>
+        <h4>{{ lectureCalendar.room.location }}; capacità: {{ lectureCalendar.room.capacity }}</h4>
       </div>
       <div>
         <span layout="column" *ngFor="let equip of lectureCalendar.roomEquipment"
               style="font-weight: bold; display: table-row">
-          {{ equip.equipment.name }}: {{ equip.work == 1 ? 'working' : 'not working' }}
+          {{ equip.equipment.name }}: {{ equip.work == 1 ? 'funzionante' : 'non funzionante' }}
         </span>
       </div>
     </div>

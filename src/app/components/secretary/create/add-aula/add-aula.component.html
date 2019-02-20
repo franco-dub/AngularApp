@@ -1,22 +1,22 @@
-<div class="container-fluid">
+<div class="my-class">
 
   <mat-grid-list [cols]="2" rowHeight="2:1">
     <mat-grid-tile>
       <div align="center">
-        <h3>Insert Aula name</h3>
+        <h3>Nome Aula</h3>
         <mat-form-field appearance="legacy">
           <input matInput class="form-control form-control-sm"
-                 id="name" placeholder="Insert Aula name"
+                 id="name" placeholder="Inserisci il nome dell'aula"
                  [(ngModel)]="name">
         </mat-form-field>
       </div>
     </mat-grid-tile>
     <mat-grid-tile>
       <div align="center">
-        <h4>Insert capacity</h4>
+        <h4>Capacita'</h4>
         <mat-form-field appearance="legacy">
           <input matInput type="number" min="0" step="1" id="capacity"
-                 placeholder="Insert capacity"
+                 placeholder="Inserisci la capacita'"
                  [(ngModel)]="capacity">
         </mat-form-field>
       </div>
@@ -27,21 +27,23 @@
     <mat-grid-list [cols]="2"  rowHeight="3:1">
       <mat-grid-tile>
         <div align="center">
-          <h3>Insert Longitude</h3>
+          <h3>Longitudine</h3>
           <mat-form-field appearance="legacy">
-            <input matInput type="number" id="longitude" placeholder="Insert longitude"
+            <input matInput type="number" id="longitude" placeholder="Inserisci la longitudine"
                    [(ngModel)]="longitude">
           </mat-form-field>
+          <mat-icon>add_location</mat-icon>
         </div>
       </mat-grid-tile>
 
       <mat-grid-tile>
         <div align="center">
-          <h3>Insert Latitude</h3>
+          <h3>Latitudine</h3>
           <mat-form-field appearance="legacy" >
-            <input matInput type="number" id="latitude" placeholder="Insert latitude"
+            <input align="left" matInput type="number" id="latitude" placeholder="Inserisci latitudine"
                    [(ngModel)]="latitude">
           </mat-form-field>
+          <mat-icon align="right">add_location</mat-icon>
         </div>
       </mat-grid-tile>
     </mat-grid-list>
@@ -49,6 +51,9 @@
 
 
   <div>
+    <mat-label align="center">
+      <h2>Seleziona l'equipaggiamento dell'aula</h2>
+    </mat-label>
     <mat-grid-list [cols]="columns" rowHeight="4:1">
       <mat-grid-tile *ngFor="let item of equipments; let i = index">
         <div align="center">
@@ -63,7 +68,7 @@
   <div align="center">
     <mat-card-actions align="center" class="example-card">
       <mat-card-content>
-        <button color="warn" mat-raised-button (click)="onSubmit()">Submit</button>
+        <button color="warn" mat-raised-button (click)="onSubmit()">Salva</button>
       </mat-card-content>
     </mat-card-actions>
   </div>
