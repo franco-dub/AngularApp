@@ -34,7 +34,7 @@
         <mat-form-field appearance="legacy" color="accent" >
           <mat-select placeholder="Seleziona lezione" [(ngModel)]="selectedLesson" [disabled]="teachings == null">
             <mat-option size="medium" *ngFor="let lesson of lessons" [value]="lesson" (click)="validateDate()">
-              {{ lesson.calendarDate.date }} - {{ lesson.day }}
+              {{ lesson.calendarDate.date }} - {{ lesson.calendarDate.type }}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -46,13 +46,13 @@
       <mat-grid-tile-header class="my-tile-header">
         <div class="my-bold">Data</div>
       </mat-grid-tile-header>
-      <mat-form-field appearance="legacy" >
+      <mat-form-field appearance="legacy">
         <input matInput [matDatepicker]="picker"
                placeholder="Inserisci la data"
-               [(ngModel)]="selectedLesson.calendarDate.dDate" required>
+               [(ngModel)]="selectedLesson.calendarDate.dDate" (ngModelChange)="findAula()" required>
       </mat-form-field>
       <mat-datepicker-toggle [for]="picker" ></mat-datepicker-toggle>
-      <mat-datepicker #picker ></mat-datepicker>
+      <mat-datepicker #picker></mat-datepicker>
     </mat-grid-tile>
 
     <mat-grid-tile>
@@ -92,7 +92,7 @@
         </mat-form-field>
       </div>
     </mat-grid-tile>
-
+<!-- 
     <mat-grid-tile>
       <mat-grid-tile-header class="my-tile-header">
 
@@ -105,7 +105,7 @@
             <h2>Tutte le prossime lezioni</h2>
           </mat-radio-button>
         </mat-radio-group>
-    </mat-grid-tile>
+    </mat-grid-tile> -->
   </mat-grid-list>
   <div align="center">
     <button mat-raised-button color="primary" [style.font-size]="'large'"  (click)="submit()" *ngIf="selectedLesson != null">

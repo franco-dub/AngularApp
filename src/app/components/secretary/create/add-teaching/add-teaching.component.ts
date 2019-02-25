@@ -61,6 +61,8 @@ export class AddTeachingComponent implements OnInit {
     for (let i = 0; i < this.selectedCourse.year; i++) {
       this.numbers.push(i + 1);
     }
+    console.log(this.numbers);
+    console.log(this.selectedCourse);
   }
 
   onSubmit() {

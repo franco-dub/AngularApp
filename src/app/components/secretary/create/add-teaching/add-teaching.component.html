@@ -38,8 +38,7 @@
       <div>
         <h3>Corso</h3>
         <mat-form-field appearance="legacy">
-          <mat-select placeholder="Seleziona il corso" [(ngModel)]="selectedCourse"
-                      >
+          <mat-select placeholder="Seleziona il corso" [(ngModel)]="selectedCourse">
             <mat-option *ngFor="let course of courses" [value]="course" (click)="fillVector()">
               {{ course.name }}
             </mat-option>
@@ -52,7 +51,7 @@
       <div>
         <h3>Anno</h3>
         <mat-form-field appearance="legacy">
-          <mat-select disabled="selectedCourse != null"  placeholder="Seleziona l'anno della materia" [(ngModel)]="year">
+          <mat-select [disabled]="!selectedCourse"  placeholder="Seleziona l'anno della materia" [(ngModel)]="year">
             <mat-option *ngFor="let ye of numbers; let i = index" [value]="ye">
               {{ ye }}
             </mat-option>

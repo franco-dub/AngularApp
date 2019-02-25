@@ -16,7 +16,7 @@ import {RoutingService} from '../../../servicies/routing.service';
 export class FilesListComponent implements OnChanges {
 
   @Input() module: Module;
-  @Input() changing: Subject<boolean>;
+  @Input() changing: TeachingMaterial;
   files: Array<TeachingMaterial>;
 
   displayedColumns: string[] = ['delete', 'fileName', 'created', 'size', 'fileType'];
@@ -27,7 +27,6 @@ export class FilesListComponent implements OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes.module.currentValue);
     this.loadFileList();
 }
 

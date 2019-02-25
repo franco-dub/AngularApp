@@ -80,16 +80,17 @@ export class AddUserComponent implements OnInit {
 
           this.createNewFirebase(student.person.email, student.person.password).then(ret=>{
             console.log(ret);
-            this.postService.saveStudent(student).subscribe(saved=>{
+            this.postService.saveStudent(student).subscribe( saved=>{
               console.log(saved);
-              this.angularFiredatabase.storage.ref('images/' + saved.person.personId + '/firebase-ico.jpg').put(this.photo[0]).
-              then(returned=> {
+             /*  this.angularFiredatabase.storage.ref('images/' + saved.person.personId + '/firebase-ico.jpg').put(this.photo[0]).
+              then( returned=> {
                 console.log(returned);
-              }).catch(err=>{
+              }).catch( err=>{
                 console.log(err);
-              });
-              if (saved != null)
-                this.router.navigate('seg-home');
+              }); */
+              if (saved != null) {
+                 this.router.navigate('seg-home');
+              }
             });
           });
           break;
@@ -121,7 +122,9 @@ export class AddUserComponent implements OnInit {
           let secretary: Secretary;
           secretary = this.newSecretary(person);
           this.selectedCourse = null;
+          console.log(secretary);
           this.postService.saveSecretary(secretary).subscribe(saved=>{
+            console.log(saved);
             if (saved != null)
               this.router.navigate('seg-home');
           });

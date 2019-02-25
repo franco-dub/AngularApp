@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from '../../../servicies/post.service';
 import { HttpClient } from '@angular/common/http';
+import { AuthGuardService } from '../../../servicies/auth-guard.service';
 import { AuthService } from '../../../servicies/auth.service';
 import { GetService } from '../../../servicies/get.service';
 import { Module } from '../../models/Module';
 import { Subject } from 'rxjs';
-import {RoutingService} from '../../../servicies/routing.service';
 import { AngularFirestore } from '@angular/fire/firestore';
-
+import { TeachingMaterial } from '../../models/TeachingMaterial';
 
 @Component({
   selector: 'app-upload-file',
@@ -20,25 +20,20 @@ export class UploadFileComponent implements OnInit {
   selectedFile: File = null;
   modules: Array<Module> = [];
   selectedModule: Module = null;
-  changingValue: Subject<boolean> = new Subject();
+  changingValue: TeachingMaterial = null;//: Subject<boolean> = new Subject();
 
   constructor(private postService: PostService,
               private getService: GetService,
               private http: HttpClient,
-              private router: RoutingService,
               private authService: AuthService,
               private firestore: AngularFirestore) {
-
                 this.profId = this.authService.getLoggedUser('user').professorId;
                }
 
   ngOnInit() {
-    this.router.currentLocation('upload-file');
-    if(this.authService.isLoggednIn()) {
-      this.getService.findModuleByProf(this.profId).subscribe(modules => {
-        this.modules = modules;
-      });
-    }
+    this.getService.findModuleByProf(this.profId).subscribe(modules => {
+      this.modules = modules;
+    });
   }
 
   onFileSelected(event) {
@@ -50,9 +45,9 @@ export class UploadFileComponent implements OnInit {
     console.log(selectedModule);
   }
   onUpload() {
-    this.postService.uploadFile(this.selectedFile, this.selectedModule.moduleId).subscribe(res =>{
+    this.postService.uploadFile(this.selectedFile, this.selectedModule.moduleId).subscribe( async res =>{
       console.log(res);
-      this.changingValue.next(true);
+      this.changingValue = res;
       this.firestore.collection('modules').doc(String(this.selectedModule.moduleId))
         .collection('notifications').add(
           {

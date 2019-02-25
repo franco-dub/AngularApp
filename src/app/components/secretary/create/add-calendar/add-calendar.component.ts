@@ -132,7 +132,7 @@ export class AddCalendarComponent implements OnInit {
 
   errorLogRoom = '';
 
-  calendarKind = ['Lezione', 'Esame'];
+  calendarKind = ['LECTURE', 'EXAM'];
 
   constructor(private postService: PostService,
               private getService: GetService,
@@ -399,7 +399,6 @@ export class AddCalendarComponent implements OnInit {
   findAula(){
 
     this.aulasFounded = null;
-
     if(this.checkData('find')) {
       this.errorLog = '';
       this.lectureCalendar.module = this.module;
@@ -409,8 +408,12 @@ export class AddCalendarComponent implements OnInit {
       this.lectureCalendar.calendarDate.dDate = new Date(this.datepipe.transform(this.dayLecture, 'yyyy-MM-dd'));
       this.lectureCalendar.day = this.dayLecture.getDay().toString().toUpperCase();
       this.lectureCalendar.calendarDate.startDate = this.datepipe.transform(this.dayLecture, 'yyyy-MM-dd');
-      this.lectureCalendar.calendarDate.endDate = this.datepipe.transform(this.endDate, 'yyyy-MM-dd');
-
+      if (this.lectureCalendar.calendarDate.type == 'EXAM') {
+        this.lectureCalendar.calendarDate.endDate  = this.datepipe.transform(this.dayLecture, 'yyyy-MM-dd');
+      } else {
+        this.lectureCalendar.calendarDate.endDate = this.datepipe.transform(this.endDate, 'yyyy-MM-dd');
+      }
+      console.log(this.lectureCalendar);
       this.getService.findAllFreeAulas(this.lectureCalendar).subscribe(aulasFounded => {
         if (aulasFounded.length != 0) {
           this.errorLogRoom = '';
@@ -425,10 +428,14 @@ export class AddCalendarComponent implements OnInit {
   }
 
   addDayLecture(){
-
     if(this.checkData('save')) {
       this.errorLog = '';
       this.lectureCalendar.room = this.selectedAula;
+      if (this.lectureCalendar.calendarDate.type == 'EXAM') {
+        this.endDate = this.dayLecture;
+        this.lectureCalendar.calendarDate.endDate = this.lectureCalendar.calendarDate.startDate;
+        this.postService.addNewDayLecture(this.lectureCalendar).subscribe();
+      } else {
       for(let k = this.dayLecture;
           k.getMonth() < this.endDate.getMonth()+1 && (k.getMonth() < this.endDate.getMonth() || k.getDate() <= this.endDate.getDate());
           ){
@@ -440,10 +447,11 @@ export class AddCalendarComponent implements OnInit {
           this.lectureCalendar.calendarDate.type = "EXAM";
           this.lectureCalendar.calendarDate.endDate = this.lectureCalendar.calendarDate.startDate;
         }
-        this.postService.addNewDayLecture(this.lectureCalendar).subscribe();
+        this.postService.addNewDayLecture(this.lectureCalendar).subscribe(console.log);
         k.setDate(k.getDate() + 7);
       }
-      this.lectureCalendar.calendarDate.type = "Esame";
+    }
+      this.lectureCalendar.calendarDate.type = "EXAM";
       this.dayLecture = null;
       this.startingHour = '';
       this.endingHour = '';

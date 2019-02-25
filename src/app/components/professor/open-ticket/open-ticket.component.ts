@@ -74,7 +74,7 @@ export class OpenTicketComponent implements OnInit {
         this.putService.updateRoomEquipment2(this.selectedRoomEquipment)
         .subscribe( roomEquipment =>{
           if (roomEquipment != null) */
-            this.router.navigate('menage-tickets');
+            this.router.navigate('manage-tickets');
     /*     }); */
       }
     });

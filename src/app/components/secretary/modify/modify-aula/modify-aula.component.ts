@@ -62,7 +62,9 @@ export class ModifyAulaComponent implements OnInit {
         this.getService.findEquipmentByRoom(this.selectedRoom).subscribe(roomEquipments => {
 
           this.roomEquipments = roomEquipments;
-          const location = this.selectedRoom.location.split(', ');
+          if (this.selectedRoom.location != null) {
+            const location = this.selectedRoom.location.split(', ');
+          }
           console.log(location);
           this.longitude = location[0];
           this.latitude = location[1];

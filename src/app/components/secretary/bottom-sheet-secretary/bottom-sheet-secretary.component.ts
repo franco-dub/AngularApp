@@ -58,8 +58,6 @@ export class BottomSheetSecretaryComponent implements OnInit {
 
       });
     });
-
-
   }
 
   optionChecked(index: number) {

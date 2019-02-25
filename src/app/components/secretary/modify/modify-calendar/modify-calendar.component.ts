@@ -93,18 +93,23 @@ export class ModifyCalendarComponent implements OnInit {
     this.lessons = [];
     this.getService.findLessonByTeaching(teaching).subscribe(lessons=>{
       let today = new Date();
-      lessons.forEach(lesson=>{
+      lessons.filter(calendar => new Date(calendar.calendarDate.date) >= new Date());
+      this.lessons = lessons;
+      /* lessons.forEach(lesson=>{
         lesson.calendarDate.dDate = new Date(lesson.calendarDate.date);
-        if (today.getMonth() <= lesson.calendarDate.dDate.getMonth() && today.getDate() <= lesson.calendarDate.dDate.getDate()){
+        if (today.getMonth() <= lesson.calendarDate.dDate.getMonth() 
+                        && today.getDate() <= lesson.calendarDate.dDate.getDate()){
           this.lessons.push(lesson);
         }
-      });
+      }); */
     });
   }
 
   validateDate(){
     console.log(this.selectedLesson);
     this.radioEna = !!this.selectedLesson.calendarDate.type.match("EXAM");
+    
+    this.selectedLesson.calendarDate.dDate = new Date(this.selectedLesson.calendarDate.date);
     this.previousDate = new FormControl(this.selectedLesson.calendarDate.dDate);
     this.selectedLesson.calendarDate.startDate = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
     this.selectedLesson.calendarDate.endDate = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
@@ -116,12 +121,15 @@ export class ModifyCalendarComponent implements OnInit {
   findAula(){
     if(this.selectedLesson.calendarDate.startTime < this.selectedLesson.calendarDate.endTime) {
       this.errorColor = 'accent';
+      this.selectedLesson.calendarDate.startDate = this.datepipe.transform(this.selectedLesson.calendarDate.dDate, 'yyyy-MM-dd');
+      this.selectedLesson.calendarDate.endDate = this.datepipe.transform(this.selectedLesson.calendarDate.dDate, 'yyyy-MM-dd');
+      this.selectedLesson.calendarDate.date = this.datepipe.transform(this.selectedLesson.calendarDate.dDate, 'yyyy-MM-dd');
       this.getService.findAllFreeAulas(this.selectedLesson).subscribe(aulasFounded => {
         if (aulasFounded.length != 0) {
           this.errorLogRoom = '';
           this.aulasFounded = aulasFounded;
         } else {
-          this.errorLogRoom = 'No free aulas founded change Hour';
+          this.errorLogRoom = 'Aula non trovata. Cambia l\'ora';
         }
       });
     }else{
@@ -163,9 +171,10 @@ export class ModifyCalendarComponent implements OnInit {
     } else {
       let moduleId = this.selectedTeaching.moduleId;
       this.selectedLesson.calendarDate.date = this.datepipe.transform(this.selectedLesson.calendarDate.dDate, "yyyy-MM-dd");
+      this.selectedLesson.day = ModifyCalendarComponent.getDaty(this.selectedLesson.calendarDate.dDate.getDay());
       this.putService.updateDayLecture(this.selectedLesson).subscribe(ret=>{
         let notify = {
-          mod: moduleId,
+          module: moduleId,
           text: 'Calendario aggiornato'
         };
         console.log(notify);
